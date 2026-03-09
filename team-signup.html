@@ -42,16 +42,29 @@
       text-decoration: none;
     }
     .nav-brand span { color: var(--gold); }
-    .nav-pill {
-      background: rgba(255,255,255,0.1);
-      color: white;
-      border: 1px solid rgba(255,255,255,0.2);
-      padding: 5px 14px;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      text-decoration: none;
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.6rem;
     }
+    .nav-links a {
+      color: rgba(255,255,255,0.78);
+      text-decoration: none;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.3px;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover, .nav-links a.nav-active { color: white; }
+    .nav-links .nav-cta {
+      background: var(--gold);
+      color: var(--navy);
+      padding: 7px 18px;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+    .nav-links .nav-cta:hover { opacity: 0.9; color: var(--navy); }
+    @media (max-width: 640px) { .hide-mobile { display: none !important; } }
 
     /* ── HERO BANNER ── */
     .hero {
@@ -574,13 +587,18 @@
 <!-- NAV -->
 <nav>
   <a class="nav-brand" href="/">MVP<span>Kids</span>Cards</a>
-  <a class="nav-pill" href="/login.html">Parent login</a>
+  <div class="nav-links">
+    <a href="teams.html" class="hide-mobile nav-active">Teams</a>
+    <a href="fundraising.html" class="hide-mobile">Fundraising</a>
+    <a href="faq.html" class="hide-mobile">FAQ</a>
+    <a href="login.html" class="nav-cta">Parent Login</a>
+  </div>
 </nav>
 
 <!-- HERO -->
 <div class="hero">
-  <div class="badge">Teams & Leagues</div>
-  <h1>Launch Your Team's<br>Fundraiser in Minutes</h1>
+  <div class="badge">Teams, Leagues & Groups</div>
+  <h1>Launch Your Group's<br>Fundraiser in Minutes</h1>
   <p>Create an account, choose your revenue model, and share one code. Parents do the rest.</p>
 </div>
 
@@ -684,9 +702,16 @@
             <option value="">Select type…</option>
             <option value="league">League / Association</option>
             <option value="club">Club / Academy</option>
-            <option value="school_team">School Team</option>
+            <option value="school_team">School Team / Class</option>
             <option value="travel_team">Travel Team</option>
             <option value="rec">Recreational Program</option>
+            <option value="dance_studio">Dance Studio</option>
+            <option value="school_pta">School / PTA</option>
+            <option value="scout_troop">Scout Troop</option>
+            <option value="arts_program">Arts / Theater Program</option>
+            <option value="faith_group">Faith Group / Youth Ministry</option>
+            <option value="esports">eSports / Robotics Team</option>
+            <option value="other">Other Group</option>
           </select>
         </div>
         <div class="form-group">
@@ -705,8 +730,8 @@
     </div>
 
     <div class="form-card">
-      <h3>Sports Offered</h3>
-      <p class="hint" style="margin-bottom:12px;">Select all that apply — parents will pick their sport when they sign up.</p>
+      <h3>Activities Offered</h3>
+      <p class="hint" style="margin-bottom:12px;">Select all that apply — parents will pick their activity when they sign up.</p>
       <div class="sports-grid" id="sportsGrid">
         <!-- Injected by JS -->
       </div>
@@ -864,7 +889,7 @@
         <span class="r-value" id="rev-city">—</span>
       </div>
       <div class="review-row">
-        <span class="r-label">Sports</span>
+        <span class="r-label">Activities</span>
         <span class="r-value" id="rev-sports">—</span>
       </div>
     </div>
@@ -942,12 +967,32 @@
     ? 'http://localhost:3001'
     : 'https://mvpkidscards-api.vercel.app';
 
-  // ── SPORTS LIST ─────────────────────────────────────────
+  // ── ACTIVITIES LIST ─────────────────────────────────────────
   const SPORTS = [
+    // ── Sports ──
     '⚽ Soccer','🏀 Basketball','⚾ Baseball','🥎 Softball','🏈 Football',
     '🏒 Hockey','🎾 Tennis','🏐 Volleyball','🏊 Swimming','🤸 Gymnastics',
     '🏃 Track & Field','🥊 Boxing','🤼 Wrestling','⛳ Golf','🏋️ Weightlifting',
     '🏇 Equestrian','🚴 Cycling','🏄 Surfing','🥋 Martial Arts','🎽 Cross Country',
+    '🎯 Archery','🏑 Field Hockey','🏉 Rugby','🏌️ Golf','🤺 Fencing',
+    '🛹 Skateboarding','🎿 Skiing / Snowboarding','🤿 Diving','🧗 Rock Climbing',
+    // ── Dance & Performing Arts ──
+    '💃 Ballet','👯 Hip Hop Dance','🩰 Contemporary Dance','🎭 Theater / Drama',
+    '🎤 Choir / Vocal','🎸 Band / Orchestra','🎺 Marching Band','💃 Cheer / Dance Team',
+    '🩰 Tap Dance','💃 Jazz Dance','🩰 Ballroom Dance',
+    // ── Gymnastics & Cheer ──
+    '🤸 Cheer','🎀 Gymnastics','🏅 Tumbling','🌀 Acrobatics',
+    // ── Academic & STEM ──
+    '🎓 Academic Team','🤖 Robotics','♟️ Chess Club','🔬 Science Olympiad',
+    '📖 Spelling Bee','🧮 Math League','🏆 Academic Bowl','🎨 Art Club',
+    // ── Scouting & Youth Groups ──
+    '🦅 Boy Scouts / Cub Scouts','🍀 Girl Scouts','🌟 4-H Club','⛺ Youth Camp',
+    // ── Faith & Community ──
+    '⛪ Youth Ministry','🕍 Hebrew School','🕌 Youth Group','🙏 Faith Team',
+    // ── eSports & Tech ──
+    '🎮 eSports','💻 Coding Club','🤖 FIRST Robotics','🚀 Rocketry Club',
+    // ── Other Activities ──
+    '📷 Photography Club','🎬 Film Club','🌍 Model UN','📰 Yearbook / Journalism',
   ];
 
   const selectedSports = new Set();
@@ -1079,7 +1124,7 @@
       if (!name) return err('Please enter your organization name.');
       if (!type) return err('Please select your organization type.');
       if (!city) return err('Please enter your location / city.');
-      if (selectedSports.size === 0) return err('Please select at least one sport.');
+      if (selectedSports.size === 0) return err('Please select at least one activity.');
     }
 
     return true;
@@ -1104,9 +1149,16 @@
   const ORG_TYPES = {
     league: 'League / Association',
     club: 'Club / Academy',
-    school_team: 'School Team',
+    school_team: 'School Team / Class',
     travel_team: 'Travel Team',
     rec: 'Recreational Program',
+    dance_studio: 'Dance Studio',
+    school_pta: 'School / PTA',
+    scout_troop: 'Scout Troop',
+    arts_program: 'Arts / Theater Program',
+    faith_group: 'Faith Group / Youth Ministry',
+    esports: 'eSports / Robotics Team',
+    other: 'Other Group',
   };
 
   function buildReview() {

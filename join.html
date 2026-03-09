@@ -4,10 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Join a Team — MVP Kids Cards</title>
+  <meta name="description" content="Enter your team code to join your child's group on MVP Kids Cards and start creating their custom athlete or activity card." />
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --navy:#0B1E3F; --gold:#E8A020; --green:#1AAF5D; --gray:#8A9BB0; }
+    :root { --navy:#0B1E3F; --gold:#E8A020; --green:#1AAF5D; --gray:#8A9BB0; --red:#fc8181; }
     body {
       font-family: 'Montserrat', sans-serif;
       background: var(--navy);
@@ -35,6 +36,9 @@
       font-size: 1.2rem;
       font-weight: 700;
       margin-bottom: 2rem;
+      text-decoration: none;
+      color: white;
+      display: block;
     }
     .logo span { color: var(--gold); }
 
@@ -93,7 +97,7 @@
       color: var(--gold);
     }
 
-    .sports-list {
+    .activities-list {
       font-size: 0.82rem;
       opacity: 0.6;
       margin-bottom: 1.5rem;
@@ -118,7 +122,7 @@
     }
     .btn-join:hover { opacity: 0.9; }
 
-    .btn-login {
+    .btn-secondary {
       display: block;
       width: 100%;
       padding: 12px;
@@ -131,11 +135,54 @@
       text-decoration: none;
       cursor: pointer;
       transition: border-color 0.15s;
+      margin-bottom: 0.5rem;
     }
-    .btn-login:hover { border-color: white; }
+    .btn-secondary:hover { border-color: white; }
 
-    .loading { opacity: 0.5; font-size: 0.9rem; }
-    .error   { color: #fc8181; font-size: 0.9rem; }
+    /* Manual code entry state */
+    .code-input-wrap {
+      position: relative;
+      margin-bottom: 0.75rem;
+    }
+    .code-input {
+      width: 100%;
+      padding: 14px 16px;
+      background: rgba(255,255,255,0.08);
+      border: 1.5px solid rgba(255,255,255,0.2);
+      border-radius: 10px;
+      color: white;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 6px;
+      text-align: center;
+      text-transform: uppercase;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .code-input::placeholder { color: rgba(255,255,255,0.2); letter-spacing: 4px; font-size: 1rem; }
+    .code-input:focus { border-color: var(--gold); }
+    .input-error { border-color: var(--red) !important; }
+
+    .error-msg { color: var(--red); font-size: 0.85rem; margin-bottom: 1rem; }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .footer-note {
+      margin-top: 2rem;
+      font-size: 0.75rem;
+      opacity: 0.35;
+    }
+    .footer-note a { color: inherit; text-decoration: underline; }
 
     .hidden { display: none !important; }
   </style>
@@ -143,14 +190,41 @@
 <body>
 
 <div class="card">
-  <div class="logo">MVP<span>Kids</span>Cards</div>
+  <a class="logo" href="/">MVP<span>Kids</span>Cards</a>
 
-  <!-- Loading state -->
+  <!-- ── LOADING STATE ── -->
   <div id="loading-state">
-    <div class="loading">Looking up team code…</div>
+    <div style="opacity:0.5; font-size:0.9rem;">
+      <span class="loading-spinner"></span> Looking up team code…
+    </div>
   </div>
 
-  <!-- Team found -->
+  <!-- ── MANUAL ENTRY STATE (no code in URL) ── -->
+  <div id="entry-state" class="hidden">
+    <div class="team-badge">Parent Sign-Up</div>
+    <h1>Enter Your<br>Team Code</h1>
+    <p class="sub">Your coach or organizer gave you a 6-character code. Enter it below to find your group.</p>
+
+    <div class="code-input-wrap">
+      <input
+        class="code-input"
+        id="codeInput"
+        type="text"
+        maxlength="6"
+        placeholder="ABC123"
+        autocomplete="off"
+        autocapitalize="characters"
+        oninput="this.value=this.value.toUpperCase().replace(/[^A-Z0-9]/g,'')"
+        onkeydown="if(event.key==='Enter') submitCode()"
+      />
+    </div>
+    <div class="error-msg hidden" id="entry-error">That code wasn't found. Check with your coach and try again.</div>
+
+    <button class="btn-join" id="btn-lookup" onclick="submitCode()">Find My Team →</button>
+    <a class="btn-secondary" href="/login.html">Already have an account? Sign in</a>
+  </div>
+
+  <!-- ── TEAM FOUND STATE ── -->
   <div id="found-state" class="hidden">
     <div class="team-badge">Team Invite</div>
     <h1>You're invited to join</h1>
@@ -162,18 +236,23 @@
       <div class="c-value" id="team-code">——</div>
     </div>
 
-    <div class="sports-list" id="sports-list"></div>
+    <div class="activities-list" id="activities-list"></div>
 
     <a class="btn-join" id="btn-signup" href="/login.html?tab=signup">Create Parent Account →</a>
-    <a class="btn-login" href="/login.html">Already have an account? Sign in</a>
+    <a class="btn-secondary" href="/login.html">Already have an account? Sign in</a>
   </div>
 
-  <!-- Error state -->
+  <!-- ── ERROR STATE (invalid code from URL) ── -->
   <div id="error-state" class="hidden">
     <div style="font-size:2.5rem; margin-bottom:1rem;">🤷</div>
     <h1 style="font-size:1.5rem; margin-bottom:0.5rem;">Code Not Found</h1>
     <p class="sub">That team code doesn't seem to exist. Double-check with your coach or league organizer.</p>
-    <a class="btn-join" href="/">Go Home</a>
+    <button class="btn-join" onclick="showEntry()">Try a Different Code</button>
+    <a class="btn-secondary" href="/">Go Home</a>
+  </div>
+
+  <div class="footer-note">
+    Are you a coach or organizer? <a href="/teams.html">Learn about the team program →</a>
   </div>
 </div>
 
@@ -182,20 +261,61 @@
     ? 'http://localhost:3001'
     : 'https://mvpkidscards-api.vercel.app';
 
-  // Extract code from path: /join/ABC123
-  const pathCode = window.location.pathname.split('/').pop();
-  // Or from query: /join.html?code=ABC123
+  // Extract code from path: /join/ABC123 or query: ?code=ABC123
+  const pathCode  = window.location.pathname.split('/').pop();
   const queryCode = new URLSearchParams(window.location.search).get('code');
-  const code = (pathCode && pathCode !== 'join.html' ? pathCode : queryCode || '').toUpperCase();
+  const urlCode   = (pathCode && pathCode !== 'join.html' ? pathCode : queryCode || '').toUpperCase();
 
-  async function lookupCode() {
-    if (!code) { showError(); return; }
+  // ── SHOW STATES ──────────────────────────────────────────
+  function showState(id) {
+    ['loading-state','entry-state','found-state','error-state'].forEach(s => {
+      document.getElementById(s).classList.toggle('hidden', s !== id);
+    });
+  }
 
+  function showEntry() {
+    showState('entry-state');
+    document.getElementById('codeInput')?.focus();
+  }
+
+  // ── MANUAL SUBMIT ────────────────────────────────────────
+  async function submitCode() {
+    const input = document.getElementById('codeInput');
+    const code  = input.value.trim().toUpperCase();
+    const errEl = document.getElementById('entry-error');
+
+    errEl.classList.add('hidden');
+    input.classList.remove('input-error');
+
+    if (code.length < 4) {
+      input.classList.add('input-error');
+      errEl.classList.remove('hidden');
+      errEl.textContent = 'Please enter a valid team code (at least 4 characters).';
+      return;
+    }
+
+    const btn = document.getElementById('btn-lookup');
+    btn.textContent = 'Looking up…';
+    btn.disabled = true;
+
+    const found = await lookupCode(code);
+
+    if (!found) {
+      btn.textContent = 'Find My Team →';
+      btn.disabled = false;
+      input.classList.add('input-error');
+      errEl.classList.remove('hidden');
+      errEl.textContent = 'That code wasn\'t found. Check with your coach and try again.';
+    }
+  }
+
+  // ── LOOKUP ────────────────────────────────────────────────
+  async function lookupCode(code) {
     try {
       const res  = await fetch(`${API}/api/teams/code/${code}`);
       const data = await res.json();
 
-      if (!res.ok || !data.valid) { showError(); return; }
+      if (!res.ok || !data.valid) return false;
 
       const org = data.org;
 
@@ -207,32 +327,41 @@
       document.getElementById('team-sub').textContent = subText;
 
       if (org.sports?.length) {
-        document.getElementById('sports-list').textContent =
-          'Sports: ' + org.sports.map(s => s.split(' ').slice(1).join(' ')).join(' · ');
+        document.getElementById('activities-list').textContent =
+          'Activities: ' + org.sports.map(s => s.split(' ').slice(1).join(' ')).join(' · ');
       }
 
       // Pre-fill code in signup URL
-      document.getElementById('btn-signup').href = `/login.html?tab=signup&team_code=${code}&org_id=${org.id}`;
+      document.getElementById('btn-signup').href =
+        `/login.html?tab=signup&team_code=${code}&org_id=${org.id}`;
 
-      // Store code in sessionStorage so signup page can auto-join
+      // Store in sessionStorage so login page can auto-join
       sessionStorage.setItem('pending_team_code', code);
       sessionStorage.setItem('pending_org_id',    org.id);
       sessionStorage.setItem('pending_org_name',  org.name);
 
-      document.getElementById('loading-state').classList.add('hidden');
-      document.getElementById('found-state').classList.remove('hidden');
+      showState('found-state');
+      return true;
 
-    } catch (err) {
-      showError();
+    } catch (e) {
+      return false;
     }
   }
 
-  function showError() {
-    document.getElementById('loading-state').classList.add('hidden');
-    document.getElementById('error-state').classList.remove('hidden');
+  // ── INIT ──────────────────────────────────────────────────
+  async function init() {
+    if (urlCode) {
+      // Code came from URL — look it up automatically
+      showState('loading-state');
+      const found = await lookupCode(urlCode);
+      if (!found) showState('error-state');
+    } else {
+      // No code — show manual entry form
+      showState('entry-state');
+    }
   }
 
-  lookupCode();
+  init();
 </script>
 
 </body>
