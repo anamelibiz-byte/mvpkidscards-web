@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team Dashboard — MVP Kids Cards</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:  #0B1E3F;
+      --navy-m: #162d5e;
+      --gold:  #E8A020;
+      --green: #1AAF5D;
+      --red:   #E53E3E;
+      --gray:  #8A9BB0;
+      --off:   #F4F6FA;
+      --border:#dde3ec;
+      --white: #ffffff;
+    }
+    body { font-family: 'Montserrat', sans-serif; background: var(--off); color: var(--navy); }
+
+    /* ── SIDEBAR LAYOUT ── */
+    .layout { display: flex; min-height: 100vh; }
+
+    .sidebar {
+      width: 240px;
+      background: var(--navy);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      overflow-y: auto;
+    }
+
+    .sidebar-brand {
+      padding: 1.5rem 1.25rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .sidebar-brand .logo {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      text-decoration: none;
+      color: white;
+    }
+    .sidebar-brand .logo span { color: var(--gold); }
+
+    .sidebar-brand .org-name {
+      font-size: 0.78rem;
+      opacity: 0.55;
+      margin-top: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 200px;
+    }
+
+    .sidebar-code {
+      margin: 0.75rem 1.25rem;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      padding: 0.6rem 0.85rem;
+    }
+
+    .sidebar-code .sc-label {
+      font-size: 0.62rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      opacity: 0.5;
+      margin-bottom: 4px;
+    }
+
+    .sidebar-code .sc-value {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 4px;
+      color: var(--gold);
+      cursor: pointer;
+    }
+
+    .sidebar-code .sc-copy {
+      font-size: 0.7rem;
+      opacity: 0.5;
+      cursor: pointer;
+      margin-top: 2px;
+    }
+    .sidebar-code .sc-copy:hover { opacity: 0.9; }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 0.75rem 0;
+    }
+
+    .nav-section-label {
+      font-size: 0.62rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      opacity: 0.4;
+      padding: 1rem 1.25rem 0.4rem;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0.65rem 1.25rem;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.7);
+      cursor: pointer;
+      border-radius: 6px;
+      margin: 1px 8px;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .nav-item:hover  { background: rgba(255,255,255,0.07); color: white; }
+    .nav-item.active { background: rgba(232,160,32,0.15); color: var(--gold); }
+    .nav-item .icon  { font-size: 1.1rem; width: 20px; }
+
+    .sidebar-footer {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .sidebar-footer button {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.6);
+      border-radius: 6px;
+      padding: 8px 14px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      transition: all 0.15s;
+    }
+    .sidebar-footer button:hover { border-color: white; color: white; }
+
+    /* ── MAIN AREA ── */
+    .main {
+      margin-left: 240px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      background: white;
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 30;
+    }
+
+    .topbar h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+
+    .topbar-actions { display: flex; gap: 10px; align-items: center; }
+
+    .btn-primary {
+      padding: 9px 20px;
+      background: var(--navy);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      transition: background 0.15s;
+    }
+    .btn-primary:hover { background: var(--navy-m); }
+
+    .btn-ghost {
+      padding: 9px 16px;
+      background: transparent;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--navy);
+      transition: border-color 0.15s;
+    }
+    .btn-ghost:hover { border-color: var(--navy); }
+
+    /* ── CONTENT ── */
+    .content { padding: 1.75rem; }
+
+    /* ── STATS STRIP ── */
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-bottom: 1.75rem;
+    }
+
+    .stat-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.2rem 1.25rem;
+    }
+
+    .stat-card .s-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 6px;
+    }
+
+    .stat-card .s-value {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .stat-card .s-sub {
+      font-size: 0.78rem;
+      color: var(--gray);
+      margin-top: 4px;
+    }
+
+    .stat-card.highlight {
+      background: var(--navy);
+      color: white;
+      border-color: var(--navy);
+    }
+
+    .stat-card.highlight .s-label { color: rgba(255,255,255,0.5); }
+    .stat-card.highlight .s-value { color: var(--gold); }
+    .stat-card.highlight .s-sub   { color: rgba(255,255,255,0.5); }
+
+    /* ── TEAM GOAL BAR ── */
+    .goal-banner {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.75rem;
+      display: none;
+    }
+
+    .goal-banner.show { display: block; }
+
+    .goal-banner .g-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 10px;
+    }
+
+    .goal-banner .g-title { font-weight: 700; font-size: 1rem; }
+    .goal-banner .g-pct {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--green);
+    }
+
+    .goal-track {
+      height: 12px;
+      background: var(--off);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 6px;
+    }
+
+    .goal-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--green), #58e888);
+      border-radius: 6px;
+      transition: width 1s ease;
+      width: 0;
+    }
+
+    .goal-detail {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--gray);
+    }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .section-header h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    /* ── ROSTER TABLE ── */
+    .roster-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 1.75rem;
+    }
+
+    .roster-card table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .roster-card th {
+      background: var(--off);
+      text-align: left;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--gray);
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .roster-card td {
+      padding: 12px 16px;
+      font-size: 0.88rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    .roster-card tr:last-child td { border-bottom: none; }
+    .roster-card tr:hover td { background: #fafbfc; }
+
+    .athlete-cell { display: flex; align-items: center; gap: 10px; }
+
+    .athlete-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.75rem;
+      font-family: 'Oswald', sans-serif;
+      flex-shrink: 0;
+    }
+
+    .athlete-name { font-weight: 600; }
+    .athlete-sport { font-size: 0.78rem; color: var(--gray); }
+
+    .raised-bar-wrap { min-width: 100px; }
+
+    .raised-bar {
+      height: 6px;
+      background: var(--off);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 3px;
+    }
+
+    .raised-fill {
+      height: 100%;
+      background: var(--green);
+      border-radius: 3px;
+    }
+
+    .raised-amount { font-size: 0.78rem; color: var(--gray); }
+
+    .edition-pip {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 3px;
+    }
+    .pip-standard { background: var(--gold); }
+    .pip-foil     { background: #aaa; }
+    .pip-rookie   { background: var(--green); }
+
+    .status-pill {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+    .pill-active  { background: #e8f8ef; color: #1a6b2a; }
+    .pill-pending { background: #fff9e6; color: #856308; }
+    .pill-new     { background: #e8ecf7; color: var(--navy); }
+
+    /* ── CODE SHARE CARD ── */
+    .share-card {
+      background: var(--navy);
+      color: white;
+      border-radius: 14px;
+      padding: 1.5rem;
+      margin-bottom: 1.75rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .share-card .sc-left { flex: 1; min-width: 200px; }
+    .share-card .sc-code {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2.2rem;
+      letter-spacing: 6px;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .share-card .sc-label { font-size: 0.75rem; opacity: 0.5; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+    .share-card .sc-url { font-size: 0.78rem; opacity: 0.4; margin-top: 4px; }
+
+    .share-card .sc-right {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .share-card .sc-btn {
+      padding: 9px 16px;
+      border: 1.5px solid rgba(255,255,255,0.25);
+      border-radius: 8px;
+      background: transparent;
+      color: white;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .share-card .sc-btn:hover { border-color: white; }
+
+    /* ── REVENUE MODEL BADGE ── */
+    .model-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 10px;
+      background: #e8f0fe;
+      color: var(--navy);
+    }
+
+    /* ── EMPTY STATE ── */
+    .empty-state {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--gray);
+    }
+    .empty-state .emoji { font-size: 2.5rem; margin-bottom: 0.75rem; }
+    .empty-state p { font-size: 0.9rem; line-height: 1.6; max-width: 360px; margin: 0 auto; }
+
+    /* ── LOADING SKELETON ── */
+    .skeleton {
+      background: linear-gradient(90deg, #e8ecf5 25%, #d4d9e8 50%, #e8ecf5 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+      border-radius: 6px;
+    }
+    @keyframes shimmer { to { background-position: -200% 0; } }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <a class="logo" href="/">MVP<span>Kids</span>Cards</a>
+      <div class="org-name" id="sidebar-org-name">Loading…</div>
+    </div>
+
+    <div class="sidebar-code" id="sidebar-code-block">
+      <div class="sc-label">Team Join Code</div>
+      <div class="sc-value" id="sidebar-code" onclick="copyCode()" title="Click to copy">——</div>
+      <div class="sc-copy" onclick="copyCode()">📋 Click to copy</div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Dashboard</div>
+      <a class="nav-item active" href="#" onclick="showView('overview')">
+        <span class="icon">📊</span> Overview
+      </a>
+      <a class="nav-item" href="#" onclick="showView('roster')">
+        <span class="icon">👥</span> Roster
+      </a>
+      <a class="nav-item" href="#" onclick="showView('cards')">
+        <span class="icon">🃏</span> Cards
+      </a>
+      <a class="nav-item" href="#" onclick="showView('revenue')">
+        <span class="icon">💰</span> Revenue
+      </a>
+
+      <div class="nav-section-label">Manage</div>
+      <a class="nav-item" href="#" onclick="showView('settings')">
+        <span class="icon">⚙️</span> Settings
+      </a>
+      <a class="nav-item" href="/team-signup.html">
+        <span class="icon">➕</span> New Team
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button onclick="logout()">← Sign Out</button>
+    </div>
+  </aside>
+
+  <!-- ── MAIN ── -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <h1 id="page-title">Team Overview</h1>
+      <div class="topbar-actions">
+        <button class="btn-ghost" onclick="copyInviteLink()">📤 Share Invite Link</button>
+        <button class="btn-primary" onclick="showInviteModal()">+ Invite Parents</button>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content" id="main-content">
+
+      <!-- STATS STRIP -->
+      <div class="stats-strip" id="stats-strip">
+        <div class="stat-card">
+          <div class="s-label">Athletes</div>
+          <div class="s-value" id="stat-athletes">—</div>
+          <div class="s-sub">registered kids</div>
+        </div>
+        <div class="stat-card">
+          <div class="s-label">Cards Sold</div>
+          <div class="s-value" id="stat-cards">—</div>
+          <div class="s-sub">total orders</div>
+        </div>
+        <div class="stat-card">
+          <div class="s-label">Total Revenue</div>
+          <div class="s-value" id="stat-revenue">—</div>
+          <div class="s-sub">from all card sales</div>
+        </div>
+        <div class="stat-card highlight">
+          <div class="s-label">Team Earned</div>
+          <div class="s-value" id="stat-team">—</div>
+          <div class="s-sub" id="stat-team-sub">your share of sales</div>
+        </div>
+      </div>
+
+      <!-- GOAL BAR -->
+      <div class="goal-banner" id="goal-banner">
+        <div class="g-top">
+          <div class="g-title" id="goal-title">Team Fundraising Goal</div>
+          <div class="g-pct" id="goal-pct">0%</div>
+        </div>
+        <div class="goal-track">
+          <div class="goal-fill" id="goal-fill"></div>
+        </div>
+        <div class="goal-detail">
+          <span id="goal-raised">$0 raised</span>
+          <span id="goal-target">Goal: —</span>
+        </div>
+      </div>
+
+      <!-- SHARE CODE CARD -->
+      <div class="share-card" id="share-card">
+        <div class="sc-left">
+          <div class="sc-label">Parent Join Code</div>
+          <div class="sc-code" id="share-code">——</div>
+          <div class="sc-url">mvpkidscards.com/join/<span id="share-code-url">——</span></div>
+        </div>
+        <div class="sc-right">
+          <button class="sc-btn" onclick="copyCode()">📋 Copy Code</button>
+          <button class="sc-btn" onclick="copyInviteLink()">🔗 Copy Link</button>
+          <button class="sc-btn" onclick="shareSMS()">📱 Text Parents</button>
+        </div>
+      </div>
+
+      <!-- ROSTER -->
+      <div class="section-header">
+        <h2>Athletes on Your Team</h2>
+        <span class="model-tag" id="revenue-model-tag">Loading…</span>
+      </div>
+
+      <div class="roster-card" id="roster-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Athlete</th>
+              <th>Parent</th>
+              <th>Cards</th>
+              <th>Raised</th>
+              <th>Joined</th>
+            </tr>
+          </thead>
+          <tbody id="roster-body">
+            <tr>
+              <td colspan="5">
+                <div class="empty-state">
+                  <div class="emoji">🏃</div>
+                  <p>Loading your roster…</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /layout -->
+
+<!-- ── INVITE MODAL ── -->
+<div id="invite-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:100; align-items:center; justify-content:center;">
+  <div style="background:white; border-radius:16px; padding:2rem; max-width:480px; width:90%; position:relative;">
+    <button onclick="closeInviteModal()" style="position:absolute; top:14px; right:16px; background:none; border:none; font-size:1.4rem; cursor:pointer; color:#aaa;">×</button>
+    <h2 style="font-family:'Oswald',sans-serif; font-size:1.35rem; margin-bottom:0.5rem;">Invite Parents</h2>
+    <p style="color:var(--gray); font-size:0.88rem; margin-bottom:1.5rem; line-height:1.5;">Share your team code or send one of these ready-made messages.</p>
+
+    <div style="background:#f4f6fa; border-radius:10px; padding:1rem; text-align:center; margin-bottom:1.25rem;">
+      <div style="font-size:0.7rem; letter-spacing:1.5px; text-transform:uppercase; color:var(--gray); margin-bottom:4px;">Team Code</div>
+      <div style="font-family:'Oswald',sans-serif; font-size:2rem; letter-spacing:5px; color:var(--navy);" id="modal-code">——</div>
+    </div>
+
+    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:1.25rem;">
+      <button style="flex:1; padding:10px; border:1.5px solid var(--border); border-radius:8px; background:white; font-size:0.85rem; font-weight:600; cursor:pointer; color:var(--navy);" onclick="copyInviteText('sms')">📱 Copy SMS Message</button>
+      <button style="flex:1; padding:10px; border:1.5px solid var(--border); border-radius:8px; background:white; font-size:0.85rem; font-weight:600; cursor:pointer; color:var(--navy);" onclick="copyInviteText('email')">📧 Copy Email Text</button>
+    </div>
+
+    <div style="background:#fff9e6; border:1px solid #fce08a; border-radius:8px; padding:0.9rem 1rem; font-size:0.82rem; color:#7a5208; line-height:1.6;" id="invite-text-preview">
+      <!-- filled by JS -->
+    </div>
+  </div>
+</div>
+
+<script>
+  const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? 'http://localhost:3001'
+    : 'https://mvpkidscards-api.vercel.app';
+
+  // ── AUTH ────────────────────────────────────────────────
+  const token   = localStorage.getItem('mvp_token');
+  const orgId   = localStorage.getItem('mvp_org_id');
+  const orgName = localStorage.getItem('mvp_org_name') || 'Your Team';
+
+  if (!token) window.location.href = '/login.html?error=session_expired';
+
+  function apiFetch(path, opts = {}) {
+    return fetch(`${API}${path}`, {
+      ...opts,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+        ...(opts.headers || {})
+      }
+    });
+  }
+
+  function logout() {
+    ['mvp_token','mvp_refresh','mvp_user_email','mvp_org_id','mvp_org_name','mvp_role']
+      .forEach(k => localStorage.removeItem(k));
+    window.location.href = '/login.html';
+  }
+
+  // ── STATE ────────────────────────────────────────────────
+  let orgData    = null;
+  let statsData  = null;
+  let membersData = [];
+  let teamCode   = '——';
+
+  // ── INIT ─────────────────────────────────────────────────
+  async function init() {
+    document.getElementById('sidebar-org-name').textContent = orgName;
+
+    try {
+      // Load org + stats in parallel
+      const [orgRes, statsRes] = await Promise.all([
+        apiFetch('/api/teams/me'),
+        orgId ? apiFetch(`/api/teams/${orgId}/stats`) : Promise.resolve(null)
+      ]);
+
+      orgData = await orgRes.json();
+      if (statsRes) statsData = await statsRes.json();
+
+      renderOrg();
+      if (orgId) await loadMembers();
+
+    } catch (err) {
+      console.error('Dashboard load error:', err);
+    }
+  }
+
+  function renderOrg() {
+    if (!orgData) return;
+    teamCode = orgData.team_code || '——';
+
+    // Sidebar
+    document.getElementById('sidebar-org-name').textContent = orgData.name;
+    document.getElementById('sidebar-code').textContent    = teamCode;
+
+    // Share card
+    document.getElementById('share-code').textContent     = teamCode;
+    document.getElementById('share-code-url').textContent = teamCode.toLowerCase();
+
+    // Stats
+    const s = statsData?.stats || {};
+    document.getElementById('stat-athletes').textContent = s.athletes_count ?? '0';
+    document.getElementById('stat-cards').textContent    = s.total_cards_sold ?? '0';
+    document.getElementById('stat-revenue').textContent  = s.total_revenue_dollars ? `$${s.total_revenue_dollars}` : '$0';
+    document.getElementById('stat-team').textContent     = s.team_earned_dollars   ? `$${s.team_earned_dollars}`   : '$0';
+    document.getElementById('stat-team-sub').textContent = `${orgData.team_share_pct || 0}% of all sales`;
+
+    // Goal bar
+    if (statsData?.org?.goal_cents) {
+      const banner = document.getElementById('goal-banner');
+      banner.classList.add('show');
+      const pct = s.goal_progress_pct || 0;
+      document.getElementById('goal-title').textContent  = statsData.org.goal_label || 'Team Fundraising Goal';
+      document.getElementById('goal-pct').textContent    = `${pct}%`;
+      document.getElementById('goal-raised').textContent = `$${s.team_earned_dollars || '0.00'} raised`;
+      document.getElementById('goal-target').textContent = `Goal: $${(statsData.org.goal_cents / 100).toLocaleString()}`;
+      setTimeout(() => { document.getElementById('goal-fill').style.width = pct + '%'; }, 300);
+    }
+
+    // Revenue model tag
+    const MODEL_LABELS = {
+      split_20:    `Team 20% / Family 80%`,
+      split_custom: `Team ${orgData.team_share_pct}% / Family ${100 - orgData.team_share_pct}%`,
+      team_all:    'Team keeps 100%',
+      parent_all:  'Family keeps 100%',
+    };
+    document.getElementById('revenue-model-tag').textContent =
+      MODEL_LABELS[orgData.revenue_model] || orgData.revenue_model;
+
+    // Modal code
+    document.getElementById('modal-code').textContent = teamCode;
+    renderInviteText();
+  }
+
+  async function loadMembers() {
+    const res  = await apiFetch(`/api/teams/${orgId}/members`);
+    const data = await res.json();
+    membersData = data.members || [];
+    renderRoster();
+  }
+
+  function renderRoster() {
+    const tbody = document.getElementById('roster-body');
+
+    if (!membersData.length) {
+      tbody.innerHTML = `
+        <tr><td colspan="5">
+          <div class="empty-state">
+            <div class="emoji">👋</div>
+            <p>No parents have joined yet. Share your team code to get started!</p>
+          </div>
+        </td></tr>`;
+      return;
+    }
+
+    // Flatten members → athletes
+    const rows = [];
+    membersData.forEach(m => {
+      if (!m.athletes || m.athletes.length === 0) {
+        rows.push({ member: m, athlete: null });
+      } else {
+        m.athletes.forEach(a => rows.push({ member: m, athlete: a }));
+      }
+    });
+
+    tbody.innerHTML = rows.map(({ member, athlete }) => {
+      const name = athlete
+        ? `${athlete.first_name} ${athlete.last_name}`
+        : '— no athlete yet';
+
+      const initials = athlete
+        ? (athlete.first_name[0] + athlete.last_name[0]).toUpperCase()
+        : '?';
+
+      const raisedDollars = parseFloat(athlete?.raised_dollars || 0);
+      const raisedPct     = Math.min(100, (raisedDollars / 200) * 100); // assume $200 goal
+
+      const joined = new Date(member.joined_at).toLocaleDateString('en-US', { month:'short', day:'numeric' });
+
+      return `
+        <tr>
+          <td>
+            <div class="athlete-cell">
+              <div class="athlete-avatar">${initials}</div>
+              <div>
+                <div class="athlete-name">${name}</div>
+                <div class="athlete-sport">${athlete?.sport || '—'}</div>
+              </div>
+            </div>
+          </td>
+          <td>${member.user?.full_name || '—'}</td>
+          <td>
+            ${athlete ? `<span class="status-pill pill-active">Active</span>` : `<span class="status-pill pill-new">None yet</span>`}
+          </td>
+          <td>
+            <div class="raised-bar-wrap">
+              <div class="raised-bar">
+                <div class="raised-fill" style="width:${raisedPct}%"></div>
+              </div>
+              <div class="raised-amount">$${raisedDollars.toFixed(2)}</div>
+            </div>
+          </td>
+          <td>${joined}</td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  // ── COPY / SHARE HELPERS ─────────────────────────────────
+  async function copyCode() {
+    if (teamCode === '——') return;
+    await navigator.clipboard.writeText(teamCode);
+    flash('share-code', teamCode, '✓ Copied!');
+  }
+
+  async function copyInviteLink() {
+    const link = `https://mvpkidscards.com/join/${teamCode.toLowerCase()}`;
+    await navigator.clipboard.writeText(link);
+    alert('Join link copied to clipboard!');
+  }
+
+  function shareSMS() {
+    const link = `https://mvpkidscards.com/join/${teamCode.toLowerCase()}`;
+    const msg  = `Hi! Join ${orgName} on MVP Kids Cards to create a real trading card for your athlete and fundraise for the team.\n\nUse code ${teamCode} at ${link}`;
+    window.location.href = `sms:?body=${encodeURIComponent(msg)}`;
+  }
+
+  function flash(id, orig, msg) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = msg;
+    setTimeout(() => el.textContent = orig, 2000);
+  }
+
+  // ── INVITE MODAL ─────────────────────────────────────────
+  function showInviteModal() {
+    document.getElementById('invite-modal').style.display = 'flex';
+  }
+  function closeInviteModal() {
+    document.getElementById('invite-modal').style.display = 'none';
+  }
+
+  function renderInviteText() {
+    const sms = `Hi! Your kid can get a real professional trading card and help fundraise for ${orgName}!\n\nSign up at mvpkidscards.com and use team code: ${teamCode}`;
+    document.getElementById('invite-text-preview').innerText = sms;
+  }
+
+  async function copyInviteText(type) {
+    const link = `https://mvpkidscards.com/join/${teamCode.toLowerCase()}`;
+    let text;
+    if (type === 'sms') {
+      text = `Hi! ${orgName} is now on MVP Kids Cards. Your athlete can get a real trading card AND help the team fundraise.\n\nSign up with code ${teamCode}: ${link}`;
+    } else {
+      text = `Subject: Get Your Athlete's Trading Card — Team Code Inside\n\nHi,\n\nWe've partnered with MVP Kids Cards to create real professional trading cards for our athletes — and it's a fundraiser too!\n\nSign up at mvpkidscards.com and use team code ${teamCode} to join ${orgName}.\n\nLink: ${link}\n\nLet's go!`;
+    }
+    await navigator.clipboard.writeText(text);
+    const btn = event.target;
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => btn.textContent = type === 'sms' ? '📱 Copy SMS Message' : '📧 Copy Email Text', 2000);
+  }
+
+  // ── VIEW SWITCHING ────────────────────────────────────────
+  function showView(view) {
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    event.target.closest('.nav-item').classList.add('active');
+
+    const titles = { overview:'Team Overview', roster:'Roster', cards:'Cards', revenue:'Revenue', settings:'Settings' };
+    document.getElementById('page-title').textContent = titles[view] || 'Dashboard';
+
+    // Full view implementations are Phase 2 — for now keep overview visible
+    if (view !== 'overview') {
+      document.getElementById('main-content').innerHTML = `
+        <div class="empty-state" style="padding:5rem 2rem;">
+          <div class="emoji">🚧</div>
+          <p>The <strong>${titles[view]}</strong> view is coming soon in the next release.</p>
+        </div>`;
+    } else {
+      window.location.reload();
+    }
+  }
+
+  // ── START ─────────────────────────────────────────────────
+  init();
+</script>
+</body>
+</html>

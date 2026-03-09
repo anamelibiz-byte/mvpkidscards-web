@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Confirmed — MVP Kids Cards</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:  #0B1E3F;
+      --gold:  #E8A020;
+      --green: #1AAF5D;
+      --gray:  #8A9BB0;
+      --off:   #F4F6FA;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--navy);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ── NAV ── */
+    nav {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background: rgba(11,30,63,0.95);
+      border-bottom: 1px solid rgba(232,160,32,0.2);
+    }
+    .nav-brand {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .nav-brand span { color: var(--gold); }
+
+    /* ── MAIN ── */
+    .container {
+      width: 100%;
+      max-width: 540px;
+      padding: 3rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    /* ── SUCCESS CHECKMARK ── */
+    .success-icon {
+      width: 88px;
+      height: 88px;
+      background: var(--green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes pop {
+      0%   { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .headline {
+      text-align: center;
+    }
+
+    .headline h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .headline p {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.6;
+      max-width: 360px;
+      margin: 0 auto;
+    }
+
+    /* ── ORDER CARD ── */
+    .order-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 1.5rem;
+      width: 100%;
+    }
+
+    .order-card h2 {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .order-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.9rem;
+    }
+
+    .order-row:last-child { border-bottom: none; }
+
+    .order-row .label { color: rgba(255,255,255,0.6); }
+    .order-row .value { font-weight: 600; }
+    .order-row .value.status-paid { color: var(--green); }
+    .order-row .value.status-pending { color: var(--gold); }
+
+    /* Edition badge */
+    .edition-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      font-family: 'Oswald', sans-serif;
+      letter-spacing: 0.5px;
+    }
+    .edition-badge.standard { background: var(--gold); color: var(--navy); }
+    .edition-badge.foil     { background: linear-gradient(135deg, #888, #ddd, #999); color: #111; }
+    .edition-badge.rookie   { background: var(--green); color: white; }
+
+    /* ── CARD PREVIEW ── */
+    .preview-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .preview-wrap img {
+      width: 160px;
+      border-radius: 10px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    }
+
+    .preview-placeholder {
+      width: 160px;
+      height: 218px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+      border: 2px dashed rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+    }
+
+    /* ── WHAT HAPPENS NEXT ── */
+    .next-steps {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 1.5rem;
+    }
+
+    .next-steps h2 {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.25rem;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 1.1rem;
+    }
+
+    .step-num {
+      width: 28px;
+      height: 28px;
+      background: var(--gold);
+      color: var(--navy);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .step-text { font-size: 0.88rem; line-height: 1.5; color: rgba(255,255,255,0.85); }
+    .step-text strong { color: white; }
+
+    /* ── ACTIONS ── */
+    .actions {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .btn-primary {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      border-radius: 10px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      text-align: center;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .btn-primary:hover { opacity: 0.9; }
+
+    .btn-ghost {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background: transparent;
+      color: white;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      border-radius: 10px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .btn-ghost:hover { border-color: white; }
+
+    /* Share */
+    .share-row {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .share-row .btn-ghost {
+      padding: 10px;
+      font-size: 0.85rem;
+    }
+
+    /* ── LOADING / ERROR ── */
+    .loading-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      opacity: 0.6;
+    }
+
+    .error-state {
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+
+    .error-state h2 { font-size: 1.25rem; margin-bottom: 8px; }
+    .error-state p  { color: rgba(255,255,255,0.6); font-size: 0.9rem; }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="/">MVP<span>Kids</span>Cards</a>
+  <a href="/" style="font-size:0.85rem; color:rgba(255,255,255,0.6); text-decoration:none;">← Home</a>
+</nav>
+
+<!-- ── LOADING ── -->
+<div class="container" id="loading-state">
+  <div class="loading-state">
+    <div style="font-size:2rem; margin-bottom:1rem;">⏳</div>
+    <p>Confirming your order…</p>
+  </div>
+</div>
+
+<!-- ── CONFIRMED ── -->
+<div class="container hidden" id="confirmed-state">
+  <div class="success-icon">🏆</div>
+
+  <div class="headline">
+    <h1>You're on the team!</h1>
+    <p id="confirm-message">Your card order is confirmed. You'll receive a confirmation email shortly.</p>
+  </div>
+
+  <!-- Card preview -->
+  <div class="preview-wrap" id="preview-wrap">
+    <div class="preview-placeholder">🃏</div>
+  </div>
+
+  <!-- Order summary -->
+  <div class="order-card">
+    <h2>Order Summary</h2>
+    <div class="order-row">
+      <span class="label">Athlete</span>
+      <span class="value" id="order-athlete">—</span>
+    </div>
+    <div class="order-row">
+      <span class="label">Edition</span>
+      <span class="value" id="order-edition">—</span>
+    </div>
+    <div class="order-row">
+      <span class="label">Quantity</span>
+      <span class="value" id="order-qty">—</span>
+    </div>
+    <div class="order-row">
+      <span class="label">Total</span>
+      <span class="value" id="order-total">—</span>
+    </div>
+    <div class="order-row">
+      <span class="label">Status</span>
+      <span class="value" id="order-status">—</span>
+    </div>
+    <div class="order-row">
+      <span class="label">Order #</span>
+      <span class="value" id="order-id" style="font-size:0.78rem; font-family:monospace;">—</span>
+    </div>
+  </div>
+
+  <!-- What happens next -->
+  <div class="next-steps">
+    <h2>What Happens Next</h2>
+    <div class="step-item">
+      <div class="step-num">1</div>
+      <div class="step-text"><strong>Confirmation email</strong> — we'll send your order details to the email you provided at checkout.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">2</div>
+      <div class="step-text"><strong>Card production</strong> — your card is sent to print within 1–2 business days.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">3</div>
+      <div class="step-text"><strong>Shipping</strong> — your card ships within 5–7 business days. We'll email you a tracking number.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">4</div>
+      <div class="step-text"><strong>Enjoy!</strong> — display it, collect it, or give it to the athlete. You're officially part of their journey. 🙌</div>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="actions">
+    <a class="btn-primary" id="btn-athlete-page" href="/">View Athlete's Page</a>
+    <div class="share-row">
+      <a class="btn-ghost" id="btn-share-sms"  href="#">📱 Text a Friend</a>
+      <a class="btn-ghost" id="btn-share-more" href="#">Share More</a>
+    </div>
+    <a class="btn-ghost" href="/">← Back to Home</a>
+  </div>
+</div>
+
+<!-- ── ERROR ── -->
+<div class="container hidden" id="error-state">
+  <div class="error-state">
+    <div style="font-size:3rem; margin-bottom:1rem;">😕</div>
+    <h2>We couldn't find your order</h2>
+    <p>It may still be processing. Check your email for a confirmation.</p>
+    <a href="/" style="display:inline-block; margin-top:1.5rem; color:var(--gold); text-decoration:none; font-weight:600;">← Go Home</a>
+  </div>
+</div>
+
+<script>
+  const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? 'http://localhost:3001'
+    : 'https://mvpkidscards-api.vercel.app';
+
+  const EDITION_LABELS = {
+    standard: 'Standard Edition',
+    foil:     'Foil Edition',
+    rookie:   'Rookie Edition',
+  };
+
+  async function loadOrder() {
+    const params  = new URLSearchParams(window.location.search);
+    const orderId = params.get('order');
+
+    if (!orderId) {
+      showError();
+      return;
+    }
+
+    try {
+      const res  = await fetch(`${API_BASE}/api/checkout/order/${orderId}`);
+      const data = await res.json();
+
+      if (!res.ok || !data.order) {
+        showError();
+        return;
+      }
+
+      renderConfirmed(data);
+
+    } catch (err) {
+      console.error('Order fetch error:', err);
+      showError();
+    }
+  }
+
+  function renderConfirmed({ order, card, athlete }) {
+    document.getElementById('loading-state').classList.add('hidden');
+    document.getElementById('confirmed-state').classList.remove('hidden');
+
+    // Confirm message
+    if (athlete) {
+      document.getElementById('confirm-message').textContent =
+        `Your ${EDITION_LABELS[card?.edition] || 'card'} featuring ${athlete.name} is confirmed! You'll receive a confirmation email shortly.`;
+    }
+
+    // Card preview
+    if (card?.preview_url) {
+      const wrap = document.getElementById('preview-wrap');
+      wrap.innerHTML = `<img src="${card.preview_url}" alt="Card preview" loading="lazy" />`;
+    }
+
+    // Order rows
+    document.getElementById('order-athlete').textContent =
+      athlete ? `${athlete.name} · ${athlete.sport}` : '—';
+
+    const editionBadge = card?.edition
+      ? `<span class="edition-badge ${card.edition}">${EDITION_LABELS[card.edition] || card.edition}</span>`
+      : '—';
+    document.getElementById('order-edition').innerHTML = editionBadge;
+
+    document.getElementById('order-qty').textContent    = order.quantity || '—';
+    document.getElementById('order-total').textContent  = order.total_usd ? `$${order.total_usd}` : '—';
+    document.getElementById('order-id').textContent     = order.id.slice(0, 18) + '…';
+
+    const statusEl = document.getElementById('order-status');
+    statusEl.textContent = order.status === 'paid' ? '✅ Confirmed' : '⏳ Processing';
+    statusEl.className   = `value status-${order.status}`;
+
+    // Athlete page button
+    if (athlete?.profile_url) {
+      document.getElementById('btn-athlete-page').href = athlete.profile_url;
+    }
+
+    // Social share: SMS
+    const shareText = athlete
+      ? `I just got a trading card for ${athlete.name}! Support their journey 👉 ${athlete.profile_url || 'mvpkidscards.com'}`
+      : 'Check out MVP Kids Cards — real trading cards for youth athletes!';
+
+    document.getElementById('btn-share-sms').href =
+      `sms:?body=${encodeURIComponent(shareText)}`;
+
+    document.getElementById('btn-share-more').addEventListener('click', async (e) => {
+      e.preventDefault();
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: `${athlete?.name || 'MVP'}'s Trading Card`,
+            text:  shareText,
+            url:   athlete?.profile_url || window.location.origin,
+          });
+        } catch (err) { /* user dismissed */ }
+      } else {
+        // Fallback: copy to clipboard
+        await navigator.clipboard.writeText(athlete?.profile_url || window.location.origin);
+        e.target.textContent = '✓ Link Copied!';
+        setTimeout(() => e.target.textContent = 'Share More', 2000);
+      }
+    });
+  }
+
+  function showError() {
+    document.getElementById('loading-state').classList.add('hidden');
+    document.getElementById('error-state').classList.remove('hidden');
+  }
+
+  loadOrder();
+</script>
+
+</body>
+</html>

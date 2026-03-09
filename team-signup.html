@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team & League Signup — MVP Kids Cards</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0B1E3F;
+      --navy-m: #162d5e;
+      --gold:   #E8A020;
+      --green:  #1AAF5D;
+      --red:    #E53E3E;
+      --gray:   #8A9BB0;
+      --off:    #F4F6FA;
+      --border: #dde3ec;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--off);
+      min-height: 100vh;
+      color: var(--navy);
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--navy);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-brand {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .nav-brand span { color: var(--gold); }
+    .nav-pill {
+      background: rgba(255,255,255,0.1);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    /* ── HERO BANNER ── */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-m) 100%);
+      color: white;
+      text-align: center;
+      padding: 3.5rem 2rem 2.5rem;
+    }
+    .hero .badge {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--navy);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 1rem;
+    }
+    .hero h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(1.8rem, 5vw, 2.6rem);
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      line-height: 1.1;
+    }
+    .hero p {
+      font-size: 1rem;
+      opacity: 0.8;
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ── STEP PROGRESS ── */
+    .progress-bar {
+      background: white;
+      border-bottom: 1px solid var(--border);
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+
+    .step-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .step-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      background: white;
+      color: var(--gray);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      transition: all 0.3s;
+    }
+
+    .step-circle.active {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: white;
+    }
+
+    .step-circle.done {
+      background: var(--green);
+      border-color: var(--green);
+      color: white;
+    }
+
+    .step-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--gray);
+      white-space: nowrap;
+    }
+
+    .step-label.active { color: var(--navy); }
+    .step-label.done   { color: var(--green); }
+
+    .step-connector {
+      width: 48px;
+      height: 2px;
+      background: var(--border);
+      margin: 0 4px;
+      margin-bottom: 20px;
+      flex-shrink: 0;
+      transition: background 0.3s;
+    }
+    .step-connector.done { background: var(--green); }
+
+    /* ── MAIN CONTENT ── */
+    .main {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    /* ── STEP PANELS ── */
+    .step-panel { display: none; }
+    .step-panel.active { display: block; }
+
+    .step-panel h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .step-panel p.step-sub {
+      color: var(--gray);
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+      line-height: 1.5;
+    }
+
+    /* ── FORM ELEMENTS ── */
+    .form-card {
+      background: white;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      padding: 1.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .form-card h3 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.25rem;
+    }
+
+    .form-row { display: flex; gap: 14px; }
+
+    .form-group {
+      margin-bottom: 1.1rem;
+      flex: 1;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 11px 13px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.92rem;
+      font-family: 'Montserrat', sans-serif;
+      color: var(--navy);
+      background: white;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--navy); }
+
+    .form-group textarea { resize: vertical; min-height: 80px; }
+
+    .hint {
+      font-size: 0.78rem;
+      color: var(--gray);
+      margin-top: 4px;
+    }
+
+    /* ── REVENUE MODEL CARDS ── */
+    .model-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .model-card {
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 1.1rem 1.25rem;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .model-card:hover { border-color: var(--navy); }
+
+    .model-card.selected {
+      border-color: var(--navy);
+      background: #f0f3fb;
+    }
+
+    .model-radio {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      background: white;
+      flex-shrink: 0;
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .model-card.selected .model-radio {
+      border-color: var(--navy);
+      background: var(--navy);
+    }
+
+    .model-card.selected .model-radio::after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: white;
+    }
+
+    .model-body { flex: 1; }
+
+    .model-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 3px;
+    }
+
+    .model-desc {
+      font-size: 0.83rem;
+      color: var(--gray);
+      line-height: 1.5;
+    }
+
+    .model-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    .badge-popular { background: #e8f4e8; color: #1a6b2a; }
+    .badge-max     { background: #fff3e0; color: #b45309; }
+
+    /* Split slider (shown for "custom split" model) */
+    .split-slider-wrap {
+      margin-top: 14px;
+      display: none;
+    }
+
+    .split-slider-wrap.show { display: block; }
+
+    .split-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .split-labels .team-pct { color: var(--navy); }
+    .split-labels .parent-pct { color: var(--green); }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--navy);
+    }
+
+    .split-track {
+      height: 8px;
+      border-radius: 4px;
+      margin-top: 4px;
+      font-size: 0.75rem;
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      color: var(--gray);
+    }
+
+    /* ── SPORTS TAGS ── */
+    .sports-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .sport-tag {
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 0.83rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      color: var(--navy);
+      background: white;
+      user-select: none;
+    }
+
+    .sport-tag.selected {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: white;
+    }
+
+    /* ── TEAM CODE PREVIEW (Step 3) ── */
+    .code-preview {
+      background: var(--navy);
+      color: white;
+      border-radius: 14px;
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .code-preview .code-label {
+      font-size: 0.72rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 8px;
+    }
+
+    .code-preview .code-value {
+      font-family: 'Oswald', sans-serif;
+      font-size: 3rem;
+      font-weight: 700;
+      letter-spacing: 6px;
+      color: var(--gold);
+    }
+
+    .code-preview .code-url {
+      font-size: 0.8rem;
+      opacity: 0.5;
+      margin-top: 8px;
+    }
+
+    .code-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-copy-code {
+      flex: 1;
+      padding: 10px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      background: white;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--navy);
+      transition: border-color 0.15s;
+    }
+    .btn-copy-code:hover { border-color: var(--navy); }
+    .btn-copy-code.copied { color: var(--green); border-color: var(--green); }
+
+    /* ── REVIEW SUMMARY (Step 4) ── */
+    .review-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--off);
+      font-size: 0.9rem;
+    }
+    .review-row:last-child { border-bottom: none; }
+    .review-row .r-label { color: var(--gray); }
+    .review-row .r-value { font-weight: 600; }
+
+    /* ── BUTTONS ── */
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+      margin-top: 2rem;
+    }
+
+    .btn-back {
+      padding: 13px 24px;
+      background: transparent;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--navy);
+      transition: border-color 0.15s;
+    }
+    .btn-back:hover { border-color: var(--navy); }
+
+    .btn-next {
+      flex: 1;
+      padding: 14px;
+      background: var(--navy);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      position: relative;
+    }
+    .btn-next:hover { background: #1a3770; }
+    .btn-next:active { transform: scale(0.99); }
+    .btn-next:disabled { background: var(--gray); cursor: not-allowed; }
+
+    .btn-spinner {
+      display: none;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .loading .btn-spinner { display: block; }
+    @keyframes spin { to { transform: translateY(-50%) rotate(360deg); } }
+
+    /* Error / success */
+    .banner {
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 0.88rem;
+      margin-bottom: 1.25rem;
+      display: none;
+    }
+    .banner.show { display: block; }
+    .banner.error { background: #fff5f5; border: 1px solid #fed7d7; color: var(--red); }
+    .banner.success { background: #f0fff4; border: 1px solid #9ae6b4; color: #276749; }
+
+    /* ── SUCCESS STATE ── */
+    .success-panel {
+      text-align: center;
+      padding: 2rem 0;
+    }
+
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      background: var(--green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      margin: 0 auto 1.5rem;
+      animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes pop {
+      0%   { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .success-panel h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .success-panel p {
+      color: var(--gray);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .btn-dashboard {
+      display: inline-block;
+      padding: 14px 36px;
+      background: var(--navy);
+      color: white;
+      border-radius: 10px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+    }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 600px) {
+      .form-row { flex-direction: column; gap: 0; }
+      .step-connector { width: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="/">MVP<span>Kids</span>Cards</a>
+  <a class="nav-pill" href="/login.html">Parent login</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge">Teams & Leagues</div>
+  <h1>Launch Your Team's<br>Fundraiser in Minutes</h1>
+  <p>Create an account, choose your revenue model, and share one code. Parents do the rest.</p>
+</div>
+
+<!-- STEP PROGRESS -->
+<div class="progress-bar" id="progress-bar">
+  <div class="step-node">
+    <div class="step-circle active" id="sc-1">1</div>
+    <div class="step-label active" id="sl-1">Account</div>
+  </div>
+  <div class="step-connector" id="conn-1"></div>
+  <div class="step-node">
+    <div class="step-circle" id="sc-2">2</div>
+    <div class="step-label" id="sl-2">Team Info</div>
+  </div>
+  <div class="step-connector" id="conn-2"></div>
+  <div class="step-node">
+    <div class="step-circle" id="sc-3">3</div>
+    <div class="step-label" id="sl-3">Revenue</div>
+  </div>
+  <div class="step-connector" id="conn-3"></div>
+  <div class="step-node">
+    <div class="step-circle" id="sc-4">4</div>
+    <div class="step-label" id="sl-4">Review</div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+  <div class="banner error" id="errorBanner"></div>
+  <div class="banner success" id="successBanner"></div>
+
+  <!-- ══════════════════════════════════════════
+       STEP 1 — ACCOUNT
+       ══════════════════════════════════════════ -->
+  <div class="step-panel active" id="step-1">
+    <h2>Create Your Account</h2>
+    <p class="step-sub">This is the administrator account for your organization.</p>
+
+    <div class="form-card">
+      <h3>Admin Info</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>First name *</label>
+          <input type="text" id="adminFirst" placeholder="Coach Mike" />
+        </div>
+        <div class="form-group">
+          <label>Last name *</label>
+          <input type="text" id="adminLast" placeholder="Rivera" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email address *</label>
+        <input type="email" id="adminEmail" placeholder="coach@riversidesoccer.com" />
+      </div>
+      <div class="form-group">
+        <label>Phone (optional)</label>
+        <input type="tel" id="adminPhone" placeholder="(555) 000-0000" />
+      </div>
+    </div>
+
+    <div class="form-card">
+      <h3>Set Password</h3>
+      <div class="form-group">
+        <label>Password *</label>
+        <input type="password" id="adminPassword" placeholder="At least 8 characters" />
+        <div class="hint">Minimum 8 characters</div>
+      </div>
+      <div class="form-group">
+        <label>Confirm password *</label>
+        <input type="password" id="adminPasswordConfirm" placeholder="Repeat password" />
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <div></div>
+      <button class="btn-next" onclick="goStep(2)">
+        Continue →
+        <div class="btn-spinner"></div>
+      </button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       STEP 2 — TEAM / LEAGUE INFO
+       ══════════════════════════════════════════ -->
+  <div class="step-panel" id="step-2">
+    <h2>Tell Us About Your Organization</h2>
+    <p class="step-sub">This info appears on your team page and all athlete cards.</p>
+
+    <div class="form-card">
+      <h3>Organization Details</h3>
+      <div class="form-group">
+        <label>Organization name *</label>
+        <input type="text" id="orgName" placeholder="Riverside Youth Soccer League" />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Type *</label>
+          <select id="orgType">
+            <option value="">Select type…</option>
+            <option value="league">League / Association</option>
+            <option value="club">Club / Academy</option>
+            <option value="school_team">School Team</option>
+            <option value="travel_team">Travel Team</option>
+            <option value="rec">Recreational Program</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Location / City *</label>
+          <input type="text" id="orgCity" placeholder="Riverside, CA" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Website (optional)</label>
+        <input type="url" id="orgWebsite" placeholder="https://riversidesoccer.com" />
+      </div>
+      <div class="form-group">
+        <label>Short description (optional)</label>
+        <textarea id="orgBio" placeholder="A short sentence about your league or program…"></textarea>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <h3>Sports Offered</h3>
+      <p class="hint" style="margin-bottom:12px;">Select all that apply — parents will pick their sport when they sign up.</p>
+      <div class="sports-grid" id="sportsGrid">
+        <!-- Injected by JS -->
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-back" onclick="goStep(1)">← Back</button>
+      <button class="btn-next" onclick="goStep(3)">
+        Continue →
+        <div class="btn-spinner"></div>
+      </button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       STEP 3 — REVENUE MODEL + TEAM CODE
+       ══════════════════════════════════════════ -->
+  <div class="step-panel" id="step-3">
+    <h2>Choose Your Revenue Model</h2>
+    <p class="step-sub">You can change this any time from your dashboard. Card prices stay the same for buyers — you're just deciding how proceeds are split.</p>
+
+    <div class="form-card">
+      <h3>Revenue Split</h3>
+      <div class="model-grid" id="modelGrid">
+
+        <!-- Option A: Team 20% / Parent 80% -->
+        <div class="model-card selected" data-model="split_20" onclick="selectModel(this)">
+          <div class="model-radio"></div>
+          <div class="model-body">
+            <div class="model-title">
+              Team 20% · Parent 80%
+              <span class="model-badge badge-popular">Most Popular</span>
+            </div>
+            <div class="model-desc">
+              For every card sold, 20% funds your team, 80% goes to the parent's kid. On a $29.99 Standard card: <strong>$6.00</strong> to your team pool, <strong>$24.00</strong> to the family.
+            </div>
+          </div>
+        </div>
+
+        <!-- Option B: Custom split -->
+        <div class="model-card" data-model="split_custom" onclick="selectModel(this)">
+          <div class="model-radio"></div>
+          <div class="model-body">
+            <div class="model-title">Custom Split</div>
+            <div class="model-desc">You set the exact percentage. Slide to choose how to divide each card sale between your team and the family.</div>
+            <div class="split-slider-wrap" id="splitSliderWrap">
+              <div class="split-labels">
+                <span class="team-pct">🏆 Team: <span id="teamPctLabel">30</span>%</span>
+                <span class="parent-pct">👨‍👩‍👧 Family: <span id="parentPctLabel">70</span>%</span>
+              </div>
+              <input type="range" id="splitSlider" min="5" max="50" value="30" step="5" oninput="updateSplit(this.value)" />
+              <div class="split-track">Drag to adjust · Team can take 5%–50%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Option C: Team keeps everything -->
+        <div class="model-card" data-model="team_all" onclick="selectModel(this)">
+          <div class="model-radio"></div>
+          <div class="model-body">
+            <div class="model-title">
+              Team keeps 100%
+              <span class="model-badge badge-max">Max fundraising</span>
+            </div>
+            <div class="model-desc">All card revenue goes directly to your team fundraiser. Great for group fundraising drives — parents contribute by selling cards, not keeping proceeds.</div>
+          </div>
+        </div>
+
+        <!-- Option D: Parent keeps everything -->
+        <div class="model-card" data-model="parent_all" onclick="selectModel(this)">
+          <div class="model-radio"></div>
+          <div class="model-body">
+            <div class="model-title">Parent keeps 100%</div>
+            <div class="model-desc">Your team earns nothing from card sales — parents keep all proceeds for their individual athlete. Great for leagues that just want to offer the service.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Team Goal -->
+    <div class="form-card">
+      <h3>Team Fundraising Goal (Optional)</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Goal amount ($)</label>
+          <input type="number" id="teamGoal" placeholder="e.g. 5000" min="0" />
+        </div>
+        <div class="form-group">
+          <label>Goal label</label>
+          <input type="text" id="teamGoalLabel" placeholder="e.g. New Uniforms Fund" />
+        </div>
+      </div>
+      <div class="hint">Parents will see your team goal on their dashboard and the public team page.</div>
+    </div>
+
+    <!-- Team Code Preview -->
+    <div class="form-card">
+      <h3>Your Team Code</h3>
+      <p class="hint" style="margin-bottom:14px;">Parents enter this code when signing up to automatically join your team. You can regenerate it any time from your dashboard.</p>
+
+      <div class="code-preview">
+        <div class="code-label">Team Join Code</div>
+        <div class="code-value" id="teamCodeDisplay">—</div>
+        <div class="code-url">mvpkidscards.com/join/<span id="teamCodeUrl">—</span></div>
+      </div>
+
+      <div class="code-actions">
+        <button class="btn-copy-code" id="btnCopyCode" onclick="copyCode()">📋 Copy Code</button>
+        <button class="btn-copy-code" id="btnCopyLink" onclick="copyLink()">🔗 Copy Join Link</button>
+        <button class="btn-copy-code" onclick="regenerateCode()">🔄 Generate New</button>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-back" onclick="goStep(2)">← Back</button>
+      <button class="btn-next" onclick="goStep(4)">
+        Review & Launch →
+        <div class="btn-spinner"></div>
+      </button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       STEP 4 — REVIEW & LAUNCH
+       ══════════════════════════════════════════ -->
+  <div class="step-panel" id="step-4">
+    <h2>Review & Launch</h2>
+    <p class="step-sub">Everything look good? You can edit any of this from your dashboard after launch.</p>
+
+    <div class="form-card">
+      <h3>Account</h3>
+      <div class="review-row">
+        <span class="r-label">Admin name</span>
+        <span class="r-value" id="rev-name">—</span>
+      </div>
+      <div class="review-row">
+        <span class="r-label">Email</span>
+        <span class="r-value" id="rev-email">—</span>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <h3>Organization</h3>
+      <div class="review-row">
+        <span class="r-label">Name</span>
+        <span class="r-value" id="rev-org">—</span>
+      </div>
+      <div class="review-row">
+        <span class="r-label">Type</span>
+        <span class="r-value" id="rev-type">—</span>
+      </div>
+      <div class="review-row">
+        <span class="r-label">Location</span>
+        <span class="r-value" id="rev-city">—</span>
+      </div>
+      <div class="review-row">
+        <span class="r-label">Sports</span>
+        <span class="r-value" id="rev-sports">—</span>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <h3>Revenue & Fundraising</h3>
+      <div class="review-row">
+        <span class="r-label">Revenue model</span>
+        <span class="r-value" id="rev-model">—</span>
+      </div>
+      <div class="review-row" id="rev-split-row">
+        <span class="r-label">Team split</span>
+        <span class="r-value" id="rev-split">—</span>
+      </div>
+      <div class="review-row">
+        <span class="r-label">Team goal</span>
+        <span class="r-value" id="rev-goal">—</span>
+      </div>
+      <div class="review-row">
+        <span class="r-label">Team join code</span>
+        <span class="r-value" id="rev-code" style="font-family:monospace; color:var(--navy); letter-spacing:3px;">—</span>
+      </div>
+    </div>
+
+    <div class="form-card" style="background:#f0f3fb; border-color:#c5d0e8;">
+      <h3 style="color:var(--navy);">What Happens After You Launch</h3>
+      <div style="font-size:0.88rem; line-height:1.8; color:var(--navy);">
+        ✅ &nbsp;Your team dashboard goes live immediately<br>
+        ✅ &nbsp;Share your <strong>team code</strong> with families via email, group chat, or flyer<br>
+        ✅ &nbsp;Parents sign up, add their athlete, and create their card<br>
+        ✅ &nbsp;Sales roll in — your team share is tracked in real time<br>
+        ✅ &nbsp;Payouts via Stripe (you'll connect your bank from the dashboard)
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-back" onclick="goStep(3)">← Back</button>
+      <button class="btn-next" id="launchBtn" onclick="handleLaunch()">
+        🚀 Launch My Team!
+        <div class="btn-spinner"></div>
+      </button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SUCCESS STATE
+       ══════════════════════════════════════════ -->
+  <div class="step-panel" id="step-success">
+    <div class="success-panel">
+      <div class="success-icon">🏆</div>
+      <h2>You're Live!</h2>
+      <p id="successMsg">Your team is set up and ready to fundraise. Share the code with parents and watch the cards roll in.</p>
+
+      <!-- Prominent code display -->
+      <div class="code-preview" style="margin: 0 0 1.5rem; max-width: 360px; margin-left:auto; margin-right:auto;">
+        <div class="code-label">Share This Code With Parents</div>
+        <div class="code-value" id="success-code">—</div>
+        <div class="code-url">mvpkidscards.com/join/<span id="success-code-url">—</span></div>
+      </div>
+
+      <div style="display:flex; gap:10px; justify-content:center; margin-bottom:2rem; flex-wrap:wrap;">
+        <button class="btn-copy-code" style="max-width:200px;" onclick="copySuccessCode()">📋 Copy Code</button>
+        <button class="btn-copy-code" style="max-width:200px;" onclick="shareCode()">📤 Share Link</button>
+      </div>
+
+      <a class="btn-dashboard" href="/team-dashboard.html" id="dashboardLink">Go to Team Dashboard →</a>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<script>
+  // ── CONFIG ──────────────────────────────────────────────
+  const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? 'http://localhost:3001'
+    : 'https://mvpkidscards-api.vercel.app';
+
+  // ── SPORTS LIST ─────────────────────────────────────────
+  const SPORTS = [
+    '⚽ Soccer','🏀 Basketball','⚾ Baseball','🥎 Softball','🏈 Football',
+    '🏒 Hockey','🎾 Tennis','🏐 Volleyball','🏊 Swimming','🤸 Gymnastics',
+    '🏃 Track & Field','🥊 Boxing','🤼 Wrestling','⛳ Golf','🏋️ Weightlifting',
+    '🏇 Equestrian','🚴 Cycling','🏄 Surfing','🥋 Martial Arts','🎽 Cross Country',
+  ];
+
+  const selectedSports = new Set();
+  let teamCode = generateCode();
+  let selectedModel = 'split_20';
+  let customSplitPct = 30;
+  let currentStep = 1;
+
+  // ── GENERATE RANDOM TEAM CODE ──────────────────────────
+  function generateCode() {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    let code = '';
+    for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
+    return code;
+  }
+
+  function regenerateCode() {
+    teamCode = generateCode();
+    updateCodeDisplay();
+  }
+
+  function updateCodeDisplay() {
+    const el1 = document.getElementById('teamCodeDisplay');
+    const el2 = document.getElementById('teamCodeUrl');
+    if (el1) el1.textContent = teamCode;
+    if (el2) el2.textContent = teamCode.toLowerCase();
+  }
+
+  // ── SPORTS GRID ─────────────────────────────────────────
+  function buildSportsGrid() {
+    const grid = document.getElementById('sportsGrid');
+    SPORTS.forEach(sport => {
+      const tag = document.createElement('div');
+      tag.className = 'sport-tag';
+      tag.textContent = sport;
+      tag.onclick = () => {
+        tag.classList.toggle('selected');
+        if (tag.classList.contains('selected')) {
+          selectedSports.add(sport);
+        } else {
+          selectedSports.delete(sport);
+        }
+      };
+      grid.appendChild(tag);
+    });
+  }
+
+  // ── REVENUE MODEL ────────────────────────────────────────
+  function selectModel(el) {
+    document.querySelectorAll('.model-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedModel = el.dataset.model;
+
+    const sliderWrap = document.getElementById('splitSliderWrap');
+    if (selectedModel === 'split_custom') {
+      sliderWrap.classList.add('show');
+    } else {
+      sliderWrap.classList.remove('show');
+    }
+  }
+
+  function updateSplit(val) {
+    customSplitPct = parseInt(val);
+    document.getElementById('teamPctLabel').textContent   = customSplitPct;
+    document.getElementById('parentPctLabel').textContent = 100 - customSplitPct;
+  }
+
+  // ── STEP NAVIGATION ──────────────────────────────────────
+  function goStep(n) {
+    if (n > currentStep && !validateStep(currentStep)) return;
+
+    // Update panels
+    document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById(`step-${n}`).classList.add('active');
+
+    // Update progress indicators
+    for (let i = 1; i <= 4; i++) {
+      const circle = document.getElementById(`sc-${i}`);
+      const label  = document.getElementById(`sl-${i}`);
+      const conn   = document.getElementById(`conn-${i}`);
+
+      circle.classList.remove('active', 'done');
+      label.classList.remove('active', 'done');
+
+      if (i < n) {
+        circle.classList.add('done');
+        circle.textContent = '✓';
+        label.classList.add('done');
+        if (conn) conn.classList.add('done');
+      } else if (i === n) {
+        circle.classList.add('active');
+        circle.textContent = i;
+        label.classList.add('active');
+        if (conn) conn.classList.remove('done');
+      } else {
+        circle.textContent = i;
+        if (conn) conn.classList.remove('done');
+      }
+    }
+
+    // On entering step 3, refresh code display
+    if (n === 3) updateCodeDisplay();
+
+    // On entering step 4, populate review
+    if (n === 4) buildReview();
+
+    currentStep = n;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    clearBanners();
+  }
+
+  // ── VALIDATION ───────────────────────────────────────────
+  function validateStep(n) {
+    clearBanners();
+
+    if (n === 1) {
+      const first = val('adminFirst'), last = val('adminLast');
+      const email = val('adminEmail'), pw = val('adminPassword'), pw2 = val('adminPasswordConfirm');
+      if (!first || !last)     return err('Please enter your first and last name.');
+      if (!email)              return err('Please enter your email address.');
+      if (!/\S+@\S+\.\S+/.test(email)) return err('Please enter a valid email address.');
+      if (!pw)                 return err('Please enter a password.');
+      if (pw.length < 8)       return err('Password must be at least 8 characters.');
+      if (pw !== pw2)          return err('Passwords do not match.');
+    }
+
+    if (n === 2) {
+      const name = val('orgName'), type = val('orgType'), city = val('orgCity');
+      if (!name) return err('Please enter your organization name.');
+      if (!type) return err('Please select your organization type.');
+      if (!city) return err('Please enter your location / city.');
+      if (selectedSports.size === 0) return err('Please select at least one sport.');
+    }
+
+    return true;
+  }
+
+  function val(id) { return document.getElementById(id)?.value?.trim() || ''; }
+
+  function err(msg) {
+    showBanner('error', msg);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return false;
+  }
+
+  // ── REVIEW ───────────────────────────────────────────────
+  const MODEL_LABELS = {
+    split_20:    'Team 20% / Family 80%',
+    split_custom: 'Custom Split',
+    team_all:    'Team keeps 100%',
+    parent_all:  'Family keeps 100%',
+  };
+
+  const ORG_TYPES = {
+    league: 'League / Association',
+    club: 'Club / Academy',
+    school_team: 'School Team',
+    travel_team: 'Travel Team',
+    rec: 'Recreational Program',
+  };
+
+  function buildReview() {
+    document.getElementById('rev-name').textContent  = `${val('adminFirst')} ${val('adminLast')}`;
+    document.getElementById('rev-email').textContent = val('adminEmail');
+    document.getElementById('rev-org').textContent   = val('orgName');
+    document.getElementById('rev-type').textContent  = ORG_TYPES[val('orgType')] || val('orgType');
+    document.getElementById('rev-city').textContent  = val('orgCity');
+    document.getElementById('rev-sports').textContent =
+      selectedSports.size > 0
+        ? [...selectedSports].map(s => s.split(' ').slice(1).join(' ')).join(', ')
+        : 'None selected';
+
+    document.getElementById('rev-model').textContent = MODEL_LABELS[selectedModel] || selectedModel;
+
+    const splitRow = document.getElementById('rev-split-row');
+    if (selectedModel === 'split_custom') {
+      splitRow.style.display = 'flex';
+      document.getElementById('rev-split').textContent = `Team ${customSplitPct}% / Family ${100 - customSplitPct}%`;
+    } else {
+      splitRow.style.display = 'none';
+    }
+
+    const goalAmt = val('teamGoal'), goalLabel = val('teamGoalLabel');
+    document.getElementById('rev-goal').textContent =
+      goalAmt ? `$${Number(goalAmt).toLocaleString()} — ${goalLabel || 'Team Fundraiser'}` : 'Not set';
+
+    document.getElementById('rev-code').textContent = teamCode;
+  }
+
+  // ── COPY HELPERS ─────────────────────────────────────────
+  async function copyCode() {
+    await navigator.clipboard.writeText(teamCode);
+    flashBtn('btnCopyCode', '✓ Copied!');
+  }
+
+  async function copyLink() {
+    const link = `https://mvpkidscards.com/join/${teamCode.toLowerCase()}`;
+    await navigator.clipboard.writeText(link);
+    flashBtn('btnCopyLink', '✓ Link Copied!');
+  }
+
+  async function copySuccessCode() {
+    await navigator.clipboard.writeText(teamCode);
+    const btn = document.querySelector('.success-panel .btn-copy-code');
+    if (btn) { btn.textContent = '✓ Copied!'; setTimeout(() => btn.textContent = '📋 Copy Code', 2000); }
+  }
+
+  async function shareCode() {
+    const link = `https://mvpkidscards.com/join/${teamCode.toLowerCase()}`;
+    const org  = val('orgName') || 'our team';
+    if (navigator.share) {
+      await navigator.share({ title: `Join ${org} on MVP Kids Cards`, url: link }).catch(() => {});
+    } else {
+      await navigator.clipboard.writeText(link);
+    }
+  }
+
+  function flashBtn(id, text) {
+    const btn = document.getElementById(id);
+    const orig = btn.textContent;
+    btn.textContent = text;
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
+  }
+
+  // ── BANNER HELPERS ────────────────────────────────────────
+  function showBanner(type, msg) {
+    const el = document.getElementById(type === 'error' ? 'errorBanner' : 'successBanner');
+    el.textContent = msg;
+    el.classList.add('show');
+  }
+
+  function clearBanners() {
+    document.getElementById('errorBanner').classList.remove('show');
+    document.getElementById('successBanner').classList.remove('show');
+  }
+
+  // ── LAUNCH (Submit) ──────────────────────────────────────
+  async function handleLaunch() {
+    const btn = document.getElementById('launchBtn');
+    btn.disabled = true;
+    btn.classList.add('loading');
+    clearBanners();
+
+    // Build the team split percentage
+    let teamSharePct = 20;
+    if (selectedModel === 'split_custom')  teamSharePct = customSplitPct;
+    else if (selectedModel === 'team_all') teamSharePct = 100;
+    else if (selectedModel === 'parent_all') teamSharePct = 0;
+
+    const payload = {
+      // Admin account
+      admin: {
+        email:     val('adminEmail'),
+        password:  val('adminPassword'),
+        full_name: `${val('adminFirst')} ${val('adminLast')}`,
+        phone:     val('adminPhone'),
+      },
+      // Organization
+      org: {
+        name:         val('orgName'),
+        type:         val('orgType'),
+        city:         val('orgCity'),
+        website:      val('orgWebsite'),
+        bio:          val('orgBio'),
+        sports:       [...selectedSports],
+        team_code:    teamCode,
+        revenue_model: selectedModel,
+        team_share_pct: teamSharePct,
+        goal_cents:   val('teamGoal') ? parseInt(val('teamGoal')) * 100 : null,
+        goal_label:   val('teamGoalLabel') || null,
+      }
+    };
+
+    try {
+      const res  = await fetch(`${API}/api/teams`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        showBanner('error', data.error || 'Something went wrong. Please try again.');
+        btn.disabled = false;
+        btn.classList.remove('loading');
+        return;
+      }
+
+      // Store auth token
+      if (data.access_token) {
+        localStorage.setItem('mvp_token',      data.access_token);
+        localStorage.setItem('mvp_refresh',    data.refresh_token || '');
+        localStorage.setItem('mvp_user_email', val('adminEmail'));
+        localStorage.setItem('mvp_org_id',     data.org?.id || '');
+        localStorage.setItem('mvp_org_name',   data.org?.name || '');
+        localStorage.setItem('mvp_role',       'team_admin');
+      }
+
+      // Show success
+      document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('step-success').classList.add('active');
+      document.getElementById('progress-bar').classList.add('hidden');
+
+      document.getElementById('success-code').textContent     = teamCode;
+      document.getElementById('success-code-url').textContent = teamCode.toLowerCase();
+      document.getElementById('successMsg').textContent =
+        `${val('orgName')} is live! Share your code with families and let the fundraising begin.`;
+
+    } catch (err) {
+      console.error('Launch error:', err);
+      showBanner('error', 'Unable to connect to the server. Please try again.');
+      btn.disabled = false;
+      btn.classList.remove('loading');
+    }
+  }
+
+  // ── INIT ─────────────────────────────────────────────────
+  buildSportsGrid();
+  updateCodeDisplay();
+</script>
+</body>
+</html>

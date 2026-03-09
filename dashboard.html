@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Dashboard — MVP Kids Cards</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:   #0B1E3F; --navy-m: #1A3260; --gold:  #E8A020;
+      --green:  #1AAF5D; --gray:   #8A9BB0; --slate: #2E3D52;
+      --white:  #ffffff; --off:    #F4F6FA; --red: #e05c1a;
+    }
+    body { font-family: 'Montserrat', sans-serif; background: var(--off); color: var(--navy); min-height: 100vh; }
+
+    /* ── SIDEBAR NAV ── */
+    .layout { display: flex; min-height: 100vh; }
+    .sidebar {
+      width: 240px; background: var(--navy); flex-shrink: 0;
+      display: flex; flex-direction: column; padding: 1.5rem 0;
+      position: sticky; top: 0; height: 100vh; overflow-y: auto;
+    }
+    .sidebar-brand {
+      font-family: 'Oswald', sans-serif; font-size: 1.15rem; font-weight: 700;
+      color: var(--white); padding: 0 1.5rem 1.5rem; letter-spacing: 0.5px;
+    }
+    .sidebar-brand span { color: var(--gold); }
+    .sidebar-nav { list-style: none; flex: 1; }
+    .sidebar-nav li a {
+      display: flex; align-items: center; gap: 0.6rem;
+      padding: 0.75rem 1.5rem; color: var(--gray); text-decoration: none;
+      font-size: 0.88rem; font-weight: 600; transition: all 0.15s;
+    }
+    .sidebar-nav li a:hover, .sidebar-nav li a.active {
+      color: var(--white); background: rgba(255,255,255,0.06);
+    }
+    .sidebar-nav li a.active { border-left: 3px solid var(--gold); }
+    .sidebar-divider { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 0.75rem 1.5rem; }
+    .sidebar-user {
+      padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.08);
+      font-size: 0.8rem; color: var(--gray);
+    }
+    .sidebar-user strong { display: block; color: var(--white); margin-bottom: 0.2rem; font-size: 0.85rem; }
+    .btn-logout {
+      margin-top: 0.5rem; display: block; color: var(--gray); font-size: 0.75rem;
+      cursor: pointer; text-align: left; background: none; border: none;
+      font-family: inherit; padding: 0;
+    }
+    .btn-logout:hover { color: var(--red); }
+
+    /* ── MAIN AREA ── */
+    .main { flex: 1; padding: 2rem; overflow-y: auto; }
+    .page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
+    .page-title { font-family: 'Oswald', sans-serif; font-size: 1.8rem; font-weight: 700; }
+
+    /* ── BUTTONS ── */
+    .btn-primary {
+      background: var(--gold); color: var(--navy); border: none;
+      padding: 0.6rem 1.3rem; border-radius: 8px; cursor: pointer;
+      font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 0.9rem;
+      letter-spacing: 0.5px; transition: opacity 0.15s; text-decoration: none; display: inline-block;
+    }
+    .btn-primary:hover { opacity: 0.88; }
+    .btn-ghost {
+      background: transparent; border: 1.5px solid var(--slate); color: var(--navy);
+      padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer;
+      font-size: 0.82rem; font-weight: 600; transition: border-color 0.15s;
+    }
+    .btn-ghost:hover { border-color: var(--navy); }
+
+    /* ── SUMMARY STATS ── */
+    .summary-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .summary-card {
+      background: var(--white); border-radius: 12px; padding: 1.25rem;
+      box-shadow: 0 2px 8px rgba(11,30,63,0.07); border: 1px solid rgba(11,30,63,0.06);
+    }
+    .summary-card .val { font-family: 'Oswald', sans-serif; font-size: 2rem; font-weight: 700; color: var(--navy); }
+    .summary-card .val.green { color: var(--green); }
+    .summary-card .val.gold  { color: var(--gold);  }
+    .summary-card .lbl { font-size: 0.78rem; color: var(--gray); margin-top: 0.25rem; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* ── KIDS GRID ── */
+    .kids-heading { font-family: 'Oswald', sans-serif; font-size: 1.1rem; margin-bottom: 1rem; }
+    .kids-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.25rem; }
+
+    .kid-card {
+      background: var(--white); border-radius: 14px;
+      box-shadow: 0 2px 12px rgba(11,30,63,0.08); border: 1px solid rgba(11,30,63,0.06);
+      overflow: hidden; transition: box-shadow 0.2s;
+    }
+    .kid-card:hover { box-shadow: 0 6px 24px rgba(11,30,63,0.13); }
+
+    .kid-card-header {
+      background: var(--navy); padding: 1.1rem 1.25rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .kid-avatar {
+      width: 52px; height: 52px; border-radius: 50%; object-fit: cover;
+      border: 2px solid var(--gold); background: var(--navy-m); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Oswald', sans-serif; font-size: 1.2rem; color: var(--gold);
+    }
+    .kid-avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+    .kid-header-info { flex: 1; min-width: 0; }
+    .kid-name { font-family: 'Oswald', sans-serif; font-size: 1.1rem; color: var(--white); font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .kid-sport { font-size: 0.78rem; color: var(--gold); margin-top: 0.1rem; }
+
+    .kid-card-body { padding: 1.1rem 1.25rem; }
+
+    /* Fundraising mini-bar */
+    .mini-fundraise { margin-bottom: 1rem; }
+    .mini-fundraise-top { display: flex; justify-content: space-between; margin-bottom: 0.4rem; }
+    .mini-fundraise-label { font-size: 0.75rem; color: var(--gray); }
+    .mini-fundraise-amount { font-size: 0.78rem; font-weight: 700; color: var(--green); }
+    .mini-track { background: rgba(11,30,63,0.08); border-radius: 999px; height: 6px; }
+    .mini-fill { height: 100%; border-radius: 999px; background: var(--green); transition: width 0.8s ease; }
+
+    /* Card edition badges */
+    .edition-badges { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .edition-badge {
+      font-size: 0.68rem; font-family: 'Oswald', sans-serif; font-weight: 700;
+      letter-spacing: 0.5px; padding: 0.2rem 0.6rem; border-radius: 20px; border: 1.5px solid;
+    }
+    .edition-badge.standard { color: var(--gold);  border-color: var(--gold); }
+    .edition-badge.foil     { color: #888;          border-color: #bbb; }
+    .edition-badge.rookie   { color: var(--green);  border-color: var(--green); }
+    .edition-badge.draft    { opacity: 0.5; }
+
+    /* Action buttons row */
+    .kid-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .action-btn {
+      flex: 1; padding: 0.5rem 0.5rem; border-radius: 8px; border: 1.5px solid;
+      font-size: 0.75rem; font-weight: 700; cursor: pointer; text-align: center;
+      text-decoration: none; display: inline-block; transition: background 0.15s, color 0.15s;
+      font-family: 'Oswald', sans-serif; letter-spacing: 0.3px;
+    }
+    .action-btn.view   { border-color: var(--navy); color: var(--navy); }
+    .action-btn.view:hover { background: var(--navy); color: var(--white); }
+    .action-btn.share  { border-color: var(--gold); color: var(--gold); }
+    .action-btn.share:hover { background: var(--gold); color: var(--navy); }
+    .action-btn.qr     { border-color: var(--green); color: var(--green); }
+    .action-btn.qr:hover { background: var(--green); color: var(--white); }
+    .action-btn.add-card { border-color: var(--slate); color: var(--slate); }
+    .action-btn.add-card:hover { background: var(--slate); color: var(--white); }
+
+    /* ── EMPTY STATE ── */
+    .empty-state {
+      text-align: center; padding: 4rem 2rem; background: var(--white);
+      border-radius: 16px; border: 2px dashed rgba(11,30,63,0.12);
+    }
+    .empty-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .empty-title { font-family: 'Oswald', sans-serif; font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--navy); }
+    .empty-sub { color: var(--gray); font-size: 0.9rem; margin-bottom: 1.5rem; line-height: 1.6; }
+
+    /* ── ADD KID MODAL ── */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(11,30,63,0.7);
+      z-index: 100; display: flex; align-items: center; justify-content: center; padding: 1rem;
+    }
+    .modal-overlay.hidden { display: none; }
+    .modal {
+      background: var(--white); border-radius: 16px; padding: 2rem;
+      width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto;
+    }
+    .modal-title { font-family: 'Oswald', sans-serif; font-size: 1.4rem; margin-bottom: 1.5rem; color: var(--navy); }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-group label { font-size: 0.78rem; font-weight: 700; color: var(--navy); letter-spacing: 0.3px; text-transform: uppercase; }
+    .form-group input, .form-group textarea, .form-group select {
+      padding: 0.6rem 0.8rem; border: 1.5px solid rgba(11,30,63,0.15); border-radius: 8px;
+      font-family: 'Montserrat', sans-serif; font-size: 0.88rem; color: var(--navy); outline: none;
+      transition: border-color 0.15s;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+      border-color: var(--gold);
+    }
+    .form-group textarea { resize: vertical; min-height: 70px; }
+    .modal-actions { display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem; }
+    .stats-hint { font-size: 0.72rem; color: var(--gray); margin-top: 0.2rem; }
+
+    /* ── LOADING ── */
+    .loading-overlay { text-align: center; padding: 4rem 2rem; }
+    .loading-spinner { color: var(--gray); font-family: 'Oswald', sans-serif; letter-spacing: 2px; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 700px) {
+      .sidebar { display: none; }
+      .main { padding: 1.25rem; }
+      .form-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="layout">
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar">
+    <div class="sidebar-brand"><span>MVP</span> KIDS CARDS</div>
+    <ul class="sidebar-nav">
+      <li><a href="#" class="active">🏠 Dashboard</a></li>
+      <li><a href="#">👦 My Athletes</a></li>
+      <li><a href="#">🃏 All Cards</a></li>
+      <li><a href="#">📦 Orders</a></li>
+      <hr class="sidebar-divider" />
+      <li><a href="#">💳 Earnings</a></li>
+      <li><a href="#">⚙️ Settings</a></li>
+    </ul>
+    <div class="sidebar-user">
+      <strong id="sidebar-name">Loading…</strong>
+      <span id="sidebar-email"></span>
+      <button class="btn-logout" onclick="logout()">Sign out</button>
+    </div>
+  </aside>
+
+  <!-- ── MAIN ── -->
+  <main class="main">
+
+    <!-- Loading -->
+    <div class="loading-overlay" id="loading">
+      <p class="loading-spinner">LOADING YOUR DASHBOARD…</p>
+    </div>
+
+    <!-- Dashboard content -->
+    <div id="dashboard-content" style="display:none">
+
+      <!-- Header -->
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">My Athletes</h1>
+          <p style="color:var(--gray);font-size:0.85rem;margin-top:0.2rem">Manage each kid's card, page, and fundraising.</p>
+        </div>
+        <button class="btn-primary" onclick="openAddKidModal()">+ Add a Kid</button>
+      </div>
+
+      <!-- Summary row -->
+      <div class="summary-row">
+        <div class="summary-card">
+          <div class="val" id="stat-kids">0</div>
+          <div class="lbl">Athletes</div>
+        </div>
+        <div class="summary-card">
+          <div class="val" id="stat-cards">0</div>
+          <div class="lbl">Cards Created</div>
+        </div>
+        <div class="summary-card">
+          <div class="val green" id="stat-sold">0</div>
+          <div class="lbl">Cards Sold</div>
+        </div>
+        <div class="summary-card">
+          <div class="val gold" id="stat-revenue">$0</div>
+          <div class="lbl">Total Raised</div>
+        </div>
+      </div>
+
+      <!-- Kids grid -->
+      <h2 class="kids-heading">Your Athletes</h2>
+      <div class="kids-grid" id="kids-grid"></div>
+
+    </div>
+  </main>
+</div>
+
+<!-- ── ADD KID MODAL ── -->
+<div class="modal-overlay hidden" id="add-kid-modal">
+  <div class="modal">
+    <h2 class="modal-title">Add a New Athlete</h2>
+    <form id="add-kid-form" onsubmit="submitAddKid(event)">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>First Name *</label>
+          <input name="first_name" required placeholder="Marcus" />
+        </div>
+        <div class="form-group">
+          <label>Last Name *</label>
+          <input name="last_name" required placeholder="Johnson" />
+        </div>
+        <div class="form-group">
+          <label>Sport *</label>
+          <input name="sport" required placeholder="Basketball" list="sport-list" />
+          <datalist id="sport-list">
+            <option>Basketball</option><option>Football</option><option>Soccer</option>
+            <option>Baseball</option><option>Softball</option><option>Volleyball</option>
+            <option>Track & Field</option><option>Swimming</option><option>Tennis</option>
+            <option>Wrestling</option><option>Lacrosse</option><option>Hockey</option>
+          </datalist>
+        </div>
+        <div class="form-group">
+          <label>Position</label>
+          <input name="position" placeholder="Point Guard" />
+        </div>
+        <div class="form-group">
+          <label>Team Name</label>
+          <input name="team_name" placeholder="Riverside Youth Elite" />
+        </div>
+        <div class="form-group">
+          <label>Grad Year</label>
+          <input name="graduation_year" type="number" placeholder="2027" min="2024" max="2035" />
+        </div>
+        <div class="form-group full">
+          <label>Hometown</label>
+          <input name="hometown" placeholder="Atlanta, GA" />
+        </div>
+        <div class="form-group full">
+          <label>Athlete Bio / Tagline</label>
+          <textarea name="bio" placeholder="Future pro. One game at a time." rows="2"></textarea>
+        </div>
+        <div class="form-group full">
+          <label>Their Dream</label>
+          <textarea name="dreams" placeholder="My dream is to play Division 1 and eventually go pro." rows="2"></textarea>
+        </div>
+        <div class="form-group full">
+          <label>Message to Supporters</label>
+          <textarea name="message_to_supporters" placeholder="Thank you for believing in me..." rows="2"></textarea>
+        </div>
+        <div class="form-group full">
+          <label>Top 3 Stats</label>
+          <input name="stat1_label" placeholder="PPG" style="margin-bottom:0.4rem" />
+          <input name="stat1_value" placeholder="18.4" style="margin-bottom:0.4rem" />
+          <input name="stat2_label" placeholder="APG" style="margin-bottom:0.4rem" />
+          <input name="stat2_value" placeholder="6.2" style="margin-bottom:0.4rem" />
+          <input name="stat3_label" placeholder="GPA" style="margin-bottom:0.4rem" />
+          <input name="stat3_value" placeholder="3.9" />
+          <div class="stats-hint">Use abbreviations: PPG, APG, SPG, GPA, ERA, goals, assists, etc.</div>
+        </div>
+        <div class="form-group">
+          <label>Fundraising Goal ($)</label>
+          <input name="fundraising_goal" type="number" placeholder="500" min="0" step="50" />
+        </div>
+        <div class="form-group">
+          <label>Goal Description</label>
+          <input name="fundraising_label" placeholder="Helping reach nationals" />
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-ghost" onclick="closeAddKidModal()">Cancel</button>
+        <button type="submit" class="btn-primary" id="add-kid-submit">Add Athlete →</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ── CREATE CARD MODAL ─────────────────────────────────────── -->
+<div class="modal-overlay hidden" id="create-card-modal">
+  <div class="modal" style="max-width:480px">
+    <h2 class="modal-title">🏆 Create Trading Card</h2>
+    <p style="color:#64748b;font-size:0.9rem;margin-bottom:1.5rem;line-height:1.5">
+      Choose an edition for <strong id="card-athlete-name"></strong>. Each edition has its own look, feel, and price point.
+    </p>
+
+    <div id="edition-cards" style="display:flex;flex-direction:column;gap:12px;margin-bottom:1.5rem">
+      <label class="edition-option" style="display:flex;align-items:center;gap:14px;padding:14px 16px;border:2px solid #e2e8f0;border-radius:12px;cursor:pointer;transition:border-color 0.2s,background 0.2s">
+        <input type="radio" name="edition" value="standard" style="accent-color:#E8A020;width:18px;height:18px;flex-shrink:0" />
+        <div style="flex:1">
+          <div style="font-weight:700;color:#0B1E3F;margin-bottom:2px">Standard Edition</div>
+          <div style="font-size:0.82rem;color:#64748b">Classic design, full stats, share link &amp; QR code</div>
+        </div>
+        <div style="font-weight:800;color:#E8A020;font-size:1.05rem">$29.99</div>
+      </label>
+
+      <label class="edition-option" style="display:flex;align-items:center;gap:14px;padding:14px 16px;border:2px solid #e2e8f0;border-radius:12px;cursor:pointer;transition:border-color 0.2s,background 0.2s">
+        <input type="radio" name="edition" value="foil" style="accent-color:#888;width:18px;height:18px;flex-shrink:0" />
+        <div style="flex:1">
+          <div style="font-weight:700;color:#0B1E3F;margin-bottom:2px">Foil Edition ✨</div>
+          <div style="font-size:0.82rem;color:#64748b">Premium holographic foil finish — the collector's pick</div>
+        </div>
+        <div style="font-weight:800;color:#888;font-size:1.05rem">$49.99</div>
+      </label>
+
+      <label class="edition-option" style="display:flex;align-items:center;gap:14px;padding:14px 16px;border:2px solid #e2e8f0;border-radius:12px;cursor:pointer;transition:border-color 0.2s,background 0.2s">
+        <input type="radio" name="edition" value="rookie" style="accent-color:#1AAF5D;width:18px;height:18px;flex-shrink:0" />
+        <div style="flex:1">
+          <div style="font-weight:700;color:#0B1E3F;margin-bottom:2px">Rookie Edition 🌟</div>
+          <div style="font-size:0.82rem;color:#64748b">First-year design with special rookie stamp</div>
+        </div>
+        <div style="font-weight:800;color:#1AAF5D;font-size:1.05rem">$39.99</div>
+      </label>
+    </div>
+
+    <div style="margin-bottom:1.25rem">
+      <label style="display:block;font-size:0.82rem;font-weight:600;color:#0B1E3F;margin-bottom:6px">Quantity</label>
+      <select id="card-quantity" style="width:100%;padding:10px 12px;border:1.5px solid #dde3ec;border-radius:8px;font-size:0.95rem;color:#0B1E3F;background:#fff;outline:none">
+        <option value="1">1 card</option>
+        <option value="5">5 cards (save 10%)</option>
+        <option value="10">10 cards (save 15%)</option>
+        <option value="25">25 cards (save 20%)</option>
+      </select>
+    </div>
+
+    <div id="card-modal-error" style="display:none;background:#fef2f2;border:1px solid #fecaca;color:#b91c1c;padding:10px 14px;border-radius:8px;font-size:0.88rem;margin-bottom:12px"></div>
+
+    <div class="modal-actions">
+      <button type="button" class="btn-ghost" onclick="closeCardModal()">Cancel</button>
+      <button type="button" class="btn-primary" id="create-card-btn" onclick="submitCreateCard()" style="background:var(--gold);color:var(--navy)">
+        Create Card →
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .edition-option:has(input:checked) { border-color: #E8A020; background: #fffbeb; }
+  .edition-option:has(input[value="foil"]:checked) { border-color: #888; background: #fafafa; }
+  .edition-option:has(input[value="rookie"]:checked) { border-color: #1AAF5D; background: #f0fff4; }
+</style>
+
+<script>
+  const API_BASE = '';
+  const BASE_URL = 'https://mvpkidscards.com';
+  let token = null;
+  let currentUser = null;
+
+  // ── AUTH ────────────────────────────────────────────────────
+  async function init() {
+    // In production, read token from localStorage after login
+    token = localStorage.getItem('mvp_token');
+    if (!token) {
+      window.location.href = '/login.html';
+      return;
+    }
+
+    try {
+      const res = await apiFetch('/api/auth/me');
+      currentUser = res;
+      document.getElementById('sidebar-name').textContent  = res.full_name || 'My Account';
+      document.getElementById('sidebar-email').textContent = res.email || '';
+      await loadDashboard();
+    } catch (e) {
+      localStorage.removeItem('mvp_token');
+      window.location.href = '/login.html';
+    }
+  }
+
+  function logout() {
+    localStorage.removeItem('mvp_token');
+    window.location.href = '/';
+  }
+
+  // ── API HELPER ───────────────────────────────────────────────
+  async function apiFetch(path, opts = {}) {
+    const res = await fetch(API_BASE + path, {
+      ...opts,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+        ...(opts.headers || {})
+      }
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || `HTTP ${res.status}`);
+    }
+    return res.json();
+  }
+
+  // ── LOAD DASHBOARD ───────────────────────────────────────────
+  async function loadDashboard() {
+    const { athletes, total } = await apiFetch('/api/athletes');
+
+    // Summary stats
+    let totalCards = 0, totalSold = 0, totalRevenueCents = 0;
+    athletes.forEach(a => {
+      totalCards += (a.cards || []).length;
+      totalSold  += a.fundraising_summary?.total_cards_sold || 0;
+      totalRevenueCents += a.fundraising_summary?.raised_cents || 0;
+    });
+
+    document.getElementById('stat-kids').textContent    = total;
+    document.getElementById('stat-cards').textContent   = totalCards;
+    document.getElementById('stat-sold').textContent    = totalSold;
+    document.getElementById('stat-revenue').textContent = '$' + (totalRevenueCents / 100).toFixed(0);
+
+    // Render kids
+    const grid = document.getElementById('kids-grid');
+    grid.innerHTML = '';
+
+    if (athletes.length === 0) {
+      grid.innerHTML = `
+        <div class="empty-state" style="grid-column:1/-1">
+          <div class="empty-icon">🏆</div>
+          <h3 class="empty-title">Add Your First Athlete</h3>
+          <p class="empty-sub">Every great card starts here. Add your kid's info and we'll create their ProspectCard — shareable, printable, and built to fundraise.</p>
+          <button class="btn-primary" onclick="openAddKidModal()">+ Add My First Kid</button>
+        </div>`;
+    } else {
+      athletes.forEach(a => grid.appendChild(buildKidCard(a)));
+    }
+
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('dashboard-content').style.display = 'block';
+  }
+
+  // ── BUILD KID CARD ───────────────────────────────────────────
+  function buildKidCard(athlete) {
+    const div = document.createElement('div');
+    div.className = 'kid-card';
+
+    const initials = (athlete.first_name[0] + athlete.last_name[0]).toUpperCase();
+    const avatarHtml = athlete.photo_url
+      ? `<div class="kid-avatar"><img src="${athlete.photo_url}" alt="${athlete.first_name}" /></div>`
+      : `<div class="kid-avatar">${initials}</div>`;
+
+    const cards = athlete.cards || [];
+    const edgeBadges = cards.map(c =>
+      `<span class="edition-badge ${c.edition} ${c.status === 'draft' ? 'draft' : ''}">${c.edition.toUpperCase()}${c.status === 'draft' ? ' (draft)' : ''}</span>`
+    ).join('');
+
+    const goal = athlete.fundraising_summary?.goal_cents || 0;
+    const raised = athlete.fundraising_summary?.raised_cents || 0;
+    const pct = goal > 0 ? Math.min(100, Math.round(raised / goal * 100)) : 0;
+    const fundraiseHtml = goal > 0 ? `
+      <div class="mini-fundraise">
+        <div class="mini-fundraise-top">
+          <span class="mini-fundraise-label">Fundraising</span>
+          <span class="mini-fundraise-amount">$${(raised/100).toFixed(0)} raised</span>
+        </div>
+        <div class="mini-track"><div class="mini-fill" style="width:${pct}%"></div></div>
+      </div>` : '';
+
+    const profileUrl = athlete.profile_slug
+      ? `${BASE_URL}/athlete/${athlete.profile_slug}`
+      : '#';
+
+    const hasPublishedCard = cards.some(c => c.is_public);
+
+    div.innerHTML = `
+      <div class="kid-card-header">
+        ${avatarHtml}
+        <div class="kid-header-info">
+          <div class="kid-name">${athlete.first_name} ${athlete.last_name}</div>
+          <div class="kid-sport">${[athlete.sport, athlete.position].filter(Boolean).join(' · ')}</div>
+        </div>
+      </div>
+      <div class="kid-card-body">
+        ${fundraiseHtml}
+        <div class="edition-badges">${edgeBadges || '<span style="color:var(--gray);font-size:0.75rem">No cards yet</span>'}</div>
+        <div class="kid-actions">
+          <a class="action-btn view" href="/athlete-profile.html?slug=${athlete.profile_slug || ''}" target="_blank">View Page</a>
+          ${hasPublishedCard ? `<button class="action-btn share" onclick="shareAthlete('${profileUrl}', '${athlete.first_name}')">Share</button>` : ''}
+          <a class="action-btn qr" href="/api/qr/athlete/${athlete.id}?format=png" download>QR Code</a>
+          <button class="action-btn add-card" onclick="createCard('${athlete.id}', '${(athlete.full_name||'').replace(/'/g,"\\'")}')">+ Card</button>
+        </div>
+      </div>`;
+
+    return div;
+  }
+
+  // ── SHARE ────────────────────────────────────────────────────
+  function shareAthlete(url, name) {
+    if (navigator.share) {
+      navigator.share({ title: `${name}'s MVP Kids Card`, url }).catch(() => copyToClipboard(url));
+    } else {
+      copyToClipboard(url);
+    }
+  }
+
+  function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => alert('Link copied to clipboard!'));
+  }
+
+  // ── CREATE CARD MODAL ────────────────────────────────────────
+  let _pendingAthleteId = null;
+
+  function createCard(athleteId, athleteName) {
+    _pendingAthleteId = athleteId;
+    document.getElementById('card-athlete-name').textContent = athleteName || 'this athlete';
+    // Reset form state
+    document.querySelectorAll('input[name="edition"]').forEach(r => r.checked = false);
+    document.getElementById('card-quantity').value = '1';
+    document.getElementById('card-modal-error').style.display = 'none';
+    document.getElementById('create-card-btn').disabled = false;
+    document.getElementById('create-card-btn').textContent = 'Create Card →';
+    document.getElementById('create-card-modal').classList.remove('hidden');
+  }
+
+  function closeCardModal() {
+    document.getElementById('create-card-modal').classList.add('hidden');
+    _pendingAthleteId = null;
+  }
+
+  async function submitCreateCard() {
+    const edition = document.querySelector('input[name="edition"]:checked')?.value;
+    const quantity = parseInt(document.getElementById('card-quantity').value) || 1;
+    const errEl = document.getElementById('card-modal-error');
+
+    if (!edition) {
+      errEl.textContent = 'Please choose an edition.';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    const btn = document.getElementById('create-card-btn');
+    btn.disabled = true;
+    btn.textContent = 'Creating…';
+    errEl.style.display = 'none';
+
+    try {
+      const res = await apiFetch('/api/cards', {
+        method: 'POST',
+        body: JSON.stringify({ athlete_id: _pendingAthleteId, edition, quantity })
+      });
+
+      closeCardModal();
+
+      // Show a nice success state instead of alert
+      showToast(`✅ ${edition.charAt(0).toUpperCase() + edition.slice(1)} card created! Refreshing…`);
+      setTimeout(() => loadDashboard(), 1500);
+
+    } catch (e) {
+      errEl.textContent = e.message || 'Error creating card. Please try again.';
+      errEl.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Create Card →';
+    }
+  }
+
+  // Toast helper
+  function showToast(msg) {
+    let toast = document.getElementById('mvp-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'mvp-toast';
+      toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#0B1E3F;color:#fff;padding:12px 24px;border-radius:10px;font-size:0.92rem;font-weight:600;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,0.18);transition:opacity 0.3s';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    toast.style.opacity = '1';
+    setTimeout(() => { toast.style.opacity = '0'; }, 3000);
+  }
+
+  // ── ADD KID MODAL ────────────────────────────────────────────
+  function openAddKidModal()  { document.getElementById('add-kid-modal').classList.remove('hidden'); }
+  function closeAddKidModal() { document.getElementById('add-kid-modal').classList.add('hidden'); }
+
+  async function submitAddKid(e) {
+    e.preventDefault();
+    const form = e.target;
+    const data = Object.fromEntries(new FormData(form));
+    const btn  = document.getElementById('add-kid-submit');
+
+    // Build stats object from individual fields
+    const stats = {};
+    ['1','2','3'].forEach(n => {
+      const label = data[`stat${n}_label`]?.trim();
+      const value = data[`stat${n}_value`]?.trim();
+      if (label && value) stats[label] = value;
+    });
+
+    const payload = {
+      first_name:             data.first_name,
+      last_name:              data.last_name,
+      sport:                  data.sport,
+      position:               data.position || null,
+      team_name:              data.team_name || null,
+      graduation_year:        data.graduation_year ? parseInt(data.graduation_year) : null,
+      hometown:               data.hometown || null,
+      bio:                    data.bio || null,
+      dreams:                 data.dreams || null,
+      message_to_supporters:  data.message_to_supporters || null,
+      stats,
+      fundraising_goal_cents: data.fundraising_goal ? Math.round(parseFloat(data.fundraising_goal) * 100) : 0,
+      fundraising_label:      data.fundraising_label || null,
+    };
+
+    btn.textContent = 'Adding…';
+    btn.disabled = true;
+
+    try {
+      await apiFetch('/api/athletes', { method: 'POST', body: JSON.stringify(payload) });
+      closeAddKidModal();
+      form.reset();
+      await loadDashboard();
+    } catch (err) {
+      alert('Error: ' + err.message);
+    } finally {
+      btn.textContent = 'Add Athlete →';
+      btn.disabled = false;
+    }
+  }
+
+  init();
+</script>
+</body>
+</html>

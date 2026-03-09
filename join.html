@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Join a Team — MVP Kids Cards</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --navy:#0B1E3F; --gold:#E8A020; --green:#1AAF5D; --gray:#8A9BB0; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--navy);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .logo {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+    }
+    .logo span { color: var(--gold); }
+
+    .team-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      background: rgba(232,160,32,0.15);
+      color: var(--gold);
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+    }
+
+    .team-name {
+      font-size: 1.2rem;
+      color: var(--gold);
+    }
+
+    .sub {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin: 1rem 0 1.5rem;
+    }
+
+    .code-box {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .code-box .c-label {
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0.4;
+      margin-bottom: 4px;
+    }
+
+    .code-box .c-value {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2.2rem;
+      letter-spacing: 6px;
+      color: var(--gold);
+    }
+
+    .sports-list {
+      font-size: 0.82rem;
+      opacity: 0.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-join {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      border-radius: 10px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      cursor: pointer;
+      margin-bottom: 0.75rem;
+      transition: opacity 0.15s;
+    }
+    .btn-join:hover { opacity: 0.9; }
+
+    .btn-login {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background: transparent;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      border-radius: 10px;
+      color: white;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .btn-login:hover { border-color: white; }
+
+    .loading { opacity: 0.5; font-size: 0.9rem; }
+    .error   { color: #fc8181; font-size: 0.9rem; }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <div class="logo">MVP<span>Kids</span>Cards</div>
+
+  <!-- Loading state -->
+  <div id="loading-state">
+    <div class="loading">Looking up team code…</div>
+  </div>
+
+  <!-- Team found -->
+  <div id="found-state" class="hidden">
+    <div class="team-badge">Team Invite</div>
+    <h1>You're invited to join</h1>
+    <div class="team-name" id="team-name">—</div>
+    <p class="sub" id="team-sub">Create your athlete's card, track fundraising, and be part of something bigger.</p>
+
+    <div class="code-box">
+      <div class="c-label">Team Code</div>
+      <div class="c-value" id="team-code">——</div>
+    </div>
+
+    <div class="sports-list" id="sports-list"></div>
+
+    <a class="btn-join" id="btn-signup" href="/login.html?tab=signup">Create Parent Account →</a>
+    <a class="btn-login" href="/login.html">Already have an account? Sign in</a>
+  </div>
+
+  <!-- Error state -->
+  <div id="error-state" class="hidden">
+    <div style="font-size:2.5rem; margin-bottom:1rem;">🤷</div>
+    <h1 style="font-size:1.5rem; margin-bottom:0.5rem;">Code Not Found</h1>
+    <p class="sub">That team code doesn't seem to exist. Double-check with your coach or league organizer.</p>
+    <a class="btn-join" href="/">Go Home</a>
+  </div>
+</div>
+
+<script>
+  const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? 'http://localhost:3001'
+    : 'https://mvpkidscards-api.vercel.app';
+
+  // Extract code from path: /join/ABC123
+  const pathCode = window.location.pathname.split('/').pop();
+  // Or from query: /join.html?code=ABC123
+  const queryCode = new URLSearchParams(window.location.search).get('code');
+  const code = (pathCode && pathCode !== 'join.html' ? pathCode : queryCode || '').toUpperCase();
+
+  async function lookupCode() {
+    if (!code) { showError(); return; }
+
+    try {
+      const res  = await fetch(`${API}/api/teams/code/${code}`);
+      const data = await res.json();
+
+      if (!res.ok || !data.valid) { showError(); return; }
+
+      const org = data.org;
+
+      document.getElementById('team-name').textContent = org.name;
+      document.getElementById('team-code').textContent = code;
+
+      let subText = 'Sign up to create your athlete\'s card and start fundraising.';
+      if (org.city) subText += ` Based in ${org.city}.`;
+      document.getElementById('team-sub').textContent = subText;
+
+      if (org.sports?.length) {
+        document.getElementById('sports-list').textContent =
+          'Sports: ' + org.sports.map(s => s.split(' ').slice(1).join(' ')).join(' · ');
+      }
+
+      // Pre-fill code in signup URL
+      document.getElementById('btn-signup').href = `/login.html?tab=signup&team_code=${code}&org_id=${org.id}`;
+
+      // Store code in sessionStorage so signup page can auto-join
+      sessionStorage.setItem('pending_team_code', code);
+      sessionStorage.setItem('pending_org_id',    org.id);
+      sessionStorage.setItem('pending_org_name',  org.name);
+
+      document.getElementById('loading-state').classList.add('hidden');
+      document.getElementById('found-state').classList.remove('hidden');
+
+    } catch (err) {
+      showError();
+    }
+  }
+
+  function showError() {
+    document.getElementById('loading-state').classList.add('hidden');
+    document.getElementById('error-state').classList.remove('hidden');
+  }
+
+  lookupCode();
+</script>
+
+</body>
+</html>

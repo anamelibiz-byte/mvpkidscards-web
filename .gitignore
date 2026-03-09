@@ -1,0 +1,11 @@
+.DS_Store
+*.log
+node_modules/
+backend/
+*.zip
+*.key
+*.docx
+*.pdf
+MVPKidsCardsfiles/
+files/
+previews/

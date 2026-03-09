@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fulfillment Dashboard — MVP Kids Cards</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:  #0B1E3F;
+      --gold:  #E8A020;
+      --green: #1AAF5D;
+      --red:   #ef4444;
+      --light: #f5f7fa;
+      --muted: #64748b;
+      --white: #fff;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--light);
+      color: var(--navy);
+      min-height: 100vh;
+    }
+
+    /* ── TOP NAV ── */
+    .topnav {
+      background: var(--navy);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      height: 60px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .topnav-logo { font-weight: 800; font-size: 1.1rem; letter-spacing: -0.3px; }
+    .topnav-logo span { color: var(--gold); }
+
+    .topnav-badge {
+      background: var(--red);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin-left: 10px;
+      letter-spacing: 0.5px;
+    }
+
+    .topnav-right { display: flex; align-items: center; gap: 16px; font-size: 0.9rem; opacity: 0.85; }
+    .topnav-right a { color: #fff; text-decoration: none; }
+    .topnav-right a:hover { opacity: 0.7; }
+
+    /* ── LAYOUT ── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 28px 24px; }
+
+    /* ── STATS STRIP ── */
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .stat-card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(11,30,63,0.07);
+      border: 1px solid rgba(11,30,63,0.06);
+    }
+
+    .stat-label { font-size: 0.78rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+    .stat-value { font-size: 1.8rem; font-weight: 800; color: var(--navy); }
+    .stat-sub   { font-size: 0.8rem; color: var(--muted); margin-top: 4px; }
+
+    /* ── FILTER BAR ── */
+    .filter-bar {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(11,30,63,0.05);
+    }
+
+    .filter-bar input[type="text"],
+    .filter-bar select {
+      padding: 9px 14px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--navy);
+      outline: none;
+      background: #fff;
+      transition: border-color 0.2s;
+    }
+
+    .filter-bar input[type="text"] { flex: 1; min-width: 200px; }
+    .filter-bar input[type="text"]:focus,
+    .filter-bar select:focus { border-color: var(--navy); }
+
+    .filter-bar select { min-width: 140px; }
+
+    .btn-export {
+      padding: 9px 18px;
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      margin-left: auto;
+    }
+    .btn-export:hover { opacity: 0.85; }
+
+    /* ── TABLE ── */
+    .table-wrap {
+      background: var(--white);
+      border-radius: 14px;
+      box-shadow: 0 2px 12px rgba(11,30,63,0.08);
+      overflow: hidden;
+    }
+
+    table { width: 100%; border-collapse: collapse; }
+
+    thead th {
+      background: #f8fafc;
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid #e2e8f0;
+      white-space: nowrap;
+    }
+
+    thead th.sortable { cursor: pointer; user-select: none; }
+    thead th.sortable:hover { color: var(--navy); }
+
+    tbody tr {
+      border-bottom: 1px solid #f1f5f9;
+      transition: background 0.1s;
+    }
+    tbody tr:hover { background: #fafcff; }
+    tbody tr:last-child { border-bottom: none; }
+
+    td { padding: 14px 16px; font-size: 0.9rem; color: var(--navy); vertical-align: middle; }
+
+    /* Status pills */
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+    .status-pill::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+    .pill-pending  { background: #fff7ed; color: #c2410c; }
+    .pill-paid     { background: #fffbeb; color: #b45309; }
+    .pill-printing { background: #eff6ff; color: #1d4ed8; }
+    .pill-shipped  { background: #f0fdf4; color: #166534; }
+    .pill-cancelled{ background: #fef2f2; color: #b91c1c; }
+    .pill-refunded { background: #f8fafc; color: #64748b; }
+
+    /* Edition badges */
+    .badge {
+      font-size: 0.72rem; font-weight: 700; padding: 2px 8px;
+      border-radius: 4px; letter-spacing: 0.3px;
+    }
+    .badge-standard { background: #fff7ed; color: #c2410c; }
+    .badge-foil     { background: #f8fafc; color: #475569; }
+    .badge-rookie   { background: #f0fdf4; color: #166534; }
+
+    /* Action buttons in table */
+    .tbl-btn {
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1.5px solid;
+      background: transparent;
+      transition: background 0.15s, color 0.15s;
+    }
+    .tbl-btn-mark { border-color: var(--green); color: var(--green); }
+    .tbl-btn-mark:hover { background: var(--green); color: #fff; }
+    .tbl-btn-ship { border-color: var(--navy); color: var(--navy); }
+    .tbl-btn-ship:hover { background: var(--navy); color: #fff; }
+    .tbl-btn-view { border-color: var(--muted); color: var(--muted); }
+    .tbl-btn-view:hover { background: var(--muted); color: #fff; }
+
+    .tbl-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+    }
+    .empty-state .icon { font-size: 2.5rem; margin-bottom: 12px; }
+    .empty-state h3 { font-size: 1.1rem; color: var(--navy); margin-bottom: 6px; }
+
+    /* Loading skeleton */
+    .skeleton {
+      background: linear-gradient(90deg, #f0f4f8 25%, #e2e8f0 50%, #f0f4f8 75%);
+      background-size: 400% 100%;
+      animation: shimmer 1.4s infinite;
+      border-radius: 6px;
+      height: 16px;
+    }
+    @keyframes shimmer { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
+
+    /* Pagination */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-top: 1px solid #f1f5f9;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .page-btns { display: flex; gap: 6px; }
+    .page-btn {
+      padding: 6px 14px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 6px;
+      background: #fff;
+      cursor: pointer;
+      font-size: 0.85rem;
+      color: var(--navy);
+      font-weight: 600;
+      transition: border-color 0.15s;
+    }
+    .page-btn:hover:not(:disabled) { border-color: var(--navy); }
+    .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .page-btn.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+
+    /* Order detail panel (slide-in) */
+    .detail-panel {
+      position: fixed;
+      top: 0; right: 0;
+      width: 420px;
+      height: 100vh;
+      background: #fff;
+      box-shadow: -4px 0 24px rgba(11,30,63,0.12);
+      z-index: 200;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .detail-panel.open { transform: translateX(0); }
+
+    .panel-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .panel-header h3 { font-size: 1.05rem; font-weight: 700; }
+    .panel-close {
+      width: 32px; height: 32px;
+      border: none; background: #f1f5f9;
+      border-radius: 50%; cursor: pointer;
+      font-size: 1rem; display: flex;
+      align-items: center; justify-content: center;
+    }
+    .panel-body { flex: 1; overflow-y: auto; padding: 20px 24px; }
+
+    .panel-row { margin-bottom: 16px; }
+    .panel-row label { font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 4px; }
+    .panel-row .val { font-size: 0.95rem; color: var(--navy); }
+
+    .panel-footer { padding: 16px 24px; border-top: 1px solid #f1f5f9; display: flex; flex-direction: column; gap: 8px; }
+
+    .btn-full {
+      width: 100%; padding: 11px;
+      border: none; border-radius: 8px;
+      font-size: 0.9rem; font-weight: 700;
+      cursor: pointer; transition: opacity 0.2s;
+    }
+    .btn-full:hover { opacity: 0.85; }
+    .btn-printing { background: #eff6ff; color: #1d4ed8; }
+    .btn-shipped  { background: var(--green); color: #fff; }
+    .btn-refund   { background: #fef2f2; color: #b91c1c; }
+
+    .overlay {
+      position: fixed; inset: 0;
+      background: rgba(11,30,63,0.35);
+      z-index: 190;
+      display: none;
+    }
+    .overlay.show { display: block; }
+
+    /* CSV export toast */
+    .toast {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      background: #0B1E3F; color: #fff;
+      padding: 12px 24px; border-radius: 10px;
+      font-size: 0.9rem; font-weight: 600;
+      z-index: 999; opacity: 0; transition: opacity 0.3s;
+      pointer-events: none;
+    }
+    .toast.show { opacity: 1; }
+
+    @media (max-width: 900px) {
+      .stats-strip { grid-template-columns: repeat(2, 1fr); }
+      .detail-panel { width: 100%; }
+    }
+    @media (max-width: 600px) {
+      .stats-strip { grid-template-columns: 1fr 1fr; }
+      td, th { font-size: 0.8rem; padding: 10px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Top Nav -->
+<nav class="topnav">
+  <div style="display:flex;align-items:center;gap:8px">
+    <span class="topnav-logo">MVP<span>Kids</span>Cards</span>
+    <span style="opacity:0.4">|</span>
+    <span style="font-size:0.85rem;opacity:0.7">Fulfillment</span>
+    <span class="topnav-badge" id="pending-badge" style="display:none">0 NEW</span>
+  </div>
+  <div class="topnav-right">
+    <span id="admin-name" style="opacity:0.7"></span>
+    <a href="/dashboard.html">Parent Portal</a>
+    <a href="#" onclick="logout()">Sign Out</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- Stats -->
+  <div class="stats-strip">
+    <div class="stat-card">
+      <div class="stat-label">New Orders</div>
+      <div class="stat-value" id="stat-new">—</div>
+      <div class="stat-sub">awaiting print</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">In Production</div>
+      <div class="stat-value" id="stat-printing">—</div>
+      <div class="stat-sub">being printed</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Shipped Today</div>
+      <div class="stat-value" id="stat-shipped">—</div>
+      <div class="stat-sub" id="stat-shipped-sub">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Total Revenue</div>
+      <div class="stat-value" id="stat-revenue">—</div>
+      <div class="stat-sub">all time</div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filter-bar">
+    <input type="text" id="search-input" placeholder="🔍  Search by name, email, or order ID…" oninput="filterOrders()" />
+    <select id="filter-status" onchange="filterOrders()">
+      <option value="">All Statuses</option>
+      <option value="paid">Paid (New)</option>
+      <option value="printing">In Production</option>
+      <option value="shipped">Shipped</option>
+      <option value="cancelled">Cancelled</option>
+      <option value="refunded">Refunded</option>
+    </select>
+    <select id="filter-edition" onchange="filterOrders()">
+      <option value="">All Editions</option>
+      <option value="standard">Standard</option>
+      <option value="foil">Foil</option>
+      <option value="rookie">Rookie</option>
+    </select>
+    <button class="btn-export" onclick="exportCSV()">⬇ Export CSV</button>
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="sortable" onclick="sortBy('id')">Order ID ↕</th>
+          <th class="sortable" onclick="sortBy('created_at')">Date ↕</th>
+          <th>Athlete</th>
+          <th>Buyer</th>
+          <th class="sortable" onclick="sortBy('edition')">Edition ↕</th>
+          <th>Qty</th>
+          <th class="sortable" onclick="sortBy('total')">Total ↕</th>
+          <th class="sortable" onclick="sortBy('status')">Status ↕</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="orders-tbody">
+        <!-- skeleton rows -->
+        <tr><td colspan="9"><div class="skeleton" style="width:80%;margin:8px 0"></div></td></tr>
+        <tr><td colspan="9"><div class="skeleton" style="width:65%;margin:8px 0"></div></td></tr>
+        <tr><td colspan="9"><div class="skeleton" style="width:72%;margin:8px 0"></div></td></tr>
+      </tbody>
+    </table>
+
+    <div class="pagination">
+      <span id="page-info">Loading…</span>
+      <div class="page-btns">
+        <button class="page-btn" id="btn-prev" onclick="changePage(-1)" disabled>← Prev</button>
+        <button class="page-btn" id="btn-next" onclick="changePage(1)" disabled>Next →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Order detail side panel -->
+<div class="overlay" id="overlay" onclick="closePanel()"></div>
+<div class="detail-panel" id="detail-panel">
+  <div class="panel-header">
+    <h3 id="panel-order-id">Order Detail</h3>
+    <button class="panel-close" onclick="closePanel()">✕</button>
+  </div>
+  <div class="panel-body" id="panel-body">
+    <!-- filled dynamically -->
+  </div>
+  <div class="panel-footer" id="panel-footer">
+    <!-- filled dynamically -->
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? 'http://localhost:3001'
+    : 'https://mvpkidscards-api.vercel.app';
+
+  let allOrders  = [];
+  let filtered   = [];
+  let sortField  = 'created_at';
+  let sortDir    = -1;  // -1 = desc, 1 = asc
+  let page       = 1;
+  const PAGE_SIZE = 25;
+
+  // ── AUTH ─────────────────────────────────────────────────────
+  const token = localStorage.getItem('mvp_token');
+  if (!token) window.location.href = '/login.html';
+
+  document.getElementById('admin-name').textContent = localStorage.getItem('mvp_user_email') || '';
+
+  function logout() {
+    localStorage.clear();
+    window.location.href = '/login.html';
+  }
+
+  // ── FETCH ORDERS ─────────────────────────────────────────────
+  async function loadOrders() {
+    try {
+      const res = await fetch(`${API}/api/admin/orders`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+
+      if (res.status === 401) { logout(); return; }
+      if (res.status === 403) {
+        document.getElementById('orders-tbody').innerHTML = `
+          <tr><td colspan="9" style="text-align:center;padding:40px;color:#b91c1c">
+            Access denied. Admin account required.
+          </td></tr>`;
+        return;
+      }
+
+      const data = await res.json();
+      allOrders = data.orders || [];
+      updateStats(data.stats || {});
+      filterOrders();
+
+    } catch (e) {
+      // Show demo data when API is offline (local preview)
+      allOrders = getDemoOrders();
+      updateStats({ new: 3, printing: 7, shipped_today: 5, revenue_cents: 487500 });
+      filterOrders();
+    }
+  }
+
+  // ── DEMO DATA (for local HTML preview without backend) ───────
+  function getDemoOrders() {
+    const statuses = ['paid','paid','paid','printing','printing','shipped','shipped','cancelled'];
+    const editions = ['standard','foil','rookie'];
+    const athletes = ['Jake Martinez','Sofia Chen','Aiden Johnson','Mia Williams','Carlos Rivera'];
+    const buyers   = ['David Martinez','Wei Chen','Marcus Johnson','Patricia Williams','Elena Rivera'];
+    const prices   = { standard: 2999, foil: 4999, rookie: 3999 };
+
+    return Array.from({ length: 38 }, (_, i) => {
+      const ed  = editions[i % 3];
+      const st  = statuses[i % statuses.length];
+      const qty = [1,1,1,1,5][i % 5];
+      const d   = new Date(Date.now() - i * 3600000 * (i + 1));
+      return {
+        id: `ORD-${String(10000 + i).padStart(5,'0')}`,
+        created_at: d.toISOString(),
+        athlete_name: athletes[i % athletes.length],
+        buyer_name:   buyers[i % buyers.length],
+        buyer_email:  buyers[i % buyers.length].toLowerCase().replace(' ', '.') + '@example.com',
+        shipping_address: `${100 + i} Main St, Springfield IL 62701`,
+        edition: ed,
+        quantity: qty,
+        unit_cents: prices[ed],
+        total_cents: prices[ed] * qty,
+        status: st,
+        stripe_payment_intent: 'pi_demo_' + Math.random().toString(36).slice(2,10),
+        card_preview_url: null
+      };
+    });
+  }
+
+  // ── STATS ────────────────────────────────────────────────────
+  function updateStats(s) {
+    document.getElementById('stat-new').textContent       = s.new ?? '—';
+    document.getElementById('stat-printing').textContent  = s.printing ?? '—';
+    document.getElementById('stat-shipped').textContent   = s.shipped_today ?? '—';
+    document.getElementById('stat-shipped-sub').textContent = 'total today';
+    document.getElementById('stat-revenue').textContent   = s.revenue_cents != null
+      ? '$' + (s.revenue_cents / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })
+      : '—';
+
+    const newCount = s.new ?? 0;
+    const badge = document.getElementById('pending-badge');
+    if (newCount > 0) {
+      badge.textContent = `${newCount} NEW`;
+      badge.style.display = 'inline';
+    }
+  }
+
+  // ── FILTER & SORT ────────────────────────────────────────────
+  function filterOrders() {
+    const q  = document.getElementById('search-input').value.toLowerCase();
+    const st = document.getElementById('filter-status').value;
+    const ed = document.getElementById('filter-edition').value;
+
+    filtered = allOrders.filter(o => {
+      const matchQ  = !q || [o.id, o.buyer_name, o.buyer_email, o.athlete_name]
+        .some(v => (v||'').toLowerCase().includes(q));
+      const matchSt = !st || o.status === st;
+      const matchEd = !ed || o.edition === ed;
+      return matchQ && matchSt && matchEd;
+    });
+
+    filtered.sort((a, b) => {
+      let av = a[sortField], bv = b[sortField];
+      if (sortField === 'total') { av = a.total_cents; bv = b.total_cents; }
+      if (typeof av === 'string') return av.localeCompare(bv) * sortDir;
+      return ((av ?? 0) - (bv ?? 0)) * sortDir;
+    });
+
+    page = 1;
+    renderTable();
+  }
+
+  function sortBy(field) {
+    if (sortField === field) sortDir *= -1;
+    else { sortField = field; sortDir = -1; }
+    filterOrders();
+  }
+
+  // ── RENDER TABLE ─────────────────────────────────────────────
+  function renderTable() {
+    const tbody = document.getElementById('orders-tbody');
+    const start = (page - 1) * PAGE_SIZE;
+    const slice = filtered.slice(start, start + PAGE_SIZE);
+    const total = filtered.length;
+
+    if (!total) {
+      tbody.innerHTML = `
+        <tr><td colspan="9">
+          <div class="empty-state">
+            <div class="icon">📦</div>
+            <h3>No orders found</h3>
+            <p>Try adjusting your filters.</p>
+          </div>
+        </td></tr>`;
+      document.getElementById('page-info').textContent = '0 orders';
+      document.getElementById('btn-prev').disabled = true;
+      document.getElementById('btn-next').disabled = true;
+      return;
+    }
+
+    tbody.innerHTML = slice.map(o => `
+      <tr onclick="openPanel('${o.id}')" style="cursor:pointer">
+        <td><code style="font-size:0.78rem;color:#64748b">${o.id}</code></td>
+        <td style="white-space:nowrap;color:#64748b;font-size:0.82rem">${fmtDate(o.created_at)}</td>
+        <td style="font-weight:600">${esc(o.athlete_name || '—')}</td>
+        <td>
+          <div style="font-weight:500">${esc(o.buyer_name || '—')}</div>
+          <div style="font-size:0.77rem;color:#94a3b8">${esc(o.buyer_email || '')}</div>
+        </td>
+        <td><span class="badge badge-${o.edition}">${(o.edition||'').toUpperCase()}</span></td>
+        <td style="text-align:center">${o.quantity || 1}</td>
+        <td style="font-weight:700">$${((o.total_cents||0)/100).toFixed(2)}</td>
+        <td><span class="status-pill pill-${o.status}">${statusLabel(o.status)}</span></td>
+        <td onclick="event.stopPropagation()">
+          <div class="tbl-actions">
+            ${o.status === 'paid'     ? `<button class="tbl-btn tbl-btn-mark" onclick="updateStatus('${o.id}','printing')">→ Print</button>` : ''}
+            ${o.status === 'printing' ? `<button class="tbl-btn tbl-btn-ship" onclick="openShipModal('${o.id}')">→ Ship</button>` : ''}
+            <button class="tbl-btn tbl-btn-view" onclick="openPanel('${o.id}')">View</button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+
+    // Pagination info
+    const end = Math.min(start + PAGE_SIZE, total);
+    document.getElementById('page-info').textContent = `Showing ${start + 1}–${end} of ${total} orders`;
+    document.getElementById('btn-prev').disabled = page <= 1;
+    document.getElementById('btn-next').disabled = end >= total;
+  }
+
+  function changePage(dir) {
+    page += dir;
+    renderTable();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── ORDER DETAIL PANEL ───────────────────────────────────────
+  function openPanel(orderId) {
+    const o = allOrders.find(x => x.id === orderId);
+    if (!o) return;
+
+    document.getElementById('panel-order-id').textContent = o.id;
+
+    document.getElementById('panel-body').innerHTML = `
+      <div class="panel-row">
+        <label>Status</label>
+        <div class="val"><span class="status-pill pill-${o.status}">${statusLabel(o.status)}</span></div>
+      </div>
+      <div class="panel-row">
+        <label>Date</label>
+        <div class="val">${fmtDateFull(o.created_at)}</div>
+      </div>
+      <div class="panel-row">
+        <label>Athlete</label>
+        <div class="val" style="font-weight:600">${esc(o.athlete_name || '—')}</div>
+      </div>
+      <div class="panel-row">
+        <label>Edition</label>
+        <div class="val"><span class="badge badge-${o.edition}">${(o.edition||'').toUpperCase()}</span></div>
+      </div>
+      <div class="panel-row">
+        <label>Quantity</label>
+        <div class="val">${o.quantity || 1}</div>
+      </div>
+      <div class="panel-row">
+        <label>Order Total</label>
+        <div class="val" style="font-weight:800;font-size:1.1rem">$${((o.total_cents||0)/100).toFixed(2)}</div>
+      </div>
+      <hr style="border:none;border-top:1px solid #f1f5f9;margin:16px 0">
+      <div class="panel-row">
+        <label>Buyer Name</label>
+        <div class="val">${esc(o.buyer_name || '—')}</div>
+      </div>
+      <div class="panel-row">
+        <label>Buyer Email</label>
+        <div class="val"><a href="mailto:${esc(o.buyer_email)}" style="color:var(--navy)">${esc(o.buyer_email || '—')}</a></div>
+      </div>
+      <div class="panel-row">
+        <label>Shipping Address</label>
+        <div class="val" style="line-height:1.5">${esc(o.shipping_address || '—')}</div>
+      </div>
+      ${o.tracking_number ? `
+      <div class="panel-row">
+        <label>Tracking Number</label>
+        <div class="val" style="font-weight:600">${esc(o.tracking_number)}</div>
+      </div>` : ''}
+      ${o.stripe_payment_intent ? `
+      <div class="panel-row">
+        <label>Stripe Payment</label>
+        <div class="val"><code style="font-size:0.8rem;color:#64748b">${o.stripe_payment_intent}</code></div>
+      </div>` : ''}
+      ${o.card_preview_url ? `
+      <div class="panel-row">
+        <label>Card Preview</label>
+        <div><a href="${o.card_preview_url}" target="_blank" style="color:var(--navy);font-weight:600;font-size:0.9rem">View preview →</a></div>
+      </div>` : ''}
+    `;
+
+    // Footer action buttons based on status
+    const footer = document.getElementById('panel-footer');
+    footer.innerHTML = '';
+    if (o.status === 'paid') {
+      footer.innerHTML = `<button class="btn-full btn-printing" onclick="updateStatus('${o.id}','printing')">Mark as In Production</button>`;
+    }
+    if (o.status === 'printing') {
+      footer.innerHTML = `<button class="btn-full btn-shipped" onclick="openShipModal('${o.id}')">Mark as Shipped</button>`;
+    }
+    if (['paid','printing'].includes(o.status)) {
+      footer.innerHTML += `<button class="btn-full btn-refund" onclick="confirmRefund('${o.id}')">Issue Refund</button>`;
+    }
+
+    document.getElementById('detail-panel').classList.add('open');
+    document.getElementById('overlay').classList.add('show');
+  }
+
+  function closePanel() {
+    document.getElementById('detail-panel').classList.remove('open');
+    document.getElementById('overlay').classList.remove('show');
+  }
+
+  // ── STATUS UPDATES ───────────────────────────────────────────
+  async function updateStatus(orderId, newStatus, extra = {}) {
+    try {
+      const res = await fetch(`${API}/api/admin/orders/${orderId}/status`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ status: newStatus, ...extra })
+      });
+
+      if (!res.ok) throw new Error('Failed to update status');
+
+      // Optimistically update local data
+      const order = allOrders.find(o => o.id === orderId);
+      if (order) {
+        order.status = newStatus;
+        if (extra.tracking_number) order.tracking_number = extra.tracking_number;
+      }
+
+      closePanel();
+      filterOrders();
+      showToast(`✅ Order ${orderId} → ${statusLabel(newStatus)}`);
+
+    } catch (e) {
+      // In local preview, just simulate success
+      const order = allOrders.find(o => o.id === orderId);
+      if (order) {
+        order.status = newStatus;
+        if (extra.tracking_number) order.tracking_number = extra.tracking_number;
+      }
+      closePanel();
+      filterOrders();
+      showToast(`✅ Order ${orderId} → ${statusLabel(newStatus)} (demo)`);
+    }
+  }
+
+  // ── SHIP MODAL (inline prompt for tracking number) ───────────
+  function openShipModal(orderId) {
+    const tracking = window.prompt('Enter tracking number (optional):') ?? '';
+    updateStatus(orderId, 'shipped', { tracking_number: tracking });
+  }
+
+  function confirmRefund(orderId) {
+    if (window.confirm(`Issue refund for order ${orderId}? This will also cancel the order.`)) {
+      updateStatus(orderId, 'refunded');
+    }
+  }
+
+  // ── CSV EXPORT ───────────────────────────────────────────────
+  function exportCSV() {
+    const headers = ['Order ID','Date','Athlete','Buyer','Email','Shipping Address','Edition','Qty','Total','Status','Tracking'];
+    const rows = filtered.map(o => [
+      o.id,
+      fmtDateFull(o.created_at),
+      o.athlete_name || '',
+      o.buyer_name   || '',
+      o.buyer_email  || '',
+      (o.shipping_address || '').replace(/,/g, ' '),
+      o.edition      || '',
+      o.quantity     || 1,
+      ((o.total_cents||0)/100).toFixed(2),
+      o.status       || '',
+      o.tracking_number || ''
+    ]);
+
+    const csv = [headers, ...rows].map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href     = url;
+    a.download = `mvp-orders-${new Date().toISOString().split('T')[0]}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('📥 CSV exported!');
+  }
+
+  // ── HELPERS ──────────────────────────────────────────────────
+  function fmtDate(iso) {
+    if (!iso) return '—';
+    const d = new Date(iso);
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+  }
+
+  function fmtDateFull(iso) {
+    if (!iso) return '—';
+    return new Date(iso).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' });
+  }
+
+  function statusLabel(s) {
+    return { paid: 'New', printing: 'In Production', shipped: 'Shipped', cancelled: 'Cancelled', pending: 'Pending', refunded: 'Refunded' }[s] || s;
+  }
+
+  function esc(str) {
+    return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  // ── INIT ──────────────────────────────────────────────────────
+  loadOrders();
+</script>
+</body>
+</html>

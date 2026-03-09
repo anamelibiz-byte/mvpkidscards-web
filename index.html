@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MVP Kids Cards — Youth Athlete Trading Cards That Fundraise Today & Appreciate Forever</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Montserrat:wght@400;500;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy-deep:  #0B1E3F;
+      --navy-mid:   #1A3260;
+      --gold:       #E8A020;
+      --gold-light: #F5C84A;
+      --card-blue:  #4A90D9;
+      --green-win:  #1AAF5D;
+      --orange:     #E05C1A;
+      --slate-gray: #8A9BB0;
+      --slate:      #2E3D52;
+      --white:      #ffffff;
+      --off-white:  #F8F9FC;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--off-white);
+      color: var(--navy-deep);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      background: rgba(11,30,63,0.96);
+      backdrop-filter: blur(8px);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .nav-logo {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.3rem; font-weight: 700;
+      color: var(--white); letter-spacing: 1px;
+      line-height: 1.1;
+    }
+    .nav-logo .mvp { color: var(--gold); }
+    .nav-logo .sub {
+      display: block; font-size: 0.55rem; letter-spacing: 2px;
+      color: var(--slate-gray); font-weight: 400; text-transform: uppercase;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--slate-gray); text-decoration: none;
+      font-size: 0.85rem; font-weight: 600; letter-spacing: 0.5px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      background: var(--gold); color: var(--navy-deep);
+      border: none; border-radius: 6px;
+      padding: 0.5rem 1.25rem; cursor: pointer;
+      font-family: 'Oswald', sans-serif; font-weight: 700;
+      font-size: 0.9rem; letter-spacing: 0.5px;
+      text-decoration: none; transition: background 0.2s, transform 0.15s;
+    }
+    .nav-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+    /* ─── EARLY ACCESS BANNER ─── */
+    .top-banner {
+      background: var(--gold); color: var(--navy-deep);
+      text-align: center; padding: 0.55rem 1rem;
+      font-family: 'Oswald', sans-serif; font-weight: 700;
+      font-size: 0.8rem; letter-spacing: 0.5px;
+      position: fixed; top: 64px; width: 100%; z-index: 99;
+    }
+    .top-banner a { color: var(--navy-deep); text-decoration: underline; }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy-mid) 60%, #1e4080 100%);
+      display: flex; align-items: center; justify-content: center;
+      padding: 8.5rem 2rem 4rem;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(74,144,217,0.12) 0%, transparent 65%);
+    }
+    .hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 40px),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 40px);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 1100px; width: 100%; position: relative; z-index: 1;
+      display: flex; align-items: center; gap: 4rem; flex-wrap: wrap;
+    }
+    .hero-text { flex: 1; min-width: 280px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: rgba(232,160,32,0.15); border: 1px solid rgba(232,160,32,0.4);
+      color: var(--gold); border-radius: 100px;
+      padding: 0.35rem 1rem; font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.5px; margin-bottom: 1.25rem;
+    }
+    .hero-badge::before { content: '🚀'; font-size: 0.75rem; }
+    .hero h1 {
+      font-family: 'Oswald', sans-serif; font-weight: 700;
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      line-height: 1.1; color: var(--white);
+      margin-bottom: 1.25rem;
+    }
+    .hero h1 span { color: var(--gold); }
+    .hero-sub {
+      color: #a8bcd4; font-size: 1.05rem; line-height: 1.7;
+      max-width: 480px; margin-bottom: 2rem;
+    }
+
+    /* ─── WAITLIST FORM (HERO) ─── */
+    .waitlist-form {
+      display: flex; gap: 0.6rem; flex-wrap: wrap; max-width: 480px;
+    }
+    .waitlist-input {
+      flex: 1; min-width: 220px;
+      padding: 0.85rem 1.1rem; border-radius: 8px;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.08); color: white;
+      font-family: 'Montserrat', sans-serif; font-size: 0.9rem;
+      outline: none; transition: border-color 0.2s;
+    }
+    .waitlist-input::placeholder { color: rgba(255,255,255,0.35); }
+    .waitlist-input:focus { border-color: var(--gold); }
+    .btn-primary {
+      background: var(--gold); color: var(--navy-deep);
+      font-family: 'Oswald', sans-serif; font-weight: 700;
+      font-size: 1rem; letter-spacing: 0.5px;
+      padding: 0.85rem 1.75rem; border: none; border-radius: 8px;
+      cursor: pointer; text-decoration: none;
+      transition: all 0.2s; display: inline-block; white-space: nowrap;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,160,32,0.35); }
+    .hero-fine {
+      margin-top: 0.75rem; color: rgba(138,155,176,0.7);
+      font-size: 0.75rem; line-height: 1.5;
+    }
+    .hero-fine span { color: var(--green-win); font-weight: 600; }
+
+    /* ─── FLOATING CARDS ─── */
+    .hero-cards { flex: 0 0 auto; position: relative; width: 280px; height: 380px; }
+    .card-visual {
+      width: 180px; height: 252px; border-radius: 10px;
+      position: absolute;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      overflow: hidden; display: flex; flex-direction: column;
+    }
+    .card-visual .card-header {
+      height: 32px; display: flex; align-items: center;
+      justify-content: space-between; padding: 0 10px;
+      font-family: 'Oswald', sans-serif; font-size: 0.55rem; font-weight: 700;
+      letter-spacing: 0.8px;
+    }
+    .card-visual .card-photo {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+    }
+    .card-visual .card-photo-inner {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem;
+    }
+    .card-visual .card-name-bar {
+      padding: 6px 10px 4px;
+      font-family: 'Oswald', sans-serif; font-weight: 700;
+      font-size: 0.75rem; color: white; text-align: center; letter-spacing: 0.5px;
+    }
+    .card-visual .card-stats {
+      display: flex; justify-content: space-around;
+      padding: 6px 6px 8px; gap: 4px;
+    }
+    .card-visual .stat-box { text-align: center; flex: 1; }
+    .card-visual .stat-val {
+      font-family: 'Oswald', sans-serif; font-weight: 700;
+      font-size: 0.8rem; color: white; line-height: 1;
+    }
+    .card-visual .stat-lbl {
+      font-family: 'Montserrat', sans-serif; font-size: 0.45rem;
+      color: var(--slate-gray); letter-spacing: 0.5px; margin-top: 1px;
+    }
+    .card-visual .card-serial {
+      padding: 4px 10px 6px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: 'Oswald', sans-serif; font-size: 0.5rem;
+      color: var(--slate-gray); letter-spacing: 0.5px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .card-standard {
+      background: var(--navy-deep); border: 2px solid var(--gold);
+      left: 70px; bottom: 0; z-index: 3; transform: rotate(2deg);
+      animation: float1 4s ease-in-out infinite;
+    }
+    .card-standard .card-header { background: var(--navy-mid); color: var(--white); }
+    .card-rookie {
+      background: #0a2a00; border: 2px solid var(--green-win);
+      left: 0; bottom: 30px; z-index: 2; transform: rotate(-4deg);
+      animation: float2 4.5s ease-in-out infinite;
+    }
+    .card-rookie .card-header { background: var(--green-win); color: var(--white); }
+    .card-foil {
+      background: #1a1a2e; border: 2px solid #aaa;
+      left: 100px; bottom: 50px; z-index: 1; transform: rotate(8deg);
+      animation: float3 5s ease-in-out infinite;
+    }
+    .card-foil .card-header { background: linear-gradient(90deg,#2d2d4a,#3d3d6a); color: var(--white); }
+
+    @keyframes float1 { 0%,100%{transform:rotate(2deg) translateY(0)} 50%{transform:rotate(2deg) translateY(-10px)} }
+    @keyframes float2 { 0%,100%{transform:rotate(-4deg) translateY(0)} 50%{transform:rotate(-4deg) translateY(-8px)} }
+    @keyframes float3 { 0%,100%{transform:rotate(8deg) translateY(0)} 50%{transform:rotate(8deg) translateY(-12px)} }
+
+    /* ─── SOCIAL PROOF BAR ─── */
+    .proof-bar {
+      background: var(--navy-deep); padding: 1.25rem 2rem;
+      display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;
+    }
+    .proof-item {
+      display: flex; align-items: center; gap: 0.5rem;
+      color: var(--slate-gray); font-size: 0.82rem; font-weight: 500;
+    }
+    .proof-item strong { color: var(--white); }
+
+    /* ─── SECTIONS ─── */
+    .section { padding: 5rem 2rem; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-family: 'Oswald', sans-serif; font-weight: 700;
+      font-size: 0.75rem; letter-spacing: 2px; color: var(--gold);
+      text-transform: uppercase; margin-bottom: 0.75rem;
+    }
+    .section h2 {
+      font-family: 'Oswald', sans-serif; font-weight: 700;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem); color: var(--navy-deep);
+      line-height: 1.15; margin-bottom: 1rem;
+    }
+    .section-sub {
+      color: #5a6f88; font-size: 1rem; line-height: 1.7;
+      max-width: 540px; margin-bottom: 3rem;
+    }
+
+    /* ─── HOW IT WORKS ─── */
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
+    .step {
+      background: white; border-radius: 16px; padding: 2rem 1.5rem;
+      box-shadow: 0 2px 20px rgba(11,30,63,0.07);
+      border-top: 4px solid transparent;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .step:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(11,30,63,0.12); }
+    .step:nth-child(1){border-color:var(--gold)}
+    .step:nth-child(2){border-color:var(--card-blue)}
+    .step:nth-child(3){border-color:var(--green-win)}
+    .step:nth-child(4){border-color:var(--orange)}
+    .step:nth-child(5){border-color:var(--gold)}
+    .step-num {
+      font-family: 'Oswald', sans-serif; font-weight: 700;
+      font-size: 2.5rem; line-height: 1;
+      color: rgba(11,30,63,0.08); margin-bottom: 0.5rem;
+    }
+    .step-icon { font-size: 1.8rem; margin-bottom: 0.75rem; }
+    .step h3 {
+      font-family: 'Oswald', sans-serif; font-weight: 600;
+      font-size: 1rem; color: var(--navy-deep); margin-bottom: 0.5rem;
+    }
+    .step p { font-size: 0.875rem; color: #5a6f88; line-height: 1.6; }
+
+    /* ─── CARD VARIANTS ─── */
+    .variants-section { background: var(--navy-deep); padding: 5rem 2rem; }
+    .variants-section h2 { color: var(--white); }
+    .variants-section .section-sub { color: var(--slate-gray); }
+    .variants-grid { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; }
+    .variant-card {
+      width: 220px; border-radius: 16px; overflow: hidden;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.4); transition: transform 0.3s;
+    }
+    .variant-card:hover { transform: translateY(-8px) rotate(-1deg); }
+    .variant-header {
+      height: 40px; display: flex; align-items: center;
+      justify-content: space-between; padding: 0 12px;
+      font-family: 'Oswald', sans-serif; font-size: 0.6rem; font-weight: 700; letter-spacing: 1px;
+    }
+    .variant-photo { height: 160px; display: flex; align-items: center; justify-content: center; font-size: 4rem; }
+    .variant-info { padding: 12px; }
+    .variant-name {
+      font-family: 'Oswald', sans-serif; font-weight: 700;
+      font-size: 1rem; color: white; text-align: center; margin-bottom: 4px;
+    }
+    .variant-pos { font-size: 0.7rem; text-align: center; margin-bottom: 8px; font-weight: 600; }
+    .variant-stats { display: flex; justify-content: space-around; }
+    .v-stat { text-align: center; }
+    .v-stat-val { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1rem; color: white; }
+    .v-stat-lbl { font-size: 0.55rem; color: var(--slate-gray); }
+    .variant-footer {
+      padding: 8px 12px; display: flex; justify-content: space-between;
+      font-family: 'Oswald', sans-serif; font-size: 0.55rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .variant-badge { text-align: center; padding: 1rem; font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 0.8rem; letter-spacing: 1px; }
+
+    .var-standard { background: var(--navy-deep); border: 2px solid var(--gold); }
+    .var-standard .variant-header { background: var(--navy-mid); color: white; }
+    .var-standard .variant-badge { background: rgba(232,160,32,0.1); color: var(--gold); }
+
+    .var-foil { background: #1a1a2e; border: 2px solid #aaa; }
+    .var-foil .variant-header { background: linear-gradient(90deg,#2d2d4a,#3d3d5e); color: white; }
+    .var-foil .v-stat-val { color: var(--gold-light); }
+    .var-foil .variant-badge { background: rgba(192,192,192,0.1); color: #C0C0C0; }
+
+    .var-rookie { background: #0a2a00; border: 2px solid var(--green-win); }
+    .var-rookie .variant-header { background: var(--green-win); color: white; }
+    .var-rookie .variant-badge { background: rgba(26,175,93,0.15); color: var(--green-win); }
+
+    /* ─── WHY ─── */
+    .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+    .why-card {
+      background: white; border-radius: 16px; padding: 2rem;
+      box-shadow: 0 2px 20px rgba(11,30,63,0.07);
+      border-left: 4px solid var(--gold);
+    }
+    .why-card.blue { border-color: var(--card-blue); }
+    .why-card.green { border-color: var(--green-win); }
+    .why-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .why-card h3 {
+      font-family: 'Oswald', sans-serif; font-weight: 700;
+      font-size: 1.1rem; color: var(--navy-deep); margin-bottom: 0.5rem;
+    }
+    .why-card p { font-size: 0.875rem; color: #5a6f88; line-height: 1.7; }
+
+    /* ─── STATS ─── */
+    .stats-section {
+      background: linear-gradient(135deg, var(--navy-deep), var(--navy-mid));
+      padding: 4rem 2rem;
+    }
+    .stats-grid {
+      max-width: 900px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2rem; text-align: center;
+    }
+    .stat-item .big { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 3rem; color: var(--gold); line-height: 1; }
+    .stat-item .label { color: var(--slate-gray); font-size: 0.85rem; margin-top: 0.4rem; }
+    .stat-item .sub { color: rgba(168,188,212,0.6); font-size: 0.72rem; margin-top: 0.2rem; }
+
+    /* ─── TESTIMONIALS ─── */
+    .testimonials { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .testimonial {
+      background: white; border-radius: 16px; padding: 2rem;
+      box-shadow: 0 2px 20px rgba(11,30,63,0.07); position: relative;
+    }
+    .testimonial::before {
+      content: '"'; font-family: Georgia, serif; font-size: 4rem;
+      color: var(--gold); line-height: 0; position: absolute;
+      top: 1.75rem; left: 1.5rem; opacity: 0.3;
+    }
+    .testimonial p { font-size: 0.9rem; color: #4a5a6a; line-height: 1.7; margin-bottom: 1.25rem; padding-top: 0.5rem; }
+    .testimonial-author { display: flex; align-items: center; gap: 0.75rem; }
+    .author-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--navy-mid); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+    .author-name { font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 0.9rem; color: var(--navy-deep); }
+    .author-role { font-size: 0.75rem; color: var(--slate-gray); }
+
+    /* ─── WAITLIST CTA SECTION ─── */
+    .cta-section {
+      background: linear-gradient(135deg, var(--navy-deep) 0%, #1a3a70 100%);
+      padding: 6rem 2rem; text-align: center; position: relative; overflow: hidden;
+    }
+    .cta-section::before {
+      content: ''; position: absolute; top: -50%; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(232,160,32,0.08) 0%, transparent 70%);
+    }
+    .cta-inner { position: relative; z-index: 1; }
+    .cta-section h2 {
+      font-family: 'Oswald', sans-serif; font-weight: 700;
+      font-size: clamp(2rem, 4vw, 3rem); color: white; margin-bottom: 1rem;
+    }
+    .cta-section h2 span { color: var(--gold); }
+    .cta-section .cta-sub {
+      color: var(--slate-gray); font-size: 1rem; max-width: 500px;
+      margin: 0 auto 2rem; line-height: 1.7;
+    }
+    .cta-form-wrap {
+      display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap;
+      max-width: 520px; margin: 0 auto 1rem;
+    }
+    .cta-input {
+      flex: 1; min-width: 240px;
+      padding: 0.85rem 1.25rem; border-radius: 8px;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.08); color: white;
+      font-family: 'Montserrat', sans-serif; font-size: 0.9rem;
+      outline: none; transition: border-color 0.2s;
+    }
+    .cta-input::placeholder { color: rgba(255,255,255,0.35); }
+    .cta-input:focus { border-color: var(--gold); }
+    .cta-fine { color: rgba(138,155,176,0.65); font-size: 0.75rem; margin-top: 0.5rem; }
+
+    /* waitlist counter pill */
+    .waitlist-count {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: rgba(26,175,93,0.15); border: 1px solid rgba(26,175,93,0.35);
+      color: var(--green-win); border-radius: 100px;
+      padding: 0.35rem 1rem; font-size: 0.78rem; font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+    .waitlist-count::before { content: '🟢'; font-size: 0.6rem; }
+
+    /* ─── FOOTER ─── */
+    footer { background: #07121f; padding: 3rem 2rem 2rem; color: var(--slate-gray); }
+    .footer-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: flex-start;
+      flex-wrap: wrap; gap: 2rem; margin-bottom: 2rem;
+    }
+    .footer-logo { font-family: 'Oswald', sans-serif; font-size: 1.3rem; font-weight: 700; color: white; margin-bottom: 0.35rem; }
+    .footer-logo .mvp { color: var(--gold); }
+    .footer-logo .sub { display: block; font-size: 0.55rem; letter-spacing: 2px; color: var(--slate-gray); font-weight: 400; text-transform: uppercase; margin-top: 2px; }
+    .footer-tagline { font-size: 0.8rem; color: var(--slate-gray); max-width: 220px; line-height: 1.5; margin-top: 0.5rem; }
+    .footer-links { display: flex; gap: 3rem; flex-wrap: wrap; }
+    .footer-col h4 {
+      font-family: 'Oswald', sans-serif; font-weight: 600;
+      font-size: 0.8rem; letter-spacing: 1px; color: white;
+      text-transform: uppercase; margin-bottom: 1rem;
+    }
+    .footer-col a { display: block; color: var(--slate-gray); text-decoration: none; font-size: 0.82rem; margin-bottom: 0.5rem; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom {
+      max-width: 1100px; margin: 0 auto;
+      border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem; font-size: 0.78rem;
+    }
+    .footer-bottom .copy { color: #3d5060; }
+    .footer-bottom .legal { display: flex; gap: 1.5rem; }
+    .footer-bottom .legal a { color: #3d5060; text-decoration: none; }
+    .footer-bottom .legal a:hover { color: var(--gold); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .hero-inner { flex-direction: column; text-align: center; align-items: center; }
+      .hero-sub { margin-left: auto; margin-right: auto; }
+      .waitlist-form { justify-content: center; }
+      .nav-links { display: none; }
+      .proof-bar { gap: 1.5rem; }
+      .hero-cards { width: 240px; height: 320px; }
+      .card-visual { width: 155px; height: 218px; }
+      .card-standard { left: 50px; }
+      .card-foil { left: 80px; bottom: 40px; }
+      .top-banner { font-size: 0.7rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- EARLY ACCESS BANNER -->
+  <div class="top-banner">
+    🎉 Now accepting early access applications — <a href="#waitlist">Join the waitlist and be first to create your athlete's card</a>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">
+      <span class="mvp">MVP</span> Kids Cards
+      <span class="sub">ProspectCard by MVP Kids Cards</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#how-it-works">How It Works</a></li>
+      <li><a href="#cards">The Cards</a></li>
+      <li><a href="#why">Why Us</a></li>
+    </ul>
+    <a href="#waitlist" class="nav-cta">Join Waitlist</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-badge">Early Access — Limited Spots Available</div>
+        <h1>Your Kid Deserves<br /><span>Their Own Card.</span></h1>
+        <p class="hero-sub">
+          MVP Kids Cards creates limited-edition trading cards for youth athletes — beautifully printed, professionally designed, and built to fundraise. Be among the first families to claim one.
+        </p>
+        <form class="waitlist-form" onsubmit="handleWaitlist(event)">
+          <input type="email" class="waitlist-input" placeholder="Enter your email address" required />
+          <button type="submit" class="btn-primary">Join the Waitlist</button>
+        </form>
+        <p class="hero-fine">
+          <span>✓ Free to join.</span> &nbsp;No credit card. No commitment. We'll reach out when your spot is ready.
+        </p>
+      </div>
+
+      <!-- Floating card stack -->
+      <div class="hero-cards">
+        <!-- Foil (back) -->
+        <div class="card-visual card-foil">
+          <div class="card-header">
+            <span>MVP <span style="color:var(--gold)">KIDS</span></span>
+            <span style="color:#C0C0C0">FOIL EDITION</span>
+          </div>
+          <div class="card-photo"><div class="card-photo-inner">🏈</div></div>
+          <div class="card-name-bar">MARCUS T.</div>
+          <div class="card-stats">
+            <div class="stat-box"><div class="stat-val" style="color:var(--gold-light)">4.6</div><div class="stat-lbl">40 DASH</div></div>
+            <div class="stat-box"><div class="stat-val" style="color:var(--gold-light)">38"</div><div class="stat-lbl">VERTICAL</div></div>
+            <div class="stat-box"><div class="stat-val" style="color:var(--gold-light)">QB</div><div class="stat-lbl">POSITION</div></div>
+          </div>
+          <div class="card-serial"><span>FOIL 2025</span><span style="color:#C0C0C0">#12/25</span></div>
+        </div>
+        <!-- Rookie (middle) -->
+        <div class="card-visual card-rookie">
+          <div class="card-header">
+            <span>MVP <span style="color:white">KIDS</span></span>
+            <span style="color:white">ROOKIE CARD</span>
+          </div>
+          <div class="card-photo"><div class="card-photo-inner">⚽</div></div>
+          <div class="card-name-bar">SOFIA R.</div>
+          <div class="card-stats">
+            <div class="stat-box"><div class="stat-val" style="color:var(--green-win)">12</div><div class="stat-lbl">GOALS</div></div>
+            <div class="stat-box"><div class="stat-val" style="color:var(--green-win)">FWD</div><div class="stat-lbl">POSITION</div></div>
+            <div class="stat-box"><div class="stat-val" style="color:var(--green-win)">U14</div><div class="stat-lbl">LEVEL</div></div>
+          </div>
+          <div class="card-serial"><span>ROOKIE 2025</span><span style="color:var(--green-win)">#03/25</span></div>
+        </div>
+        <!-- Standard (front) -->
+        <div class="card-visual card-standard">
+          <div class="card-header">
+            <span>MVP <span style="color:var(--gold)">KIDS</span></span>
+            <span style="color:var(--gold)">STANDARD</span>
+          </div>
+          <div class="card-photo"><div class="card-photo-inner">🏀</div></div>
+          <div class="card-name-bar">JAYLEN W.</div>
+          <div class="card-stats">
+            <div class="stat-box"><div class="stat-val">18.2</div><div class="stat-lbl">PPG</div></div>
+            <div class="stat-box"><div class="stat-val">PG</div><div class="stat-lbl">POSITION</div></div>
+            <div class="stat-box"><div class="stat-val">AAU</div><div class="stat-lbl">LEAGUE</div></div>
+          </div>
+          <div class="card-serial"><span>STD 2025</span><span style="color:var(--gold)">#07/25</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROOF BAR -->
+  <div class="proof-bar">
+    <div class="proof-item">🏆 <span><strong>30M+</strong> youth athletes in America</span></div>
+    <div class="proof-item">💰 <span>Average family fundraises <strong>$330+ per card run</strong></span></div>
+    <div class="proof-item">🃏 <span>Limited editions of <strong>25 cards per athlete</strong></span></div>
+    <div class="proof-item">📬 <span><strong>Auto-fulfilled</strong> · Ships in 7–10 days</span></div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how-it-works">
+    <div class="section-inner">
+      <div class="section-label">The Process</div>
+      <h2>From photo to card in minutes.</h2>
+      <p class="section-sub">No design skills needed. Create a professional-grade trading card for your athlete and start raising money — all from your phone.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-icon">👤</div>
+          <h3>Build Your Athlete's Profile</h3>
+          <p>Add your child's name, sport, team, position, and a few key stats. Takes less than 5 minutes.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-icon">📸</div>
+          <h3>Upload Their Photo</h3>
+          <p>Upload a clear action photo. Our platform instantly composites it into a professional card template.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-icon">🃏</div>
+          <h3>Pick Your Card Edition</h3>
+          <p>Choose from Standard, Foil Edition, or Rookie Card. Each has its own design, feel, and value.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <div class="step-icon">📣</div>
+          <h3>Share Your Fundraising Link</h3>
+          <p>Your personal fundraising page goes live instantly. Send it to grandparents, coaches, and teammates.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">05</div>
+          <div class="step-icon">📬</div>
+          <h3>Cards Ship to Every Buyer</h3>
+          <p>Every card prints and ships directly to the buyer in 7–10 days. You don't lift a finger.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CARD VARIANTS -->
+  <section class="variants-section section" id="cards">
+    <div class="section-inner">
+      <div class="section-label">The Collection</div>
+      <h2 style="color:white">Three editions. One legacy.</h2>
+      <p class="section-sub">Each variant tells a different story. Choose the edition that fits your athlete's moment.</p>
+      <div class="variants-grid">
+        <!-- Standard -->
+        <div class="variant-card var-standard">
+          <div class="variant-header">
+            <span>MVP <span style="color:var(--gold)">KIDS</span></span>
+            <span style="color:var(--gold)">STANDARD</span>
+          </div>
+          <div class="variant-photo" style="background:linear-gradient(180deg,#0d2550,#0B1E3F)">🏀</div>
+          <div class="variant-info">
+            <div class="variant-name">JAYLEN WILLIAMS</div>
+            <div class="variant-pos" style="color:var(--gold)">BASKETBALL · POINT GUARD</div>
+            <div class="variant-stats">
+              <div class="v-stat"><div class="v-stat-val">18.2</div><div class="v-stat-lbl">PPG</div></div>
+              <div class="v-stat"><div class="v-stat-val">7.1</div><div class="v-stat-lbl">APG</div></div>
+              <div class="v-stat"><div class="v-stat-val">AAU</div><div class="v-stat-lbl">LEAGUE</div></div>
+            </div>
+          </div>
+          <div class="variant-footer" style="color:var(--slate-gray)"><span>STANDARD 2025</span><span style="color:var(--gold)">#07/25</span></div>
+          <div class="variant-badge" style="background:rgba(232,160,32,0.1);color:var(--gold)">STANDARD EDITION</div>
+        </div>
+        <!-- Foil -->
+        <div class="variant-card var-foil">
+          <div class="variant-header">
+            <span>MVP <span style="color:#C0C0C0">KIDS</span></span>
+            <span style="color:#C0C0C0">FOIL EDITION</span>
+          </div>
+          <div class="variant-photo" style="background:linear-gradient(180deg,#252545,#1a1a2e)">🏈</div>
+          <div class="variant-info">
+            <div class="variant-name">MARCUS THOMAS</div>
+            <div class="variant-pos" style="color:#C0C0C0">FOOTBALL · QUARTERBACK</div>
+            <div class="variant-stats">
+              <div class="v-stat"><div class="v-stat-val" style="color:var(--gold-light)">4.6</div><div class="v-stat-lbl">40 DASH</div></div>
+              <div class="v-stat"><div class="v-stat-val" style="color:var(--gold-light)">38"</div><div class="v-stat-lbl">VERTICAL</div></div>
+              <div class="v-stat"><div class="v-stat-val" style="color:var(--gold-light)">U16</div><div class="v-stat-lbl">LEVEL</div></div>
+            </div>
+          </div>
+          <div class="variant-footer" style="color:var(--slate-gray)"><span>FOIL 2025</span><span style="color:#C0C0C0">#12/25</span></div>
+          <div class="variant-badge" style="background:rgba(192,192,192,0.08);color:#C0C0C0">FOIL EDITION</div>
+        </div>
+        <!-- Rookie -->
+        <div class="variant-card var-rookie">
+          <div class="variant-header">
+            <span>MVP <span style="color:white">KIDS</span></span>
+            <span style="color:white">ROOKIE CARD</span>
+          </div>
+          <div class="variant-photo" style="background:linear-gradient(180deg,#0f3a00,#0a2a00)">⚽</div>
+          <div class="variant-info">
+            <div class="variant-name">SOFIA RODRIGUEZ</div>
+            <div class="variant-pos" style="color:var(--green-win)">SOCCER · FORWARD</div>
+            <div class="variant-stats">
+              <div class="v-stat"><div class="v-stat-val" style="color:var(--green-win)">12</div><div class="v-stat-lbl">GOALS</div></div>
+              <div class="v-stat"><div class="v-stat-val" style="color:var(--green-win)">8</div><div class="v-stat-lbl">ASSISTS</div></div>
+              <div class="v-stat"><div class="v-stat-val" style="color:var(--green-win)">U14</div><div class="v-stat-lbl">LEVEL</div></div>
+            </div>
+          </div>
+          <div class="variant-footer" style="color:var(--slate-gray)"><span>ROOKIE 2025</span><span style="color:var(--green-win)">#03/25</span></div>
+          <div class="variant-badge" style="background:rgba(26,175,93,0.1);color:var(--green-win)">ROOKIE CARD</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY MVP KIDS CARDS -->
+  <section class="section" id="why">
+    <div class="section-inner">
+      <div class="section-label">Why MVP Kids Cards</div>
+      <h2>More than a fundraiser.</h2>
+      <p class="section-sub">Car washes and bake sales are exhausting. MVP Kids Cards gives your family something to be proud of — and something supporters actually want to buy.</p>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon">🏅</div>
+          <h3>A Keepsake That Lasts Forever</h3>
+          <p>Every card is a physical artifact of this chapter of your child's athletic journey. Limited to 25 copies, beautifully printed, professionally designed.</p>
+        </div>
+        <div class="why-card blue">
+          <div class="why-icon">💸</div>
+          <h3>Real Money for Real Costs</h3>
+          <p>Youth sports costs the average family $883 per year. A single 25-card run can raise $330+ for fees, travel, gear, and tournaments — with zero manual effort.</p>
+        </div>
+        <div class="why-card green">
+          <div class="why-icon">📈</div>
+          <h3>Potential Future Value</h3>
+          <p>Cards are recorded on-chain. If your athlete goes pro one day, supporters who bought their card at age 12 hold a verified piece of history — potentially worth far more.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">🔒</div>
+          <h3>Parent-Controlled & COPPA Safe</h3>
+          <p>You control your athlete's data and likeness at all times. Full COPPA compliance, escrow-protected funds, and a 7-day refund guarantee.</p>
+        </div>
+        <div class="why-card blue">
+          <div class="why-icon">⚡</div>
+          <h3>Fully Automated Fulfillment</h3>
+          <p>No post office runs. Cards print and ship directly to buyers within 7–10 days. Once you create your page, your job is done.</p>
+        </div>
+        <div class="why-card green">
+          <div class="why-icon">🏆</div>
+          <h3>5% Royalty to Your Athlete — Forever</h3>
+          <p>Every time a card resells on the secondary market, your athlete earns 5% automatically — for life — thanks to a smart contract built into every card.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARKET STATS -->
+  <section class="stats-section">
+    <div class="stats-grid">
+      <div class="stat-item"><div class="big">30M+</div><div class="label">Youth athletes in the US</div><div class="sub">All potential MVP Kids Cards athletes</div></div>
+      <div class="stat-item"><div class="big">$883</div><div class="label">Average annual sports cost per child</div><div class="sub">Per family, per year</div></div>
+      <div class="stat-item"><div class="big">$330+</div><div class="label">Avg raised per card run</div><div class="sub">Based on 25 cards at $15 avg</div></div>
+      <div class="stat-item"><div class="big">5%</div><div class="label">Royalty on every resale</div><div class="sub">To the athlete, forever</div></div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section" style="background:var(--off-white)">
+    <div class="section-inner">
+      <div class="section-label">Early Families</div>
+      <h2>What parents are saying.</h2>
+      <p class="section-sub">Here's what it felt like for the first families who created cards for their athletes.</p>
+      <div class="testimonials">
+        <div class="testimonial">
+          <p>We raised $412 in a single weekend. Grandma bought three. Uncle Rico bought five. Everyone wanted one — it felt nothing like begging for GoFundMe donations.</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">👩</div>
+            <div><div class="author-name">Maria L.</div><div class="author-role">Mom of a U14 soccer player · Houston, TX</div></div>
+          </div>
+        </div>
+        <div class="testimonial">
+          <p>My son was so proud when his card arrived. He took it to school. His coach asked for one. It felt like he was already a professional athlete — and he's only 11.</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">👨</div>
+            <div><div class="author-name">David K.</div><div class="author-role">Dad of an AAU basketball player · Atlanta, GA</div></div>
+          </div>
+        </div>
+        <div class="testimonial">
+          <p>Our travel team used MVP Kids Cards for the whole squad. Every family raised money for the tournament trip and the cards were incredible quality. We're doing it every season.</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">👩</div>
+            <div><div class="author-name">Coach Tamara B.</div><div class="author-role">Travel softball coach · Phoenix, AZ</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WAITLIST CTA -->
+  <section class="cta-section" id="waitlist">
+    <div class="cta-inner">
+      <div class="waitlist-count">Waitlist now open — grab your spot</div>
+      <h2>Be among the first to create<br /><span>your athlete's card.</span></h2>
+      <p class="cta-sub">
+        We're onboarding our first families now. Join the waitlist and we'll reach out personally to help you create your child's first MVP Kids Card.
+      </p>
+      <div class="cta-form-wrap">
+        <input type="email" class="cta-input" placeholder="Enter your email address" id="cta-email" />
+        <button class="btn-primary" onclick="handleWaitlistCTA()">Reserve My Spot</button>
+      </div>
+      <p class="cta-fine">Free to join · No credit card · No commitment · We'll never spam you</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo"><span class="mvp">MVP</span> Kids Cards<span class="sub">ProspectCard by MVP Kids Cards</span></div>
+        <div class="footer-tagline">Youth athlete trading cards that fundraise today and appreciate forever.</div>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Product</h4>
+          <a href="#how-it-works">How It Works</a>
+          <a href="#cards">Card Editions</a>
+          <a href="#why">Why MVP Kids Cards</a>
+          <a href="#waitlist">Join Waitlist</a>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="#">About</a>
+          <a href="#">Blog</a>
+          <a href="#">Press</a>
+          <a href="mailto:hello@mvpkidscards.com">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">COPPA Compliance</a>
+          <a href="#">Refund Policy</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="copy">© 2025 MVP Kids Cards. All rights reserved.</div>
+      <div class="legal">
+        <a href="mailto:hello@mvpkidscards.com">hello@mvpkidscards.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const CK_FORM_ID = '9180950';
+    const CK_API_KEY = 'API__kLPRkScvWF4CrdILvR0wQ';
+
+    async function subscribeToConvertKit(email) {
+      const url = `https://api.convertkit.com/v3/forms/${CK_FORM_ID}/subscribe`;
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ api_key: CK_API_KEY, email: email })
+      });
+      if (!response.ok) throw new Error('Subscription failed');
+      return response.json();
+    }
+
+    async function handleWaitlist(e) {
+      e.preventDefault();
+      const input = e.target.querySelector('input[type="email"]');
+      const btn = e.target.querySelector('button');
+      if (!input.value) return;
+
+      const originalText = btn.textContent;
+      btn.textContent = 'Joining...';
+      btn.disabled = true;
+      input.disabled = true;
+
+      try {
+        await subscribeToConvertKit(input.value);
+        btn.textContent = '✓ You\'re on the list!';
+        btn.style.background = 'var(--green-win)';
+        btn.style.color = 'white';
+        input.value = '';
+        input.placeholder = 'We\'ll be in touch soon!';
+      } catch (err) {
+        btn.textContent = originalText;
+        btn.disabled = false;
+        input.disabled = false;
+        alert('Something went wrong — please try again or email us directly.');
+      }
+    }
+
+    async function handleWaitlistCTA() {
+      const input = document.getElementById('cta-email');
+      const btn = input.nextElementSibling;
+      if (!input.value) { input.focus(); return; }
+
+      const originalText = btn.textContent;
+      btn.textContent = 'Joining...';
+      btn.disabled = true;
+      input.disabled = true;
+
+      try {
+        await subscribeToConvertKit(input.value);
+        btn.textContent = '✓ You\'re on the list!';
+        btn.style.background = 'var(--green-win)';
+        btn.style.color = 'white';
+        input.value = '';
+        input.placeholder = 'We\'ll be in touch soon 🎉';
+      } catch (err) {
+        btn.textContent = originalText;
+        btn.disabled = false;
+        input.disabled = false;
+        alert('Something went wrong — please try again or email us directly.');
+      }
+    }
+  </script>
+
+</body>
+</html>

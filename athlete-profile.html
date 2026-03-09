@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="page-title">Athlete Profile — MVP Kids Cards</title>
+  <meta id="og-title"       property="og:title"       content="MVP Kids Cards" />
+  <meta id="og-description" property="og:description" content="Support a future pro." />
+  <meta id="og-image"       property="og:image"       content="" />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:   #0B1E3F;
+      --navy-m: #1A3260;
+      --gold:   #E8A020;
+      --green:  #1AAF5D;
+      --gray:   #8A9BB0;
+      --slate:  #2E3D52;
+      --white:  #ffffff;
+      --off:    #F4F6FA;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Montserrat', sans-serif; background: var(--navy); color: var(--white); min-height: 100vh; }
+
+    /* ── NAV ── */
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2rem; background: rgba(11,30,63,0.95);
+      position: sticky; top: 0; z-index: 50; backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(232,160,32,0.2);
+    }
+    .nav-brand { font-family: 'Oswald', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--white); text-decoration: none; }
+    .nav-brand span { color: var(--gold); }
+    .btn-nav { background: var(--gold); color: var(--navy); padding: 0.4rem 1.1rem;
+      border-radius: 6px; font-family: 'Oswald', sans-serif; font-weight: 700;
+      font-size: 0.85rem; letter-spacing: 0.5px; text-decoration: none; }
+
+    /* ── HERO SECTION ── */
+    .hero-section {
+      background: linear-gradient(160deg, var(--navy) 0%, var(--navy-m) 60%, #1e4080 100%);
+      padding: 3rem 2rem 2rem;
+      display: flex; flex-direction: column; align-items: center; gap: 2rem;
+    }
+    @media (min-width: 800px) {
+      .hero-section { flex-direction: row; align-items: flex-start; justify-content: center; gap: 4rem; padding: 4rem 4rem 3rem; }
+    }
+
+    /* ── CARD DISPLAY ── */
+    .card-showcase { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+    .card-img-wrap {
+      width: 220px; border-radius: 14px; overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 2px rgba(232,160,32,0.3);
+      transition: transform 0.3s;
+    }
+    .card-img-wrap:hover { transform: scale(1.03) rotate(-1deg); }
+    .card-img-wrap img { width: 100%; display: block; }
+    .card-img-placeholder {
+      width: 220px; aspect-ratio: 2.75/3.75;
+      background: var(--navy-m); border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gray); font-size: 0.8rem; text-align: center; padding: 1rem;
+      border: 2px solid rgba(232,160,32,0.3);
+    }
+
+    /* Edition tabs */
+    .edition-tabs { display: flex; gap: 0.5rem; }
+    .edition-tab {
+      padding: 0.35rem 0.9rem; border-radius: 20px; font-size: 0.75rem;
+      font-family: 'Oswald', sans-serif; font-weight: 700; letter-spacing: 1px;
+      cursor: pointer; border: 2px solid transparent; transition: all 0.2s;
+    }
+    .edition-tab[data-edition="standard"] { border-color: #E8A020; color: #E8A020; }
+    .edition-tab[data-edition="foil"]     { border-color: #C0C0C0; color: #C0C0C0; }
+    .edition-tab[data-edition="rookie"]   { border-color: #1AAF5D; color: #1AAF5D; }
+    .edition-tab.active { color: var(--navy); }
+    .edition-tab[data-edition="standard"].active { background: #E8A020; }
+    .edition-tab[data-edition="foil"].active     { background: #C0C0C0; }
+    .edition-tab[data-edition="rookie"].active   { background: #1AAF5D; }
+
+    /* ── ATHLETE INFO ── */
+    .athlete-info { max-width: 480px; }
+    .athlete-name {
+      font-family: 'Oswald', sans-serif; font-size: 2.8rem; font-weight: 700;
+      line-height: 1.05; color: var(--white);
+    }
+    .athlete-sport {
+      font-size: 1rem; color: var(--gold); font-weight: 600;
+      margin: 0.4rem 0 0.2rem; letter-spacing: 0.5px;
+    }
+    .athlete-team { font-size: 0.9rem; color: var(--gray); margin-bottom: 1.2rem; }
+
+    .stat-pills { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.5rem; }
+    .stat-pill {
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px; padding: 0.5rem 1rem; text-align: center; min-width: 72px;
+    }
+    .stat-pill .val { font-family: 'Oswald', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--white); }
+    .stat-pill .lbl { font-size: 0.65rem; color: var(--gray); letter-spacing: 1px; text-transform: uppercase; }
+
+    .bio-quote {
+      border-left: 3px solid var(--gold); padding-left: 1rem;
+      font-style: italic; color: rgba(255,255,255,0.8); font-size: 0.95rem;
+      line-height: 1.6; margin-bottom: 1.5rem;
+    }
+
+    /* ── FUNDRAISING BAR ── */
+    .fundraising-box {
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(232,160,32,0.25);
+      border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem;
+    }
+    .fundraising-label { font-size: 0.8rem; color: var(--gray); margin-bottom: 0.5rem; letter-spacing: 0.5px; text-transform: uppercase; }
+    .fundraising-title { font-family: 'Oswald', sans-serif; font-size: 1.05rem; color: var(--white); margin-bottom: 0.75rem; }
+    .progress-track { background: rgba(255,255,255,0.1); border-radius: 999px; height: 10px; overflow: hidden; margin-bottom: 0.5rem; }
+    .progress-fill  { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--green), #52d68a); transition: width 1s ease; }
+    .fundraising-meta { display: flex; justify-content: space-between; font-size: 0.82rem; }
+    .fundraising-raised { color: var(--green); font-weight: 700; }
+    .fundraising-goal   { color: var(--gray); }
+
+    /* ── BUY BUTTONS ── */
+    .buy-section { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem; }
+    .btn-buy {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.9rem 1.25rem; border-radius: 10px; border: none; cursor: pointer;
+      font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1rem;
+      letter-spacing: 0.5px; text-decoration: none; transition: transform 0.15s, opacity 0.15s;
+    }
+    .btn-buy:hover { transform: translateY(-2px); opacity: 0.93; }
+    .btn-buy.standard { background: var(--gold); color: var(--navy); }
+    .btn-buy.foil     { background: linear-gradient(135deg, #888, #ddd, #999); color: #111; }
+    .btn-buy.rookie   { background: var(--green); color: var(--white); }
+    .btn-buy .edition-name { font-size: 0.75rem; opacity: 0.8; font-weight: 400; }
+    .btn-buy .price { font-size: 1.1rem; }
+    .btn-buy:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── SHARE TOOLS ── */
+    .share-section { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.25rem; }
+    .share-label { font-size: 0.75rem; color: var(--gray); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 0.75rem; }
+    .share-row { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+    .share-btn {
+      display: flex; align-items: center; gap: 0.4rem;
+      padding: 0.45rem 0.9rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.06); color: var(--white);
+      font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: background 0.2s;
+      text-decoration: none;
+    }
+    .share-btn:hover { background: rgba(255,255,255,0.12); }
+    .share-btn svg { width: 16px; height: 16px; }
+    .copy-link-wrap { display: flex; align-items: center; gap: 0.5rem; flex: 1; min-width: 240px; }
+    .copy-link-input {
+      flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px; padding: 0.45rem 0.75rem; color: var(--gray);
+      font-size: 0.78rem; font-family: monospace; outline: none;
+    }
+    .btn-copy {
+      background: var(--navy-m); border: 1px solid rgba(255,255,255,0.15); color: var(--white);
+      border-radius: 8px; padding: 0.45rem 0.9rem; font-size: 0.78rem;
+      font-weight: 600; cursor: pointer; white-space: nowrap; transition: background 0.2s;
+    }
+    .btn-copy:hover { background: var(--slate); }
+    .btn-copy.copied { background: var(--green); color: var(--white); }
+
+    /* ── DREAMS SECTION ── */
+    .dreams-section {
+      background: linear-gradient(135deg, rgba(26,175,93,0.08), rgba(74,144,217,0.08));
+      border: 1px solid rgba(26,175,93,0.2); border-radius: 16px;
+      padding: 2rem; max-width: 700px; margin: 2rem auto;
+      text-align: center;
+    }
+    .dreams-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .dreams-heading { font-family: 'Oswald', sans-serif; font-size: 1.1rem; color: var(--green); letter-spacing: 1px; margin-bottom: 0.75rem; }
+    .dreams-text { color: rgba(255,255,255,0.85); font-size: 1rem; line-height: 1.7; font-style: italic; }
+
+    /* ── MESSAGE ── */
+    .message-section {
+      background: rgba(255,255,255,0.04); border-radius: 16px;
+      padding: 2rem; max-width: 700px; margin: 0 auto 2rem;
+    }
+    .message-heading { font-family: 'Oswald', sans-serif; font-size: 1rem; color: var(--gold); letter-spacing: 1px; margin-bottom: 0.75rem; }
+    .message-text { color: rgba(255,255,255,0.8); font-size: 0.95rem; line-height: 1.7; }
+
+    /* ── QR SECTION ── */
+    .qr-section {
+      text-align: center; padding: 2rem; max-width: 700px; margin: 0 auto 3rem;
+    }
+    .qr-heading { font-family: 'Oswald', sans-serif; font-size: 1rem; color: var(--gray); letter-spacing: 1px; margin-bottom: 1rem; }
+    .qr-code-img { width: 160px; height: 160px; background: white; border-radius: 12px; padding: 8px; display: inline-block; }
+    .qr-code-img img { width: 100%; display: block; border-radius: 6px; }
+    .btn-download-qr {
+      display: inline-block; margin-top: 0.75rem; padding: 0.5rem 1.25rem;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 8px; color: var(--white); font-size: 0.8rem; font-weight: 600;
+      cursor: pointer; text-decoration: none; transition: background 0.2s;
+    }
+    .btn-download-qr:hover { background: rgba(255,255,255,0.14); }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 2rem; border-top: 1px solid rgba(255,255,255,0.06);
+      color: var(--gray); font-size: 0.78rem;
+    }
+    footer a { color: var(--gold); text-decoration: none; }
+
+    /* ── LOADING / ERROR ── */
+    .loading-screen { display: flex; align-items: center; justify-content: center; min-height: 60vh; }
+    .loading-text { color: var(--gray); font-family: 'Oswald', sans-serif; letter-spacing: 2px; }
+    .error-screen { text-align: center; padding: 4rem 2rem; }
+    .error-screen h2 { font-family: 'Oswald', sans-serif; font-size: 2rem; color: var(--gold); margin-bottom: 1rem; }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-brand"><span>MVP</span> KIDS CARDS</a>
+    <a href="/#waitlist" class="btn-nav">Create Your Card</a>
+  </nav>
+
+  <!-- Loading state -->
+  <div class="loading-screen" id="loading">
+    <p class="loading-text">LOADING ATHLETE PROFILE…</p>
+  </div>
+
+  <!-- Error state -->
+  <div class="error-screen hidden" id="error-state">
+    <h2>Athlete Not Found</h2>
+    <p style="color:var(--gray);margin-bottom:1.5rem">This profile doesn't exist or hasn't been published yet.</p>
+    <a href="/" class="btn-nav">Go Back Home</a>
+  </div>
+
+  <!-- Main content (hidden until data loads) -->
+  <main id="main-content" class="hidden">
+
+    <!-- ── HERO ── -->
+    <section class="hero-section">
+
+      <!-- Card showcase -->
+      <div class="card-showcase">
+        <div class="card-img-wrap" id="card-display">
+          <div class="card-img-placeholder">
+            <span>Card preview loading…</span>
+          </div>
+        </div>
+        <div class="edition-tabs" id="edition-tabs"></div>
+      </div>
+
+      <!-- Athlete info + actions -->
+      <div class="athlete-info">
+        <h1 class="athlete-name" id="athlete-name">—</h1>
+        <p class="athlete-sport" id="athlete-sport">—</p>
+        <p class="athlete-team" id="athlete-team"></p>
+
+        <!-- Stats -->
+        <div class="stat-pills" id="stat-pills"></div>
+
+        <!-- Bio quote -->
+        <blockquote class="bio-quote hidden" id="bio-quote"></blockquote>
+
+        <!-- Fundraising bar -->
+        <div class="fundraising-box hidden" id="fundraising-box">
+          <div class="fundraising-label">Fundraising Progress</div>
+          <div class="fundraising-title" id="fundraising-title"></div>
+          <div class="progress-track">
+            <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+          </div>
+          <div class="fundraising-meta">
+            <span class="fundraising-raised" id="fundraising-raised">$0 raised</span>
+            <span class="fundraising-goal"   id="fundraising-goal">Goal: $0</span>
+          </div>
+        </div>
+
+        <!-- Buy buttons -->
+        <div class="buy-section" id="buy-section"></div>
+
+        <!-- Share tools -->
+        <div class="share-section">
+          <div class="share-label">Share this athlete</div>
+          <div class="share-row">
+            <a id="share-sms"      class="share-btn" href="#">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+              Text
+            </a>
+            <a id="share-facebook" class="share-btn" href="#" target="_blank">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+              Facebook
+            </a>
+            <a id="share-twitter"  class="share-btn" href="#" target="_blank">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+              Twitter
+            </a>
+            <div class="copy-link-wrap">
+              <input class="copy-link-input" id="copy-link-input" type="text" readonly />
+              <button class="btn-copy" id="btn-copy" onclick="copyLink()">Copy Link</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── DREAMS ── -->
+    <div class="dreams-section hidden" id="dreams-section">
+      <div class="dreams-icon">🌟</div>
+      <div class="dreams-heading">MY DREAM</div>
+      <p class="dreams-text" id="dreams-text"></p>
+    </div>
+
+    <!-- ── MESSAGE ── -->
+    <div class="message-section hidden" id="message-section">
+      <div class="message-heading">A MESSAGE FROM <span id="message-from-name"></span></div>
+      <p class="message-text" id="message-text"></p>
+    </div>
+
+    <!-- ── QR CODE ── -->
+    <div class="qr-section">
+      <div class="qr-heading">SCAN TO SHARE · PRINT FOR FLYERS</div>
+      <div class="qr-code-img">
+        <img id="qr-img" src="" alt="QR Code" />
+      </div>
+      <br/>
+      <a id="qr-download" class="btn-download-qr" href="#" download>
+        ↓ Download QR Code
+      </a>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>Powered by <a href="/">MVP Kids Cards</a> · Supporting youth athletes everywhere</p>
+    <p style="margin-top:0.4rem">Want your own card? <a href="/#waitlist">Join the waitlist →</a></p>
+  </footer>
+
+  <script>
+    const PRICES = { standard: '$29.99', foil: '$49.99', rookie: '$39.99' };
+    const EDITION_LABELS = { standard: 'Standard Edition', foil: 'Foil Edition', rookie: 'Rookie Card' };
+    const API_BASE = '';  // same origin; change to full URL when deploying separately
+
+    let currentCards = [];
+    let currentEdition = 'standard';
+    let profileSlug = '';
+    let athleteData = null;
+
+    // Extract slug from URL: /athlete/:slug
+    function getSlugFromURL() {
+      const parts = window.location.pathname.split('/');
+      return parts[parts.length - 1] || parts[parts.length - 2];
+    }
+
+    async function loadProfile() {
+      profileSlug = getSlugFromURL();
+      if (!profileSlug) return showError();
+
+      try {
+        const res = await fetch(`${API_BASE}/api/athletes/profile/${profileSlug}`);
+        if (!res.ok) return showError();
+        const { athlete, cards, fundraising } = await res.json();
+
+        athleteData = athlete;
+        currentCards = cards || [];
+        renderProfile(athlete, cards, fundraising);
+      } catch (e) {
+        showError();
+      }
+    }
+
+    function renderProfile(athlete, cards, fundraising) {
+      // Page meta
+      const fullName = `${athlete.first_name} ${athlete.last_name}`;
+      document.title = `${fullName} — MVP Kids Cards`;
+      document.getElementById('og-title').content       = `${fullName}'s ProspectCard`;
+      document.getElementById('og-description').content = athlete.bio || `Support ${athlete.first_name}'s journey.`;
+
+      // Name + sport
+      document.getElementById('athlete-name').textContent  = fullName;
+      document.getElementById('athlete-sport').textContent =
+        [athlete.sport, athlete.position].filter(Boolean).join(' · ');
+      const teamParts = [athlete.team_name, athlete.graduation_year ? `Class of ${athlete.graduation_year}` : '', athlete.hometown].filter(Boolean);
+      document.getElementById('athlete-team').textContent = teamParts.join(' · ');
+
+      // Stats
+      const statPills = document.getElementById('stat-pills');
+      if (athlete.stats && Object.keys(athlete.stats).length > 0) {
+        Object.entries(athlete.stats).slice(0, 6).forEach(([key, val]) => {
+          const pill = document.createElement('div');
+          pill.className = 'stat-pill';
+          pill.innerHTML = `<div class="val">${val}</div><div class="lbl">${key}</div>`;
+          statPills.appendChild(pill);
+        });
+      }
+
+      // Bio
+      if (athlete.bio) {
+        const bioEl = document.getElementById('bio-quote');
+        bioEl.textContent = `"${athlete.bio}"`;
+        bioEl.classList.remove('hidden');
+      }
+
+      // Fundraising bar
+      if (fundraising?.goal_cents > 0) {
+        document.getElementById('fundraising-box').classList.remove('hidden');
+        if (fundraising.label) document.getElementById('fundraising-title').textContent = fundraising.label;
+        document.getElementById('fundraising-raised').textContent = `$${fundraising.raised_dollars} raised`;
+        document.getElementById('fundraising-goal').textContent   = `Goal: $${fundraising.goal_dollars}`;
+        setTimeout(() => {
+          document.getElementById('progress-fill').style.width = (fundraising.progress_pct || 0) + '%';
+        }, 300);
+      }
+
+      // Card display + edition tabs + buy buttons
+      if (cards.length > 0) {
+        renderCardDisplay(cards[0]);
+        renderEditionTabs(cards);
+        renderBuyButtons(cards);
+      } else {
+        document.getElementById('card-display').innerHTML =
+          '<div class="card-img-placeholder">Card coming soon!</div>';
+      }
+
+      // Share tools
+      const pageUrl = window.location.href;
+      document.getElementById('copy-link-input').value = pageUrl;
+      document.getElementById('share-sms').href =
+        `sms:?&body=Check out ${athlete.first_name}'s MVP Kids Card! ${pageUrl}`;
+      document.getElementById('share-facebook').href =
+        `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`;
+      document.getElementById('share-twitter').href =
+        `https://twitter.com/intent/tweet?text=${encodeURIComponent(`Support ${fullName} — get their trading card! 🏆`)}&url=${encodeURIComponent(pageUrl)}`;
+
+      // Dreams
+      if (athlete.dreams) {
+        document.getElementById('dreams-text').textContent = athlete.dreams;
+        document.getElementById('dreams-section').classList.remove('hidden');
+      }
+
+      // Message to supporters
+      if (athlete.message_to_supporters) {
+        document.getElementById('message-from-name').textContent = athlete.first_name.toUpperCase();
+        document.getElementById('message-text').textContent = athlete.message_to_supporters;
+        document.getElementById('message-section').classList.remove('hidden');
+      }
+
+      // QR code — generated server-side, loaded as image
+      // (served by /api/qr/athlete/:id when auth available, or we use a QR service for public)
+      const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&color=0B1E3F&bgcolor=FFFFFF&data=${encodeURIComponent(pageUrl)}`;
+      document.getElementById('qr-img').src = qrApiUrl;
+      document.getElementById('qr-download').href = qrApiUrl + '&format=png';
+
+      // Show content, hide loading
+      document.getElementById('loading').classList.add('hidden');
+      document.getElementById('main-content').classList.remove('hidden');
+    }
+
+    function renderCardDisplay(card) {
+      currentEdition = card.edition;
+      const wrap = document.getElementById('card-display');
+      if (card.preview_url) {
+        wrap.innerHTML = `<img src="${card.preview_url}" alt="ProspectCard" />`;
+        if (athleteData?.photo_url) {
+          document.getElementById('og-image').content = card.preview_url;
+        }
+      } else {
+        wrap.innerHTML = `<div class="card-img-placeholder">Preview generating…</div>`;
+      }
+    }
+
+    function renderEditionTabs(cards) {
+      const tabs = document.getElementById('edition-tabs');
+      tabs.innerHTML = '';
+      cards.forEach(card => {
+        const tab = document.createElement('button');
+        tab.className = `edition-tab${card.edition === currentEdition ? ' active' : ''}`;
+        tab.dataset.edition = card.edition;
+        tab.textContent = card.edition.toUpperCase();
+        tab.onclick = () => {
+          document.querySelectorAll('.edition-tab').forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          renderCardDisplay(card);
+        };
+        tabs.appendChild(tab);
+      });
+    }
+
+    function renderBuyButtons(cards) {
+      const section = document.getElementById('buy-section');
+      section.innerHTML = '';
+      cards.forEach(card => {
+        const btn = document.createElement('button');
+        btn.className = `btn-buy ${card.edition}`;
+        btn.dataset.slug = card.share_slug;
+        btn.innerHTML = `
+          <span>
+            <div>${EDITION_LABELS[card.edition]}</div>
+            <div class="edition-name">Own a piece of their journey</div>
+          </span>
+          <span class="price">${PRICES[card.edition]}</span>
+        `;
+        btn.addEventListener('click', () => handleBuy(card, btn));
+        section.appendChild(btn);
+      });
+    }
+
+    // ── STRIPE CHECKOUT ────────────────────────────────────────
+    async function handleBuy(card, btn) {
+      const originalHTML = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = `
+        <span>Processing…</span>
+        <span style="display:inline-block;width:18px;height:18px;border:2px solid rgba(0,0,0,0.3);border-top-color:currentColor;border-radius:50%;animation:spin 0.7s linear infinite;"></span>
+      `;
+
+      try {
+        const res = await fetch(`${API_BASE}/api/checkout/session`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            card_share_slug: card.share_slug,
+            quantity: 1,
+          })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok || !data.checkout_url) {
+          throw new Error(data.error || 'Could not start checkout');
+        }
+
+        // Redirect to Stripe Checkout
+        window.location.href = data.checkout_url;
+
+      } catch (err) {
+        console.error('Checkout error:', err);
+        btn.disabled = false;
+        btn.innerHTML = originalHTML;
+        alert('Sorry, something went wrong. Please try again.');
+      }
+    }
+
+    function copyLink() {
+      const input = document.getElementById('copy-link-input');
+      const btn = document.getElementById('btn-copy');
+      navigator.clipboard.writeText(input.value).then(() => {
+        btn.textContent = '✓ Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy Link';
+          btn.classList.remove('copied');
+        }, 2500);
+      });
+    }
+
+    function showError() {
+      document.getElementById('loading').classList.add('hidden');
+      document.getElementById('error-state').classList.remove('hidden');
+    }
+
+    loadProfile();
+  </script>
+</body>
+</html>
