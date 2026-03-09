@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snapshot vs MVP Kids Cards — Competitive Analysis & Build Roadmap</title>
+  <style>
+    :root {
+      --navy: #0B1E3F;
+      --navy-mid: #1A3260;
+      --gold: #E8A020;
+      --green: #1AAF5D;
+      --red: #E84040;
+      --slate: #8A9BB0;
+      --off-white: #F8F9FC;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--off-white);
+      color: #1a1a2e;
+      line-height: 1.7;
+    }
+    header {
+      background: var(--navy);
+      color: #fff;
+      padding: 48px 40px 36px;
+    }
+    header .eyebrow {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    header h1 { font-size: 2rem; font-weight: 800; margin-bottom: 8px; }
+    header p { color: var(--slate); font-size: 0.95rem; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
+
+    /* Summary cards */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .stat-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      border-top: 4px solid var(--gold);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .stat-card .num { font-size: 2rem; font-weight: 800; color: var(--navy); }
+    .stat-card .label { font-size: 0.82rem; color: var(--slate); margin-top: 4px; }
+
+    /* Section headers */
+    h2 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--navy);
+      margin: 40px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--gold);
+    }
+    h3 { font-size: 1rem; font-weight: 700; color: var(--navy-mid); margin: 20px 0 8px; }
+
+    /* Page inventory table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      margin-bottom: 32px;
+      font-size: 0.9rem;
+    }
+    thead { background: var(--navy); color: #fff; }
+    thead th { padding: 14px 16px; text-align: left; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    tbody tr:nth-child(even) { background: #f9fafb; }
+    tbody td { padding: 12px 16px; border-bottom: 1px solid #eef0f5; vertical-align: top; }
+    tbody td:first-child { font-weight: 600; color: var(--navy); }
+
+    /* Status badges */
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .badge-exists  { background: #d1fae5; color: #065f46; }
+    .badge-missing { background: #fee2e2; color: #991b1b; }
+    .badge-partial { background: #fef3c7; color: #92400e; }
+    .badge-mvp     { background: #ede9fe; color: #5b21b6; }
+
+    /* Priority cards */
+    .priority-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+    .priority-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      border-left: 5px solid var(--navy);
+    }
+    .priority-card.p1 { border-color: var(--red); }
+    .priority-card.p2 { border-color: var(--gold); }
+    .priority-card.p3 { border-color: var(--green); }
+    .priority-card .p-label {
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+    .p1 .p-label { color: var(--red); }
+    .p2 .p-label { color: #b45309; }
+    .p3 .p-label { color: var(--green); }
+    .priority-card h3 { margin-top: 0; font-size: 1rem; }
+    .priority-card ul { margin: 10px 0 0 16px; font-size: 0.88rem; color: #444; }
+    .priority-card ul li { margin-bottom: 4px; }
+
+    /* Feature comparison */
+    .comparison-table tbody td:nth-child(2),
+    .comparison-table tbody td:nth-child(3) { text-align: center; }
+    .check { color: var(--green); font-size: 1.2rem; }
+    .cross { color: var(--red); font-size: 1.2rem; }
+    .partial-icon { color: #d97706; font-size: 1rem; }
+
+    /* MVP diff callout */
+    .mvp-diff {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+      color: #fff;
+      border-radius: 16px;
+      padding: 32px;
+      margin: 32px 0;
+    }
+    .mvp-diff h2 { color: var(--gold); border-color: var(--gold); }
+    .mvp-diff p { color: #c8d4e8; margin-bottom: 16px; }
+    .mvp-diff ul { margin-left: 20px; color: #c8d4e8; }
+    .mvp-diff ul li { margin-bottom: 6px; }
+    .mvp-diff strong { color: var(--gold); }
+
+    /* Roadmap */
+    .roadmap-section { margin-bottom: 12px; }
+    .roadmap-phase {
+      background: var(--navy);
+      color: var(--gold);
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 6px 14px;
+      border-radius: 6px 6px 0 0;
+      display: inline-block;
+    }
+    .roadmap-items {
+      background: #fff;
+      border-radius: 0 12px 12px 12px;
+      padding: 20px 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .roadmap-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f2f7;
+      font-size: 0.9rem;
+    }
+    .roadmap-item:last-child { border-bottom: none; }
+    .roadmap-item .ri-icon { font-size: 1.2rem; min-width: 28px; }
+    .roadmap-item .ri-text strong { display: block; font-weight: 700; color: var(--navy); }
+    .roadmap-item .ri-text span { color: var(--slate); font-size: 0.82rem; }
+
+    footer {
+      background: var(--navy);
+      color: var(--slate);
+      text-align: center;
+      padding: 24px;
+      font-size: 0.82rem;
+      margin-top: 60px;
+    }
+    footer strong { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Internal Strategy Document — MVP Kids Cards</div>
+  <h1>Snapshot (makesnapshots.com) vs. MVP Kids Cards<br>Competitive Analysis & Feature Build Roadmap</h1>
+  <p>Researched March 9, 2026 &nbsp;·&nbsp; Purpose: Identify all features, pages, and tools on Snapshot to replicate and exceed — with fundraising as MVP's primary differentiator.</p>
+</header>
+
+<div class="container">
+
+  <!-- Summary stats -->
+  <div class="summary-grid">
+    <div class="stat-card">
+      <div class="num">12</div>
+      <div class="label">Pages on Snapshot's public site</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">8</div>
+      <div class="label">Already built on MVP Kids Cards</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">7</div>
+      <div class="label">Key pages / features still to build</div>
+    </div>
+    <div class="stat-card" style="border-top-color: var(--green);">
+      <div class="num">3</div>
+      <div class="label">Fundraising features Snapshot lacks entirely</div>
+    </div>
+  </div>
+
+  <!-- ========== SECTION 1: PAGE INVENTORY ========== -->
+  <h2>📋 Snapshot — Complete Page & Tool Inventory</h2>
+  <p style="margin-bottom:16px; color:#555;">Every public URL found on makesnapshots.com, mapped to MVP Kids Cards status.</p>
+
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Page / Feature</th>
+        <th>Snapshot URL</th>
+        <th>What It Does</th>
+        <th>MVP Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Homepage</td>
+        <td>/</td>
+        <td>Hero, how-it-works, template gallery preview, social proof, team CTA, pricing tiers</td>
+        <td><span class="badge badge-exists">✓ Built</span></td>
+      </tr>
+      <tr>
+        <td>Card Builder (App)</td>
+        <td>/dashboard/card-builder</td>
+        <td>Live drag-and-drop card editor — upload photo, pick template, add name/stats/team, preview real-time</td>
+        <td><span class="badge badge-partial">Partial — dashboard exists, builder is MVP</span></td>
+      </tr>
+      <tr>
+        <td>Templates Gallery</td>
+        <td>/templates</td>
+        <td>Browseable grid of all card templates (10+ styles: Skyline, Shattered, Urban Rise, Legacy, etc.) with free tags and NEW badges</td>
+        <td><span class="badge badge-missing">Missing</span></td>
+      </tr>
+      <tr>
+        <td>Custom Sports Card (Landing)</td>
+        <td>/custom-sports-card</td>
+        <td>SEO landing page targeting "custom sports card" — product overview, features, CTA to builder</td>
+        <td><span class="badge badge-missing">Missing</span></td>
+      </tr>
+      <tr>
+        <td>Custom Trading Cards (Landing)</td>
+        <td>/custom-trading-cards</td>
+        <td>SEO landing page targeting "custom trading cards" keyword — mirrors custom-sports-card page</td>
+        <td><span class="badge badge-missing">Missing</span></td>
+      </tr>
+      <tr>
+        <td>Teams Page</td>
+        <td>/teams</td>
+        <td>Full team setup flow: create team, set sport/location/player count, choose who pays (player vs. team), select template, set deadline. Cards ship to coach.</td>
+        <td><span class="badge badge-partial">Partial — team-dashboard.html exists, no public signup flow</span></td>
+      </tr>
+      <tr>
+        <td>Organizations / Partners</td>
+        <td>/organizations</td>
+        <td>Partner inquiry form for leagues, schools, booster clubs. Offers: 15% commission, custom branding, org-level dashboard, bulk pricing, fundraising. No upfront cost.</td>
+        <td><span class="badge badge-missing">Missing</span></td>
+      </tr>
+      <tr>
+        <td>FAQ</td>
+        <td>/faq</td>
+        <td>Accordion FAQ covering: Getting Started, Pricing & Payment, Printing & Quality, Shipping & Delivery, Teams & Organizations (13 questions total)</td>
+        <td><span class="badge badge-missing">Missing</span></td>
+      </tr>
+      <tr>
+        <td>Resources Hub</td>
+        <td>/resources</td>
+        <td>SEO resource center with links to guides on: custom baseball cards, football cards, basketball cards, holographic cards, team sets, photo tips, sizing guides, and more</td>
+        <td><span class="badge badge-missing">Missing</span></td>
+      </tr>
+      <tr>
+        <td>Blog</td>
+        <td>/blog (→ /resources)</td>
+        <td>Routes to the resources page — content marketing hub for SEO</td>
+        <td><span class="badge badge-exists">✓ Built — blog.html + 7 posts</span></td>
+      </tr>
+      <tr>
+        <td>About</td>
+        <td>/about</td>
+        <td>Brand story, two HQ locations (Print: Des Moines IA; Tech: Wilmington NC), founder profiles with photos</td>
+        <td><span class="badge badge-exists">✓ Built</span></td>
+      </tr>
+      <tr>
+        <td>Contact</td>
+        <td>/contact</td>
+        <td>Contact form, phone number, live chat widget (Intercom/Crisp), response time SLA (2–4 hrs), mini-FAQ embedded</td>
+        <td><span class="badge badge-exists">✓ Built</span></td>
+      </tr>
+      <tr>
+        <td>Careers</td>
+        <td>/careers</td>
+        <td>Simple open roles listing</td>
+        <td><span class="badge badge-missing">Missing (low priority)</span></td>
+      </tr>
+      <tr>
+        <td>Terms of Service</td>
+        <td>/terms</td>
+        <td>Standard terms</td>
+        <td><span class="badge badge-exists">✓ Built</span></td>
+      </tr>
+      <tr>
+        <td>Privacy Policy</td>
+        <td>/privacy</td>
+        <td>Standard privacy</td>
+        <td><span class="badge badge-exists">✓ Built</span></td>
+      </tr>
+      <tr>
+        <td>SMS Terms</td>
+        <td>/sms-terms (in footer)</td>
+        <td>SMS marketing opt-in terms — they do text message marketing</td>
+        <td><span class="badge badge-missing">Missing (low priority)</span></td>
+      </tr>
+      <tr>
+        <td>COPPA Compliance</td>
+        <td>Not present</td>
+        <td>Snapshot does NOT have a COPPA page — MVP already has a competitive advantage here</td>
+        <td><span class="badge badge-mvp">✓ MVP Exclusive Advantage</span></td>
+      </tr>
+      <tr>
+        <td>Refund Policy</td>
+        <td>Not present publicly</td>
+        <td>Snapshot doesn't have a public refund page</td>
+        <td><span class="badge badge-mvp">✓ MVP Exclusive Advantage</span></td>
+      </tr>
+      <tr>
+        <td>Blockchain / On-Chain Provenance</td>
+        <td>Not present</td>
+        <td>Snapshot has NO blockchain features whatsoever — pure print product</td>
+        <td><span class="badge badge-mvp">✓ MVP Exclusive Differentiator</span></td>
+      </tr>
+      <tr>
+        <td>Fundraising Campaign Tools</td>
+        <td>Mentioned only (no dedicated page)</td>
+        <td>Snapshot mentions "fundraising opportunities" in their org inquiry form checkbox — no dedicated page, tool, or calculator</td>
+        <td><span class="badge badge-mvp">✓ MVP's Core Differentiator — build fully</span></td>
+      </tr>
+      <tr>
+        <td>Marketplace / Resale</td>
+        <td>Not present</td>
+        <td>Snapshot cards are print-only — no secondary market or trading</td>
+        <td><span class="badge badge-mvp">✓ MVP Exclusive Feature</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ========== SECTION 2: FEATURE DEEP DIVE ========== -->
+  <h2>🔍 Feature Deep-Dive: What Snapshot Does Really Well</h2>
+
+  <h3>1. Teams Page — Full Self-Service Flow (/teams)</h3>
+  <p style="margin-bottom:12px;">This is Snapshot's most powerful conversion page. A coach or parent fills out one form and the entire team workflow kicks off. Key fields:</p>
+  <ul style="margin-left:20px; margin-bottom:16px; font-size:0.9rem; color:#444;">
+    <li>Team name, sport (16 options), location (state), player count</li>
+    <li>Contact info (name, email, phone — they text updates)</li>
+    <li>Cards needed by deadline (auto-sets internal deadline 7 days prior)</li>
+    <li><strong>"Who pays?"</strong> toggle — Players Pay ($29.99/player) or Team Pays (upfront bulk)</li>
+    <li>Template selection — "let players choose" or lock to one design</li>
+    <li>Ships to coach for distribution</li>
+  </ul>
+  <p style="margin-bottom:20px; font-size:0.9rem; color:#555;"><strong>MVP Opportunity:</strong> Replicate this exact flow but add a <em>Fundraising Goal</em> field — how much does your team need to raise? Show the math live: "15 players × 25 cards × $18 = $6,750 potential." Make fundraising the hero, not an afterthought.</p>
+
+  <h3>2. Organizations Page — Commission Partner Program (/organizations)</h3>
+  <p style="margin-bottom:12px;">Snapshot offers leagues/schools up to <strong>15% commission</strong> on all sales through a partner form. Checkboxes they offer orgs:</p>
+  <ul style="margin-left:20px; margin-bottom:16px; font-size:0.9rem; color:#444;">
+    <li>Custom Team Templates (org-branded)</li>
+    <li>Bulk Card Orders</li>
+    <li>Custom Booster Boxes</li>
+    <li>Team Fundraising</li>
+    <li>MEGA Cards (oversized display prints)</li>
+    <li>Snapshot LIVE Contests</li>
+    <li>Custom Branding</li>
+  </ul>
+  <p style="margin-bottom:20px; font-size:0.9rem; color:#555;"><strong>MVP Opportunity:</strong> Turn this into a full <strong>League & School Partner portal</strong> — not just a form. Give organizations their own dashboard with revenue tracking, team management, and a fundraising calculator. This is MVP's biggest gap and biggest opportunity.</p>
+
+  <h3>3. FAQ Page — 13 Questions in 4 Categories (/faq)</h3>
+  <p style="margin-bottom:12px;">Snapshot's FAQ covers: Getting Started (3Q), Pricing & Payment (3Q), Printing & Quality (3Q), Shipping & Delivery (3Q), Teams & Organizations (3Q). Key answers MVP needs to match:</p>
+  <ul style="margin-left:20px; margin-bottom:16px; font-size:0.9rem; color:#444;">
+    <li>Free to create + preview; only pay to print</li>
+    <li>JPG, PNG, HEIC photo formats; 300 DPI minimum</li>
+    <li>Cards $17.99 each; team discounts based on boxes ordered</li>
+    <li>Ships worldwide; US 3–7 days; international 7–14 days</li>
+    <li>Tracking via email + dashboard</li>
+    <li>Team billing is invoiced after order confirmation</li>
+  </ul>
+
+  <h3>4. Resources Hub — SEO Content Engine (/resources)</h3>
+  <p style="margin-bottom:12px;">Snapshot's resources page is a massive SEO play — it's a content hub with links to guides targeting every possible search query around custom cards. Key resource categories:</p>
+  <ul style="margin-left:20px; margin-bottom:16px; font-size:0.9rem; color:#444;">
+    <li>Custom Cards by Sport: baseball, football, basketball, soccer, lacrosse</li>
+    <li>Card Types: holographic, trading cards, playing cards, mega/oversized</li>
+    <li>How-To Guides: photo tips, sizing guide, design guide</li>
+    <li>Team Guides: team sets, booster boxes, team ordering</li>
+    <li>Gift Ideas: cards as gifts, special events, keepsakes</li>
+  </ul>
+  <p style="margin-bottom:20px; font-size:0.9rem; color:#555;"><strong>MVP Opportunity:</strong> Build a Resources hub focused on the fundraising angle — "How to run a card fundraiser," "How much can your team raise?", "Fundraising vs. other options," etc. MVP has the blog for individual posts; a hub page ties it all together for SEO.</p>
+
+  <h3>5. Template Gallery — Visual Card Picker (/templates)</h3>
+  <p style="margin-bottom:12px;">A visual grid of all card styles with free/NEW badges. Snapshot's current templates (10+ and growing):</p>
+  <ul style="margin-left:20px; margin-bottom:20px; font-size:0.9rem; color:#444;">
+    <li>Skyline (AI city background), Shattered (glass effect), Urban Rise (graffiti), BOOM! (color explosion)</li>
+    <li>Legacy (heritage/retro), Paint Blaster (paint burst), Modern Chrome (foil/metal), Afterdark (neon)</li>
+    <li>Neon Bomb (pop-art), Stencil (spray paint), + more in pipeline</li>
+  </ul>
+
+  <!-- ========== SECTION 3: MVP DIFFERENTIATORS ========== -->
+  <div class="mvp-diff">
+    <h2>🏆 Where MVP Kids Cards Beats Snapshot</h2>
+    <p>These are features Snapshot doesn't have at all. They are MVP's competitive moat — lean into them hard.</p>
+    <ul>
+      <li><strong>Dedicated Fundraising Engine</strong> — Snapshot mentions fundraising once in a checkbox. MVP makes it the entire reason to exist. Team fundraising pages, campaign math calculators, progress tracking, shareable fundraising links.</li>
+      <li><strong>Blockchain Provenance / On-Chain Cards</strong> — Snapshot is 100% print. MVP cards have verifiable digital ownership records — a collectibles story Snapshot can't tell.</li>
+      <li><strong>Secondary Marketplace</strong> — MVP cards can be resold. Snapshot cards are paper. This changes the value proposition entirely — parents invest, not just spend.</li>
+      <li><strong>COPPA Compliance Page</strong> — Snapshot has nothing. MVP's explicit COPPA page builds trust with schools and youth orgs that have data governance requirements.</li>
+      <li><strong>Transparent Refund Policy</strong> — Snapshot has no public refund page. MVP's clear refund policy reduces purchase hesitation.</li>
+      <li><strong>Athlete Profile Pages</strong> — MVP has /athlete-profile.html. Snapshot has no concept of a persistent athlete identity — just one-off orders.</li>
+    </ul>
+  </div>
+
+  <!-- ========== SECTION 4: PAGES TO BUILD ========== -->
+  <h2>🔨 Pages MVP Kids Cards Needs to Build</h2>
+  <p style="margin-bottom:20px; color:#555;">Ranked by business impact. Fundraising pages are highest priority since that's MVP's core differentiator.</p>
+
+  <div class="priority-grid">
+
+    <div class="priority-card p1">
+      <div class="p-label">Priority 1 — Build Immediately</div>
+      <h3>📄 FAQ Page (faq.html)</h3>
+      <ul>
+        <li>Mirror Snapshot's 5-category structure</li>
+        <li>Add MVP-specific sections: Blockchain & Ownership, Fundraising, Marketplace</li>
+        <li>Expandable accordion UI</li>
+        <li>Embed mini-FAQ on contact.html</li>
+        <li>~20–25 questions total</li>
+      </ul>
+    </div>
+
+    <div class="priority-card p1">
+      <div class="p-label">Priority 1 — Build Immediately</div>
+      <h3>🎯 Fundraising Landing Page (fundraising.html)</h3>
+      <ul>
+        <li>Snapshot has nothing like this — MVP's biggest weapon</li>
+        <li>Live fundraising calculator (players × cards × price = total)</li>
+        <li>Step-by-step campaign setup guide</li>
+        <li>Testimonial: "Our team raised $X in Y days"</li>
+        <li>CTA to team signup flow</li>
+        <li>Compare to bake sales, car washes — show ROI</li>
+      </ul>
+    </div>
+
+    <div class="priority-card p1">
+      <div class="p-label">Priority 1 — Build Immediately</div>
+      <h3>🏫 Organizations / Partners Page (organizations.html)</h3>
+      <ul>
+        <li>Replicate Snapshot's /organizations page as starting point</li>
+        <li>Add commission structure (MVP's rate vs Snapshot's 15%)</li>
+        <li>Org types: leagues, school districts, booster clubs, tournaments</li>
+        <li>Inquiry form with fundraising checkbox</li>
+        <li>Preview of org dashboard benefits</li>
+      </ul>
+    </div>
+
+    <div class="priority-card p2">
+      <div class="p-label">Priority 2 — Build Soon</div>
+      <h3>🎨 Templates Gallery (templates.html)</h3>
+      <ul>
+        <li>Visual grid of all card templates</li>
+        <li>Filter by sport, style, color</li>
+        <li>Each template card shows name + preview image</li>
+        <li>"Free" and "NEW" badges matching Snapshot's style</li>
+        <li>CTA to builder on each template</li>
+      </ul>
+    </div>
+
+    <div class="priority-card p2">
+      <div class="p-label">Priority 2 — Build Soon</div>
+      <h3>📚 Resources Hub (resources.html)</h3>
+      <ul>
+        <li>Central SEO hub page linking all guides + blog posts</li>
+        <li>Fundraising section front-and-center</li>
+        <li>Sport-specific guides (baseball, soccer, basketball cards)</li>
+        <li>How-to guides: photo tips, card sizing, team setup</li>
+        <li>Links to all 7 existing blog posts</li>
+      </ul>
+    </div>
+
+    <div class="priority-card p2">
+      <div class="p-label">Priority 2 — Build Soon</div>
+      <h3>🔒 Public Team Signup Flow (teams.html)</h3>
+      <ul>
+        <li>Upgrade /team-dashboard.html with a public-facing signup</li>
+        <li>Form: team name, sport, state, player count, deadline, who pays</li>
+        <li>Add: Fundraising goal field + live revenue calculator</li>
+        <li>"Join a team" flow with team code entry</li>
+        <li>Snapshot's killer feature — MVP needs parity here</li>
+      </ul>
+    </div>
+
+    <div class="priority-card p3">
+      <div class="p-label">Priority 3 — Nice to Have</div>
+      <h3>🔍 SEO Landing Pages</h3>
+      <ul>
+        <li>custom-sports-card.html → targets "custom sports card" keyword</li>
+        <li>custom-trading-cards.html → targets "custom trading cards" keyword</li>
+        <li>youth-sports-fundraising.html → targets fundraising search traffic</li>
+        <li>These are thin content pages built entirely for organic search</li>
+      </ul>
+    </div>
+
+    <div class="priority-card p3">
+      <div class="p-label">Priority 3 — Nice to Have</div>
+      <h3>💼 Careers Page (careers.html)</h3>
+      <ul>
+        <li>Simple page listing open roles</li>
+        <li>Can start with "No open roles — check back soon"</li>
+        <li>Builds brand credibility</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- ========== SECTION 5: FAQ CONTENT ========== -->
+  <h2>❓ Recommended FAQ Structure for MVP Kids Cards</h2>
+  <p style="margin-bottom:16px; color:#555;">Based on Snapshot's FAQ plus MVP-specific topics. 6 categories, ~25 questions.</p>
+
+  <table>
+    <thead>
+      <tr><th>Category</th><th>Key Questions to Answer</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Getting Started</td>
+        <td>How do I create my first card? · What photo formats work? · Do I need design experience? · Is it really free to create?</td>
+      </tr>
+      <tr>
+        <td>Pricing & Payment</td>
+        <td>How much does a card cost? · Can I preview before paying? · What payment methods are accepted? · Are there team discounts?</td>
+      </tr>
+      <tr>
+        <td>Printing & Quality</td>
+        <td>What's the card stock quality? · What sizes are available? · How long does production take? · What's a MEGA Card?</td>
+      </tr>
+      <tr>
+        <td>Shipping & Delivery</td>
+        <td>Where do you ship? · How are cards packaged? · Can I track my order? · What if my cards arrive damaged?</td>
+      </tr>
+      <tr>
+        <td>Teams & Fundraising</td>
+        <td>How does a team campaign work? · Who pays — the team or the players? · How much can our team raise? · How do I collect money from players? · Can a league or school use MVP?</td>
+      </tr>
+      <tr>
+        <td>Blockchain & Ownership</td>
+        <td>What does "on-chain" mean? · Is my child's data on the blockchain? · Can I sell my card? · What's the marketplace? · Is this an NFT?</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ========== SECTION 6: BUILD ROADMAP ========== -->
+  <h2>🗺️ Recommended Build Roadmap</h2>
+
+  <div class="roadmap-section">
+    <div class="roadmap-phase">Phase 1 — This Week (Pages That Drive Conversions)</div>
+    <div class="roadmap-items">
+      <div class="roadmap-item">
+        <div class="ri-icon">📋</div>
+        <div class="ri-text">
+          <strong>faq.html</strong>
+          <span>25 questions, 6 categories, accordion UI. Copy Snapshot's structure, add blockchain/fundraising/marketplace sections. Huge trust builder.</span>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="ri-icon">💰</div>
+        <div class="ri-text">
+          <strong>fundraising.html</strong>
+          <span>The page Snapshot doesn't have. Live JS calculator, step-by-step campaign guide, ROI comparison vs bake sales. MVP's hero differentiator page.</span>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="ri-icon">🏫</div>
+        <div class="ri-text">
+          <strong>organizations.html</strong>
+          <span>Partner inquiry page for leagues, schools, booster clubs. Commission structure, org dashboard preview, fundraising checkbox options.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="roadmap-section">
+    <div class="roadmap-phase">Phase 2 — Next 2 Weeks (Parity + SEO)</div>
+    <div class="roadmap-items">
+      <div class="roadmap-item">
+        <div class="ri-icon">🎨</div>
+        <div class="ri-text">
+          <strong>templates.html</strong>
+          <span>Visual template gallery with sport filters. Drives card builder traffic and organic search.</span>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="ri-icon">📚</div>
+        <div class="ri-text">
+          <strong>resources.html</strong>
+          <span>SEO hub tying together all blog posts, guides, and how-tos. Fundraising section as the lead.</span>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="ri-icon">🏆</div>
+        <div class="ri-text">
+          <strong>teams.html (public flow)</strong>
+          <span>Public-facing team setup page with fundraising goal field and live revenue calculator. Closes the Snapshot parity gap.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="roadmap-section">
+    <div class="roadmap-phase">Phase 3 — SEO & Polish</div>
+    <div class="roadmap-items">
+      <div class="roadmap-item">
+        <div class="ri-icon">🔍</div>
+        <div class="ri-text">
+          <strong>custom-sports-card.html + youth-sports-fundraising.html</strong>
+          <span>Thin SEO landing pages targeting high-volume search terms. Build credibility in Google for the keywords that matter.</span>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="ri-icon">💼</div>
+        <div class="ri-text">
+          <strong>careers.html + press.html updates</strong>
+          <span>Credibility pages. Simple and fast to build.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Internal strategy document for <strong>MVP Kids Cards</strong> &nbsp;·&nbsp; Researched from makesnapshots.com on March 9, 2026 &nbsp;·&nbsp; Do not distribute externally
+</footer>
+
+</body>
+</html>
