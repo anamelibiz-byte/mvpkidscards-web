@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Service — MVP Kids Cards</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --navy-deep: #0B1E3F; --navy-mid: #1A3260; --gold: #E8A020; --gold-light: #F5C84A; --green-win: #1AAF5D; --slate-gray: #8A9BB0; --off-white: #F8F9FC; --white: #ffffff; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Montserrat', sans-serif; background: var(--off-white); color: var(--navy-deep); overflow-x: hidden; }
+    nav { position: fixed; top: 0; width: 100%; z-index: 100; background: rgba(11,30,63,0.96); backdrop-filter: blur(8px); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .nav-logo { font-family: 'Oswald', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--white); letter-spacing: 1px; line-height: 1.1; text-decoration: none; }
+    .nav-logo .mvp { color: var(--gold); }
+    .nav-logo .sub { display: block; font-size: 0.55rem; letter-spacing: 2px; color: var(--slate-gray); font-weight: 400; text-transform: uppercase; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--slate-gray); text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta { background: var(--gold); color: var(--navy-deep); border: none; border-radius: 6px; padding: 0.5rem 1.25rem; font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: background 0.2s; }
+    .nav-cta:hover { background: var(--gold-light); }
+    .page-hero { background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy-mid) 100%); padding: 8rem 2rem 4rem; text-align: center; }
+    .page-hero .label { font-family: 'Oswald', sans-serif; font-size: 0.75rem; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; margin-bottom: 1rem; }
+    .page-hero h1 { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: clamp(2rem, 4vw, 3rem); color: var(--white); margin-bottom: 0.75rem; }
+    .page-hero .updated { color: var(--slate-gray); font-size: 0.85rem; }
+    .legal-layout { max-width: 900px; margin: 0 auto; padding: 4rem 2rem 5rem; display: grid; grid-template-columns: 200px 1fr; gap: 3rem; align-items: start; }
+    .toc { position: sticky; top: 84px; }
+    .toc h4 { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 0.75rem; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; margin-bottom: 1rem; }
+    .toc a { display: block; color: #5a6f88; text-decoration: none; font-size: 0.8rem; margin-bottom: 0.5rem; transition: color 0.2s; line-height: 1.4; }
+    .toc a:hover { color: var(--gold); }
+    .legal-body h2 { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1.4rem; color: var(--navy-deep); margin-top: 2.5rem; margin-bottom: 0.75rem; padding-top: 0.5rem; border-top: 2px solid rgba(11,30,63,0.06); }
+    .legal-body h2:first-child { margin-top: 0; border-top: none; }
+    .legal-body h3 { font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 1rem; color: var(--navy-deep); margin-top: 1.5rem; margin-bottom: 0.5rem; }
+    .legal-body p { font-size: 0.9rem; color: #3a4a5a; line-height: 1.85; margin-bottom: 1rem; }
+    .legal-body ul { margin: 0.5rem 0 1rem 1.5rem; }
+    .legal-body ul li { font-size: 0.9rem; color: #3a4a5a; line-height: 1.8; margin-bottom: 0.4rem; }
+    .legal-body a { color: var(--gold); text-decoration: none; }
+    .legal-body a:hover { text-decoration: underline; }
+    .highlight-box { background: rgba(232,160,32,0.08); border: 1px solid rgba(232,160,32,0.25); border-radius: 10px; padding: 1.25rem 1.5rem; margin: 1.25rem 0; }
+    .highlight-box p { margin: 0; font-size: 0.875rem; }
+    footer { background: #07121f; padding: 3rem 2rem 2rem; color: var(--slate-gray); }
+    .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 2rem; margin-bottom: 2rem; }
+    .footer-logo { font-family: 'Oswald', sans-serif; font-size: 1.3rem; font-weight: 700; color: white; }
+    .footer-logo .mvp { color: var(--gold); }
+    .footer-logo .sub { display: block; font-size: 0.55rem; letter-spacing: 2px; color: var(--slate-gray); font-weight: 400; text-transform: uppercase; margin-top: 2px; }
+    .footer-tagline { font-size: 0.8rem; max-width: 220px; line-height: 1.5; margin-top: 0.5rem; }
+    .footer-links { display: flex; gap: 3rem; flex-wrap: wrap; }
+    .footer-col h4 { font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 0.8rem; letter-spacing: 1px; color: white; text-transform: uppercase; margin-bottom: 1rem; }
+    .footer-col a { display: block; color: var(--slate-gray); text-decoration: none; font-size: 0.82rem; margin-bottom: 0.5rem; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom { max-width: 1100px; margin: 0 auto; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 0.78rem; }
+    .footer-bottom .copy { color: #3d5060; }
+    .footer-bottom .legal { display: flex; gap: 1.5rem; }
+    .footer-bottom .legal a { color: #3d5060; text-decoration: none; }
+    .footer-bottom .legal a:hover { color: var(--gold); }
+    @media (max-width: 768px) { .nav-links { display: none; } .legal-layout { grid-template-columns: 1fr; } .toc { display: none; } }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo"><span class="mvp">MVP</span> Kids Cards<span class="sub">ProspectCard by MVP Kids Cards</span></a>
+    <ul class="nav-links">
+      <li><a href="/#how-it-works">How It Works</a></li>
+      <li><a href="/#cards">The Cards</a></li>
+      <li><a href="/#why">Why Us</a></li>
+    </ul>
+    <a href="/#waitlist" class="nav-cta">Join Waitlist</a>
+  </nav>
+
+  <div class="page-hero">
+    <div class="label">Legal</div>
+    <h1>Terms of Service</h1>
+    <div class="updated">Last updated: June 1, 2025</div>
+  </div>
+
+  <div class="legal-layout">
+    <div class="toc">
+      <h4>Contents</h4>
+      <a href="#s1">1. Acceptance</a>
+      <a href="#s2">2. Eligibility</a>
+      <a href="#s3">3. Account Registration</a>
+      <a href="#s4">4. Platform Description</a>
+      <a href="#s5">5. Intellectual Property</a>
+      <a href="#s6">6. Athlete Likeness & Consent</a>
+      <a href="#s7">7. Payments & Fees</a>
+      <a href="#s8">8. Card Fulfillment</a>
+      <a href="#s9">9. Blockchain & Royalties</a>
+      <a href="#s10">10. Prohibited Conduct</a>
+      <a href="#s11">11. Disclaimer of Warranties</a>
+      <a href="#s12">12. Limitation of Liability</a>
+      <a href="#s13">13. Indemnification</a>
+      <a href="#s14">14. Termination</a>
+      <a href="#s15">15. Governing Law</a>
+      <a href="#s16">16. Changes to Terms</a>
+      <a href="#s17">17. Contact</a>
+    </div>
+
+    <div class="legal-body">
+
+      <div class="highlight-box">
+        <p><strong>Please read these Terms carefully.</strong> By creating an account or using the MVP Kids Cards platform, you agree to be bound by these Terms of Service. If you do not agree, do not use the platform.</p>
+      </div>
+
+      <h2 id="s1">1. Acceptance of Terms</h2>
+      <p>These Terms of Service ("Terms") constitute a legally binding agreement between you ("User," "Parent," or "you") and MVP Kids Cards ("Company," "we," "us," or "our") governing your use of the MVP Kids Cards platform, including all associated websites, mobile applications, and services (collectively, the "Platform").</p>
+      <p>By accessing or using the Platform, you confirm that you are at least 18 years old, have the legal authority to enter into these Terms, and agree to be bound by them. If you are using the Platform on behalf of an organization, you represent that you have authority to bind that organization to these Terms.</p>
+
+      <h2 id="s2">2. Eligibility</h2>
+      <p>The Platform is intended exclusively for use by adults (18 years of age or older) who are parents, legal guardians, or authorized coaches or team administrators acting on behalf of minor athletes. Minor athletes do not use the Platform directly and do not create accounts.</p>
+      <p>By creating an account, you represent and warrant that: (a) you are at least 18 years of age; (b) you are the parent or legal guardian of any minor athlete whose profile you create, or you have explicit written authorization from such parent or guardian; (c) all information you provide is accurate and complete; and (d) your use of the Platform does not violate any applicable law or regulation.</p>
+
+      <h2 id="s3">3. Account Registration</h2>
+      <p>To access most features of the Platform, you must create an account. You agree to: (a) provide accurate, current, and complete registration information; (b) maintain and promptly update your account information; (c) maintain the security of your account credentials; (d) notify us immediately of any unauthorized use of your account; and (e) accept responsibility for all activities that occur under your account.</p>
+      <p>We reserve the right to refuse registration or terminate accounts at our discretion, particularly where we have reason to believe that provided information is false, that account use violates these Terms, or that registration poses a risk to the safety of minors.</p>
+
+      <h2 id="s4">4. Platform Description</h2>
+      <p>MVP Kids Cards provides tools that allow parents and authorized adults to: create professionally designed trading cards featuring youth athletes; share fundraising pages where supporters can purchase physical printed copies of those cards; and track fundraising proceeds. We facilitate the design, printing, and fulfillment of physical trading cards through third-party print partners.</p>
+      <p>The Platform is not a general marketplace and is not intended for the sale of cards by minors, the creation of cards without a parent's or guardian's verifiable involvement, or any commercial purpose unrelated to youth athlete fundraising.</p>
+
+      <h2 id="s5">5. Intellectual Property</h2>
+      <h3>5.1 Your Content</h3>
+      <p>You retain ownership of all photos, text, and other content you upload to the Platform ("Your Content"). By uploading Your Content, you grant MVP Kids Cards a non-exclusive, worldwide, royalty-free license to use, reproduce, process, and display Your Content solely for the purpose of operating the Platform and fulfilling card orders. This license terminates when you delete Your Content or close your account, except to the extent necessary to complete pending orders.</p>
+      <h3>5.2 Platform Content</h3>
+      <p>All Platform software, designs, templates, graphics, text, and other content not provided by you ("Platform Content") is owned by MVP Kids Cards and protected by applicable intellectual property laws. You may not copy, modify, distribute, or create derivative works from Platform Content without our prior written consent.</p>
+      <h3>5.3 Feedback</h3>
+      <p>If you provide feedback or suggestions regarding the Platform, you grant us an unrestricted, perpetual, irrevocable, royalty-free license to use and incorporate such feedback into our products and services.</p>
+
+      <h2 id="s6">6. Athlete Likeness and Parental Consent</h2>
+      <p>By creating an athlete profile and uploading a photograph of a minor, you represent and warrant that: (a) you are the parent or legal guardian of the athlete depicted, or have explicit written authorization from such parent or guardian; (b) you have full legal authority to grant the licenses described in Section 5.1 with respect to the athlete's image, name, and likeness; (c) the athlete's photo does not infringe any third-party rights; and (d) you have complied with all applicable laws regarding the use of a minor's likeness.</p>
+      <p>You indemnify MVP Kids Cards against any claims arising from unauthorized use of a minor's image or likeness.</p>
+
+      <h2 id="s7">7. Payments and Fees</h2>
+      <h3>7.1 Card Pricing</h3>
+      <p>Card prices are set by the parent when creating the fundraising page, subject to our minimum and maximum price guidelines. MVP Kids Cards charges a platform fee (currently 15% of the card sale price) plus applicable payment processing fees charged by Stripe. The remaining proceeds are disbursed to the parent's connected Stripe account.</p>
+      <h3>7.2 Payment Processing</h3>
+      <p>All payments are processed by Stripe. By making or receiving payments through the Platform, you agree to Stripe's Terms of Service. MVP Kids Cards does not store payment card information.</p>
+      <h3>7.3 Payouts</h3>
+      <p>Fundraising proceeds are held in escrow until card fulfillment is complete, then disbursed to the parent's Stripe account. Payout timing is subject to Stripe's standard processing times (typically 2–7 business days after card shipment confirmation).</p>
+      <h3>7.4 Taxes</h3>
+      <p>You are responsible for determining and paying any applicable taxes on proceeds you receive through the Platform. MVP Kids Cards may be required to report certain payments to tax authorities and issue tax forms as required by law.</p>
+
+      <h2 id="s8">8. Card Fulfillment</h2>
+      <p>Physical cards are printed and shipped by our third-party print fulfillment partner. We estimate a fulfillment time of 7–10 business days from the date a buyer's payment is confirmed. Shipping times may vary based on destination and carrier performance.</p>
+      <p>MVP Kids Cards does not guarantee specific delivery dates and is not liable for delays caused by fulfillment partners, shipping carriers, customs, or events outside our control. If a card arrives damaged, we will work with the buyer to arrange a replacement at no additional cost, subject to our <a href="/refund.html">Refund Policy</a>.</p>
+
+      <h2 id="s9">9. Blockchain Recording and Royalties</h2>
+      <p>Each card's provenance (athlete name, card edition, serial number, and issuance date) is recorded on a public blockchain. This record is permanent and cannot be deleted. No personal contact information, financial information, or photographs are recorded on the blockchain.</p>
+      <p>Athletes are entitled to a 5% royalty on each verified secondary market resale of their card, facilitated through a smart contract. MVP Kids Cards makes reasonable efforts to enforce this royalty but cannot guarantee enforcement on all secondary platforms or informal sales. Royalty payments are disbursed to the wallet or account designated by the parent.</p>
+
+      <h2 id="s10">10. Prohibited Conduct</h2>
+      <p>You agree not to use the Platform to:</p>
+      <ul>
+        <li>Create cards featuring any person without proper authorization, particularly any minor for whom you are not the parent or authorized guardian.</li>
+        <li>Upload content that is false, defamatory, obscene, offensive, or that infringes any third party's rights.</li>
+        <li>Attempt to circumvent, disable, or interfere with security features of the Platform.</li>
+        <li>Use the Platform for any purpose that violates applicable law, including consumer protection laws, privacy laws, or child protection laws.</li>
+        <li>Impersonate another person or organization, or misrepresent your affiliation with any person or organization.</li>
+        <li>Attempt to gain unauthorized access to any portion of the Platform or any other accounts, systems, or networks connected to the Platform.</li>
+        <li>Use automated means to access or scrape the Platform without our prior written consent.</li>
+        <li>Engage in any conduct that in our sole judgment restricts or inhibits any other person's use of the Platform.</li>
+      </ul>
+
+      <h2 id="s11">11. Disclaimer of Warranties</h2>
+      <p>THE PLATFORM IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED. TO THE FULLEST EXTENT PERMITTED BY LAW, MVP KIDS CARDS DISCLAIMS ALL WARRANTIES, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.</p>
+      <p>We do not warrant that the Platform will be uninterrupted, error-free, or free of viruses or other harmful components. We do not warrant the accuracy, completeness, or usefulness of any information on the Platform.</p>
+
+      <h2 id="s12">12. Limitation of Liability</h2>
+      <p>TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, MVP KIDS CARDS AND ITS OFFICERS, DIRECTORS, EMPLOYEES, AND AGENTS SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, DATA, OR GOODWILL, ARISING OUT OF OR RELATED TO YOUR USE OF THE PLATFORM.</p>
+      <p>OUR TOTAL LIABILITY TO YOU FOR ALL CLAIMS ARISING OUT OF OR RELATED TO THE PLATFORM SHALL NOT EXCEED THE GREATER OF (A) THE TOTAL AMOUNT YOU PAID TO MVP KIDS CARDS IN THE TWELVE MONTHS PRECEDING THE CLAIM, OR (B) ONE HUNDRED DOLLARS ($100).</p>
+
+      <h2 id="s13">13. Indemnification</h2>
+      <p>You agree to defend, indemnify, and hold harmless MVP Kids Cards and its officers, directors, employees, and agents from and against any claims, damages, obligations, losses, liabilities, costs, and expenses (including reasonable attorneys' fees) arising from: (a) your use of the Platform; (b) Your Content; (c) your violation of these Terms; (d) your violation of any third-party rights; or (e) your use of a minor's likeness without proper authorization.</p>
+
+      <h2 id="s14">14. Termination</h2>
+      <p>We may suspend or terminate your account and access to the Platform at any time, with or without cause and with or without notice, particularly if we believe you have violated these Terms or that your continued use poses a risk to the safety of minors or the integrity of the Platform.</p>
+      <p>You may close your account at any time by contacting us at <a href="mailto:hello@mvpkidscards.com">hello@mvpkidscards.com</a>. Upon account closure, we will delete your personal information in accordance with our Privacy Policy, subject to legal retention requirements. Pending orders will be fulfilled before account data is deleted.</p>
+
+      <h2 id="s15">15. Governing Law and Dispute Resolution</h2>
+      <p>These Terms are governed by the laws of the State of Texas, without regard to its conflict of law principles. Any dispute arising from or relating to these Terms or the Platform shall be resolved by binding arbitration under the rules of the American Arbitration Association, except that either party may seek injunctive or other equitable relief in any court of competent jurisdiction for claims involving intellectual property or the safety of minors.</p>
+      <p>YOU AGREE TO RESOLVE DISPUTES WITH MVP KIDS CARDS INDIVIDUALLY AND NOT AS PART OF A CLASS ACTION OR REPRESENTATIVE PROCEEDING.</p>
+
+      <h2 id="s16">16. Changes to Terms</h2>
+      <p>We reserve the right to modify these Terms at any time. When we make material changes, we will notify you by email and by posting an updated version with a new "Last updated" date. Your continued use of the Platform after the effective date of any changes constitutes your acceptance of the modified Terms. If you do not agree to the modified Terms, you must stop using the Platform.</p>
+
+      <h2 id="s17">17. Contact Us</h2>
+      <p>If you have questions about these Terms, please contact us:</p>
+      <ul>
+        <li><strong>Email:</strong> <a href="mailto:legal@mvpkidscards.com">legal@mvpkidscards.com</a></li>
+        <li><strong>General:</strong> <a href="mailto:hello@mvpkidscards.com">hello@mvpkidscards.com</a></li>
+        <li><strong>Contact form:</strong> <a href="/contact.html">mvpkidscards.com/contact</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo"><span class="mvp">MVP</span> Kids Cards<span class="sub">ProspectCard by MVP Kids Cards</span></div>
+        <div class="footer-tagline">Youth athlete trading cards that fundraise today and appreciate forever.</div>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Product</h4>
+          <a href="/#how-it-works">How It Works</a>
+          <a href="/#cards">Card Editions</a>
+          <a href="/#why">Why MVP Kids Cards</a>
+          <a href="/#waitlist">Join Waitlist</a>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="/about.html">About</a>
+          <a href="/blog.html">Blog</a>
+          <a href="/press.html">Press</a>
+          <a href="/contact.html">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="/privacy.html">Privacy Policy</a>
+          <a href="/terms.html">Terms of Service</a>
+          <a href="/coppa.html">COPPA Compliance</a>
+          <a href="/refund.html">Refund Policy</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="copy">© 2025 MVP Kids Cards. All rights reserved.</div>
+      <div class="legal"><a href="mailto:hello@mvpkidscards.com">hello@mvpkidscards.com</a></div>
+    </div>
+  </footer>
+
+</body>
+</html>

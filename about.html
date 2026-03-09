@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us — MVP Kids Cards</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy-deep: #0B1E3F; --navy-mid: #1A3260; --gold: #E8A020;
+      --gold-light: #F5C84A; --green-win: #1AAF5D; --slate-gray: #8A9BB0;
+      --off-white: #F8F9FC; --white: #ffffff;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Montserrat', sans-serif; background: var(--off-white); color: var(--navy-deep); overflow-x: hidden; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; width: 100%; z-index: 100; background: rgba(11,30,63,0.96); backdrop-filter: blur(8px); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .nav-logo { font-family: 'Oswald', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--white); letter-spacing: 1px; line-height: 1.1; text-decoration: none; }
+    .nav-logo .mvp { color: var(--gold); }
+    .nav-logo .sub { display: block; font-size: 0.55rem; letter-spacing: 2px; color: var(--slate-gray); font-weight: 400; text-transform: uppercase; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--slate-gray); text-decoration: none; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.5px; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta { background: var(--gold); color: var(--navy-deep); border: none; border-radius: 6px; padding: 0.5rem 1.25rem; cursor: pointer; font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 0.9rem; letter-spacing: 0.5px; text-decoration: none; transition: background 0.2s, transform 0.15s; }
+    .nav-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+    /* PAGE HERO */
+    .page-hero { background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy-mid) 100%); padding: 8rem 2rem 5rem; text-align: center; }
+    .page-hero .label { font-family: 'Oswald', sans-serif; font-size: 0.75rem; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; margin-bottom: 1rem; }
+    .page-hero h1 { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: clamp(2.2rem, 5vw, 3.5rem); color: var(--white); line-height: 1.1; margin-bottom: 1.25rem; }
+    .page-hero h1 span { color: var(--gold); }
+    .page-hero p { color: #a8bcd4; font-size: 1.05rem; line-height: 1.7; max-width: 580px; margin: 0 auto; }
+
+    /* CONTENT */
+    .content { max-width: 860px; margin: 0 auto; padding: 5rem 2rem; }
+    .content h2 { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1.8rem; color: var(--navy-deep); margin-bottom: 1rem; margin-top: 3rem; }
+    .content h2:first-child { margin-top: 0; }
+    .content p { font-size: 1rem; color: #4a5a6a; line-height: 1.8; margin-bottom: 1.25rem; }
+    .content strong { color: var(--navy-deep); }
+
+    /* VALUES */
+    .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin: 2.5rem 0; }
+    .value-card { background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 2px 20px rgba(11,30,63,0.07); border-top: 4px solid var(--gold); }
+    .value-card.blue { border-color: #4A90D9; }
+    .value-card.green { border-color: var(--green-win); }
+    .value-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .value-card h3 { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1rem; color: var(--navy-deep); margin-bottom: 0.5rem; }
+    .value-card p { font-size: 0.875rem; color: #5a6f88; line-height: 1.6; margin: 0; }
+
+    /* TEAM */
+    .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin: 2.5rem 0; }
+    .team-member { text-align: center; }
+    .team-avatar { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--navy-mid), var(--navy-deep)); display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 1rem; border: 3px solid var(--gold); }
+    .team-member h3 { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1rem; color: var(--navy-deep); }
+    .team-member p { font-size: 0.8rem; color: var(--slate-gray); margin-top: 0.25rem; }
+
+    /* CTA BAND */
+    .cta-band { background: linear-gradient(135deg, var(--navy-deep), #1a3a70); padding: 4rem 2rem; text-align: center; }
+    .cta-band h2 { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 2rem; color: white; margin-bottom: 1rem; }
+    .cta-band h2 span { color: var(--gold); }
+    .cta-band p { color: var(--slate-gray); margin-bottom: 2rem; }
+    .btn-primary { background: var(--gold); color: var(--navy-deep); font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1rem; padding: 0.85rem 2rem; border: none; border-radius: 8px; cursor: pointer; text-decoration: none; transition: all 0.2s; display: inline-block; }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+    /* FOOTER */
+    footer { background: #07121f; padding: 3rem 2rem 2rem; color: var(--slate-gray); }
+    .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 2rem; margin-bottom: 2rem; }
+    .footer-logo { font-family: 'Oswald', sans-serif; font-size: 1.3rem; font-weight: 700; color: white; margin-bottom: 0.35rem; }
+    .footer-logo .mvp { color: var(--gold); }
+    .footer-logo .sub { display: block; font-size: 0.55rem; letter-spacing: 2px; color: var(--slate-gray); font-weight: 400; text-transform: uppercase; margin-top: 2px; }
+    .footer-tagline { font-size: 0.8rem; color: var(--slate-gray); max-width: 220px; line-height: 1.5; margin-top: 0.5rem; }
+    .footer-links { display: flex; gap: 3rem; flex-wrap: wrap; }
+    .footer-col h4 { font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 0.8rem; letter-spacing: 1px; color: white; text-transform: uppercase; margin-bottom: 1rem; }
+    .footer-col a { display: block; color: var(--slate-gray); text-decoration: none; font-size: 0.82rem; margin-bottom: 0.5rem; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom { max-width: 1100px; margin: 0 auto; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 0.78rem; }
+    .footer-bottom .copy { color: #3d5060; }
+    .footer-bottom .legal { display: flex; gap: 1.5rem; }
+    .footer-bottom .legal a { color: #3d5060; text-decoration: none; }
+    .footer-bottom .legal a:hover { color: var(--gold); }
+
+    @media (max-width: 768px) { .nav-links { display: none; } }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo"><span class="mvp">MVP</span> Kids Cards<span class="sub">ProspectCard by MVP Kids Cards</span></a>
+    <ul class="nav-links">
+      <li><a href="/#how-it-works">How It Works</a></li>
+      <li><a href="/#cards">The Cards</a></li>
+      <li><a href="/#why">Why Us</a></li>
+    </ul>
+    <a href="/#waitlist" class="nav-cta">Join Waitlist</a>
+  </nav>
+
+  <div class="page-hero">
+    <div class="label">Our Story</div>
+    <h1>Built for the <span>kid on the court.</span></h1>
+    <p>MVP Kids Cards exists because every youth athlete deserves to feel like a pro — and every family deserves a fundraiser worth being proud of.</p>
+  </div>
+
+  <div class="content">
+    <h2>Where it started</h2>
+    <p>It started at a travel basketball tournament in Houston. A parent watched their 11-year-old pour their heart out on the court — then turned around and started dreading the bake sale they had to run to pay for the next tournament. There had to be a better way.</p>
+    <p>What if the athlete was the product? What if supporters could own a piece of this journey — something real, something collectible, something that might actually be worth something one day? <strong>MVP Kids Cards was born from that question.</strong></p>
+    <p>We built a platform that turns your child's athletic story into a limited-edition trading card. Professional design. Real print quality. Auto-fulfilled to every buyer. And a built-in fundraising engine that does the work while you cheer from the sidelines.</p>
+
+    <h2>What we believe</h2>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-icon">🏅</div>
+        <h3>Every Kid Is Already an MVP</h3>
+        <p>You don't have to be going D1 to deserve a professional card. Every athlete who shows up, puts in work, and represents their team has a story worth telling.</p>
+      </div>
+      <div class="value-card blue">
+        <div class="value-icon">👨‍👩‍👧</div>
+        <h3>Parents Deserve Better Fundraisers</h3>
+        <p>Car washes, candy bars, and GoFundMe posts are exhausting and awkward. We built something families can share with pride — and supporters genuinely want to buy.</p>
+      </div>
+      <div class="value-card green">
+        <div class="value-icon">🔒</div>
+        <h3>Kids' Safety Comes First</h3>
+        <p>We are fully COPPA compliant. Parents control every piece of their child's data and likeness. We will never sell, share, or profit from children's personal information.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">📈</div>
+        <h3>Today's Card, Tomorrow's Legacy</h3>
+        <p>We record every card on-chain. If your athlete goes pro, the people who believed in them at age 12 hold a verified, provable piece of that journey — potentially worth far more than $15.</p>
+      </div>
+    </div>
+
+    <h2>How it works</h2>
+    <p>Parents create a free account, build their athlete's profile, upload a photo, and choose a card edition — Standard, Foil, or Rookie. We generate a beautiful card design in minutes and spin up a personal fundraising page with a unique link.</p>
+    <p>Supporters buy cards directly from that link. We print and ship to every buyer in 7–10 days. Proceeds go directly to the family (minus a small platform fee), and the athlete earns a 5% royalty on every future resale of their card — for life.</p>
+    <p>No inventory. No post office runs. No awkward asks. Just a link, a story, and a card worth keeping.</p>
+
+    <h2>Where we're headed</h2>
+    <p>We're currently in early access, onboarding our first families. Our roadmap includes team and league packages, coach dashboards, advanced card customization, and eventually a secondary marketplace where collector cards can be traded — with athletes always earning their cut.</p>
+    <p>We believe the sports trading card industry is ripe for reinvention — and it should start with the youngest athletes, not end with them.</p>
+  </div>
+
+  <div class="cta-band">
+    <h2>Ready to create your athlete's <span>first card?</span></h2>
+    <p>Join the waitlist and we'll reach out personally to get you started.</p>
+    <a href="/#waitlist" class="btn-primary">Join the Waitlist</a>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo"><span class="mvp">MVP</span> Kids Cards<span class="sub">ProspectCard by MVP Kids Cards</span></div>
+        <div class="footer-tagline">Youth athlete trading cards that fundraise today and appreciate forever.</div>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Product</h4>
+          <a href="/#how-it-works">How It Works</a>
+          <a href="/#cards">Card Editions</a>
+          <a href="/#why">Why MVP Kids Cards</a>
+          <a href="/#waitlist">Join Waitlist</a>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="/about.html">About</a>
+          <a href="/blog.html">Blog</a>
+          <a href="/press.html">Press</a>
+          <a href="/contact.html">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="/privacy.html">Privacy Policy</a>
+          <a href="/terms.html">Terms of Service</a>
+          <a href="/coppa.html">COPPA Compliance</a>
+          <a href="/refund.html">Refund Policy</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="copy">© 2025 MVP Kids Cards. All rights reserved.</div>
+      <div class="legal">
+        <a href="mailto:hello@mvpkidscards.com">hello@mvpkidscards.com</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

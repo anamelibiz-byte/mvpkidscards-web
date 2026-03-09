@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ — Frequently Asked Questions | MVP Kids Cards</title>
+  <meta name="description" content="Got questions about MVP Kids Cards? Find answers about creating cards, pricing, team fundraising, shipping, blockchain ownership, and more.">
+  <meta name="keywords" content="MVP Kids Cards FAQ, custom kids trading cards questions, youth card fundraising FAQ, trading card printing questions">
+  <meta property="og:title" content="FAQ | MVP Kids Cards">
+  <meta property="og:description" content="Everything you need to know about creating, ordering, and fundraising with MVP Kids Cards.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://mvpkidscards-web.vercel.app/faq.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --navy-deep: #0B1E3F;
+      --navy-mid:  #1A3260;
+      --gold:      #E8A020;
+      --gold-light:#F5C84A;
+      --green-win: #1AAF5D;
+      --slate-gray:#8A9BB0;
+      --off-white: #F8F9FC;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Montserrat', sans-serif; background: var(--off-white); color: #1a1a2e; }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--navy-deep);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      height: 68px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 16px rgba(0,0,0,.4);
+    }
+    .nav-logo {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: 0.04em;
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; align-items: center; gap: 28px; }
+    .nav-links a {
+      color: var(--slate-gray);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      font-family: 'Oswald', sans-serif;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color .2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: #fff; }
+    .nav-cta {
+      background: var(--gold);
+      color: var(--navy-deep) !important;
+      padding: 8px 20px;
+      border-radius: 6px;
+      font-weight: 700 !important;
+    }
+    .nav-cta:hover { background: var(--gold-light) !important; color: var(--navy-deep) !important; }
+
+    /* ── HERO ── */
+    .faq-hero {
+      background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy-mid) 100%);
+      color: #fff;
+      text-align: center;
+      padding: 72px 24px 56px;
+    }
+    .faq-hero .eyebrow {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .faq-hero h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .faq-hero p {
+      color: var(--slate-gray);
+      font-size: 1rem;
+      max-width: 560px;
+      margin: 0 auto 28px;
+      line-height: 1.7;
+    }
+    .faq-search {
+      display: flex;
+      max-width: 480px;
+      margin: 0 auto;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,.3);
+    }
+    .faq-search input {
+      flex: 1;
+      padding: 14px 20px;
+      border: none;
+      font-size: 0.9rem;
+      font-family: 'Montserrat', sans-serif;
+      outline: none;
+    }
+    .faq-search button {
+      background: var(--gold);
+      border: none;
+      padding: 0 24px;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      color: var(--navy-deep);
+      text-transform: uppercase;
+    }
+
+    /* ── LAYOUT ── */
+    .faq-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 56px 24px 80px;
+    }
+
+    /* Category tabs */
+    .cat-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 40px;
+    }
+    .cat-tab {
+      background: #fff;
+      border: 2px solid #e2e6ef;
+      border-radius: 30px;
+      padding: 8px 18px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--navy-mid);
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .cat-tab:hover, .cat-tab.active {
+      background: var(--navy-deep);
+      border-color: var(--navy-deep);
+      color: #fff;
+    }
+
+    /* FAQ sections */
+    .faq-section { margin-bottom: 48px; }
+    .faq-section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .faq-section-header .icon {
+      width: 42px;
+      height: 42px;
+      background: var(--navy-deep);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .faq-section-header h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--navy-deep);
+    }
+
+    /* Accordion */
+    .accordion { display: flex; flex-direction: column; gap: 8px; }
+    .acc-item {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 1px 6px rgba(0,0,0,.07);
+      overflow: hidden;
+      border: 1px solid #e8ecf4;
+    }
+    .acc-trigger {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--navy-deep);
+      transition: background .15s;
+    }
+    .acc-trigger:hover { background: #f5f7fc; }
+    .acc-trigger.open { color: var(--gold); background: var(--navy-deep); }
+    .acc-trigger.open .acc-arrow { transform: rotate(180deg); color: var(--gold); }
+    .acc-arrow {
+      font-size: 0.8rem;
+      color: var(--slate-gray);
+      transition: transform .25s, color .25s;
+      flex-shrink: 0;
+    }
+    .acc-body {
+      display: none;
+      padding: 0 22px 20px;
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: #3a3f5c;
+      border-top: 1px solid #f0f2f9;
+    }
+    .acc-body.open { display: block; }
+    .acc-body p { margin-bottom: 10px; }
+    .acc-body p:last-child { margin-bottom: 0; }
+    .acc-body ul { margin: 8px 0 8px 20px; }
+    .acc-body ul li { margin-bottom: 4px; }
+    .acc-body .highlight {
+      background: linear-gradient(135deg, var(--navy-deep), var(--navy-mid));
+      color: #fff;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-top: 10px;
+      font-size: 0.85rem;
+    }
+    .acc-body .highlight strong { color: var(--gold); }
+    .acc-body a { color: var(--gold); font-weight: 600; }
+
+    /* Still need help */
+    .still-help {
+      background: var(--navy-deep);
+      border-radius: 16px;
+      padding: 48px 32px;
+      text-align: center;
+      color: #fff;
+      margin-top: 16px;
+    }
+    .still-help h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .still-help p { color: var(--slate-gray); margin-bottom: 24px; font-size: 0.92rem; }
+    .help-btns { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+    .help-btn {
+      display: inline-block;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+    }
+    .help-btn-gold { background: var(--gold); color: var(--navy-deep); }
+    .help-btn-outline { background: transparent; border: 2px solid var(--slate-gray); color: #fff; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy-deep);
+      color: var(--slate-gray);
+      padding: 48px 32px 28px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto 32px;
+    }
+    .footer-brand .logo {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    .footer-brand .logo span { color: var(--gold); }
+    .footer-brand p { font-size: 0.82rem; line-height: 1.7; }
+    .footer-col h4 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 14px;
+    }
+    .footer-col a {
+      display: block;
+      color: var(--slate-gray);
+      text-decoration: none;
+      font-size: 0.85rem;
+      margin-bottom: 8px;
+      transition: color .2s;
+    }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom {
+      text-align: center;
+      font-size: 0.78rem;
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding-top: 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    @media (max-width: 680px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .nav-links .hide-mobile { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">MVP <span>Kids</span> Cards</a>
+  <div class="nav-links">
+    <a href="index.html" class="hide-mobile">Home</a>
+    <a href="blog.html" class="hide-mobile">Blog</a>
+    <a href="faq.html" class="active">FAQ</a>
+    <a href="contact.html" class="hide-mobile">Contact</a>
+    <a href="dashboard.html" class="nav-cta">Get Started</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="faq-hero">
+  <div class="eyebrow">Help Center</div>
+  <h1>Frequently Asked Questions</h1>
+  <p>Everything you need to know about creating, ordering, and fundraising with MVP Kids Cards — for athletes, artists, scholars, and every kid in between.</p>
+  <div class="faq-search">
+    <input type="text" id="faqSearch" placeholder="Search questions…" oninput="filterFAQ(this.value)">
+    <button type="button">Search</button>
+  </div>
+</section>
+
+<!-- FAQ CONTENT -->
+<div class="faq-wrap">
+
+  <!-- Category tabs -->
+  <div class="cat-tabs">
+    <button class="cat-tab active" onclick="scrollTo('getting-started')">Getting Started</button>
+    <button class="cat-tab" onclick="scrollTo('pricing')">Pricing</button>
+    <button class="cat-tab" onclick="scrollTo('categories')">Card Categories</button>
+    <button class="cat-tab" onclick="scrollTo('printing')">Printing & Quality</button>
+    <button class="cat-tab" onclick="scrollTo('shipping')">Shipping</button>
+    <button class="cat-tab" onclick="scrollTo('fundraising')">Fundraising</button>
+    <button class="cat-tab" onclick="scrollTo('blockchain')">Blockchain & Ownership</button>
+  </div>
+
+  <!-- ── SECTION 1: GETTING STARTED ── -->
+  <div class="faq-section" id="getting-started">
+    <div class="faq-section-header">
+      <div class="icon">🚀</div>
+      <h2>Getting Started</h2>
+    </div>
+    <div class="accordion">
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          How do I create my first card?
+          <span class="acc-arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p>It's simple — and completely free until you're ready to order prints. Here's how:</p>
+          <ul>
+            <li>Create a free parent account (no credit card required)</li>
+            <li>Click "Create a Card" in your dashboard</li>
+            <li>Upload your child's photo</li>
+            <li>Choose a card template and category (sports, dance, academics, and more)</li>
+            <li>Add name, stats, achievements, team, or milestones</li>
+            <li>Preview your finished card — then order prints whenever you're ready</li>
+          </ul>
+          <p>The whole process takes under 5 minutes!</p>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          Does my child need an account?
+          <span class="acc-arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p>No — and by design. In compliance with COPPA (Children's Online Privacy Protection Act), children never create accounts on MVP Kids Cards. <strong>Parents are always the account holders.</strong></p>
+          <p>You manage everything for your child: the card design, the order, the fundraising campaign, and any resale activity on the marketplace. Your child's data is protected, and you stay in full control.</p>
+          <p><a href="coppa.html">Read our full COPPA compliance page →</a></p>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          What photo formats do you accept?
+          <span class="acc-arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p>We accept <strong>JPG, PNG, and HEIC</strong> formats. For the best-looking card:</p>
+          <ul>
+            <li>Use high-resolution images (at least 800 × 800 px — 300 DPI preferred)</li>
+            <li>Good lighting makes the biggest difference — natural daylight or overcast skies work great</li>
+            <li>Action shots look incredible on sports and dance templates</li>
+            <li>Portrait shots with a clean background work beautifully for academic and milestone cards</li>
+          </ul>
+          <p><a href="blog/how-to-take-the-perfect-athlete-photo.html">Read our complete photo guide →</a></p>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          Do I need design experience?
+          <span class="acc-arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p>Not at all. Our card builder is designed for busy parents, not designers. Upload a photo, fill in a few fields, pick a template — and our system handles all the layout and design work. You'll have a professional-looking card in minutes, no Photoshop required.</p>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          Is it really free to create and preview?
+          <span class="acc-arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p>Yes — 100% free. Creating an account, uploading photos, customizing your card, and previewing the finished design costs nothing. <strong>You only pay when you decide to order physical prints.</strong></p>
+          <p>This means you can design cards for your whole team, get everyone's approval, and place a single bulk order — no risk, no wasted money.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── SECTION 2: PRICING ── -->
+  <div class="faq-section" id="pricing">
+    <div class="faq-section-header">
+      <div class="icon">💳</div>
+      <h2>Pricing &amp; Payment</h2>
+    </div>
+    <div class="accordion">
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          How much does a card cost?
+          <span class="acc-arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p>Individual cards start at <strong>$18 per card</strong> with free US shipping. Bulk and team orders get volume pricing — the more cards you order, the lower your cost per card.</p>
+          <div class="highlight">
+            <strong>Fundraising flip:</strong> When your child's supporters buy their card at the recommended supporter price, your team keeps the difference. Most teams net $8–$12 per card sold.
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          Are there team or bulk discounts?
+          <span class="acc-arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p>Yes! Team discounts are based on the total number of card packs ordered, not individual cards. The more players participating in your campaign, the better the per-card rate.</p>
+          <p>Leagues, schools, and organizations with multiple teams get additional volume pricing. <a href="organizations.html">Contact us about our partner program →</a></p>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          What payment methods do you accept?
+          <span class="acc-arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p>We accept all major credit and debit cards: <strong>Visa, Mastercard, American Express, and Discover</strong>. Payments are processed securely through Stripe — we never store your card number on our servers.</p>
+          <p>For team and organization bulk orders, we also support invoice billing. <a href="contact.html">Contact us to arrange invoicing →</a></p>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          Can I preview my card before paying?
+          <span class="acc-arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p>Yes! You can design, customize, and fully preview your card completely free. The preview shows you exactly how your printed card will look. You only pay when you click "Order Prints" — there's no obligation at any point before that.</p>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          What is the marketplace fee?
+          <span class="acc-arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p>When a card is resold on the MVP Kids Cards marketplace, we charge a <strong>15% platform fee</strong> on the sale price. The remaining 85% goes to the seller (the parent account holder).</p>
+          <p>Card number and payment information are processed securely and never stored on MVP servers.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── SECTION 3: CARD CATEGORIES ── -->
+  <div class="faq-section" id="categories">
+    <div class="faq-section-header">
+      <div class="icon">🏅</div>
+      <h2>Card Categories</h2>
+    </div>
+    <div class="accordion">
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          Is MVP Kids Cards only for sports?
+          <span class="acc-arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p>Absolutely not! MVP Kids Cards celebrates <strong>every kid's milestone</strong> — not just athletes. We have card templates and stat fields designed for:</p>
+          <ul>
+            <li>🏈 <strong>Sports</strong> — soccer, baseball, basketball, football, swimming, track, gymnastics, cheer, and more</li>
+            <li>🎭 <strong>Arts & Performance</strong> — theater, band, orchestra, choir, visual art, film</li>
+            <li>💃 <strong>Dance</strong> — ballet, hip-hop, competition dance, recitals</li>
+            <li>📚 <strong>Academic Achievement</strong> — honor roll, science fair, spelling bee, debate, valedictorian</li>
+            <li>⚜️ <strong>Scouting & Service</strong> — Boy Scouts, Girl Scouts, Eagle Scout, community service milestones</li>
+            <li>🎮 <strong>eSports & Robotics</strong> — competitive gaming, coding competitions, robotics leagues</li>
+            <li>✝️ <strong>Faith & Religious Milestones</strong> — Confirmation, Bar/Bat Mitzvah, First Communion</li>
+            <li>📣 <strong>Cheer & Gymnastics</strong> — competition squads, performance troupes</li>
+            <li>🎉 <strong>School & PTA Fundraisers</strong> — class fundraising campaigns, school events, booster programs</li>
+          </ul>
+          <p>Every category has custom stat fields that make sense for that activity. A dancer's card shows performance style and competition level. A scholar's card shows GPA and academic achievements. Every kid's story is different — their card should reflect that.</p>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          Can I create a card for a non-competitive activity?
+          <span class="acc-arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p>Absolutely. Cards aren't just for competitions — they're for milestones, memories, and moments. We've seen parents create cards for:</p>
+          <ul>
+            <li>A child's first piano recital</li>
+            <li>Completing a Girl Scout gold award</li>
+            <li>Graduating from 5th grade</li>
+            <li>Finishing a school fundraiser campaign</li>
+            <li>A religious milestone like a Bar Mitzvah or Confirmation</li>
+            <li>A robotics team's first competition</li>
+          </ul>
+          <p>If it's a moment worth remembering, it's worth a card.</p>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          Can schools or PTAs use MVP Kids Cards for fundraising?
+          <span class="acc-arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p>Yes — and this is one of our most popular use cases! Schools and PTAs can run class-wide or school-wide card campaigns where every student gets their own card. Families sell to grandparents, aunts, uncles, and family friends — and the school keeps the fundraising profit.</p>
+          <p>It's a unique, meaningful alternative to the typical candy bar or wrapping paper fundraiser. Every family has a reason to sell because <em>their child</em> is on the card.</p>
+          <p><a href="organizations.html">Learn about our school & PTA partner program →</a></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── SECTION 4: PRINTING & QUALITY ── -->
+  <div class="faq-section" id="printing">
+    <div class="faq-section-header">
+      <div class="icon">🖨️</div>
+      <h2>Printing &amp; Quality</h2>
+    </div>
+    <div class="accordion">
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          What is the print quality like?
+          <span class="acc-arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p>Our cards are printed on <strong>professional-grade card stock</strong> using the same quality standards as official trading cards. Every card features:</p>
+          <ul>
+            <li>Vibrant, full-color printing with sharp detail</li>
+            <li>Premium heavyweight card stock — sturdy and durable</li>
+            <li>Optional protective finishes (matte or gloss)</li>
+            <li>Standard trading card size: <strong>2.5" × 3.5"</strong> (fits standard sleeves and binders)</li>
+          </ul>
+          <p>These are real trading cards — not printouts. They feel and look like the kind of card you'd find in a pack at the store.</p>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          What card sizes are available?
+          <span class="acc-arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p>We offer two sizes:</p>
+          <ul>
+            <li><strong>Standard Card (2.5" × 3.5")</strong> — The classic trading card size. Fits in standard sleeves, binders, and top loaders. Great for collecting, trading, and fundraising.</li>
+            <li><strong>MEGA Card (11" × 15.4")</strong> — An oversized display-ready card. Perfect for a bedroom wall, trophy case, or as a special gift. Comes with a protective sleeve.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          How long does printing take?
+          <span class="acc-arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p>Production typically takes <strong>2–3 business days</strong> after your order is confirmed. This applies to both individual orders and team bulk orders.</p>
+          <p>Rush production may be available for large team orders — <a href="contact.html">contact us</a> if you have a deadline.</p>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          What if my card has a printing defect?
+          <span class="acc-arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p>If your card arrives with a printing defect or is damaged in shipping, we will reprint and reship your order at no cost to you. Just email us a photo of the defective card within 30 days of receipt.</p>
+          <p><a href="refund.html">Read our full refund & reprint policy →</a></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── SECTION 5: SHIPPING ── -->
+  <div class="faq-section" id="shipping">
+    <div class="faq-section-header">
+      <div class="icon">📦</div>
+      <h2>Shipping &amp; Delivery</h2>
+    </div>
+    <div class="accordion">
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          Where do you ship?
+          <span class="acc-arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p>We ship across the United States with free standard shipping on all orders. International shipping is available — <a href="contact.html">contact us for international rates</a>.</p>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          How long does shipping take?
+          <span class="acc-arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p>After production (2–3 business days), US shipping typically takes <strong>3–7 business days</strong>. Total estimated delivery time from order placement: <strong>5–10 business days</strong>.</p>
+          <p>You'll receive a tracking number by email as soon as your order ships.</p>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          How are the cards packaged?
+          <span class="acc-arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p>Cards are carefully packaged in protective sleeves and rigid mailers to ensure they arrive in perfect, collector-ready condition. Team bulk orders ship together to the team organizer (coach, parent coordinator, or PTA organizer) for distribution.</p>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          Can I track my order?
+          <span class="acc-arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p>Yes! You'll receive tracking information via email as soon as your order ships. You can also check your order status anytime from your parent dashboard.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── SECTION 6: FUNDRAISING ── -->
+  <div class="faq-section" id="fundraising">
+    <div class="faq-section-header">
+      <div class="icon">💰</div>
+      <h2>Teams &amp; Fundraising</h2>
+    </div>
+    <div class="accordion">
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          How does a team fundraising campaign work?
+          <span class="acc-arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p>Running a team campaign is simple:</p>
+          <ul>
+            <li><strong>Step 1:</strong> The organizer (coach, parent rep, or PTA coordinator) sets up a team campaign in minutes</li>
+            <li><strong>Step 2:</strong> Each player/participant gets their own unique card — sport, dance, academic, or any other category</li>
+            <li><strong>Step 3:</strong> Families receive their shareable card link to send to grandparents, aunts, uncles, and family friends</li>
+            <li><strong>Step 4:</strong> Supporters purchase cards, and the fundraising profit goes to your team or program</li>
+            <li><strong>Step 5:</strong> Cards ship directly to your team organizer for distribution at a team event</li>
+          </ul>
+          <div class="highlight">
+            <strong>Real example:</strong> A 15-player travel soccer team each sells 20 cards → that's 300 cards × $12 net per card = <strong>$3,600 raised in one campaign.</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          How much can our team raise?
+          <span class="acc-arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p>It depends on your team size and how many cards each family sells, but here are some realistic benchmarks:</p>
+          <ul>
+            <li>Small team (8 players, 15 cards each) → ~<strong>$1,440 raised</strong></li>
+            <li>Medium team (15 players, 20 cards each) → ~<strong>$3,600 raised</strong></li>
+            <li>Large team or school class (30 participants, 25 cards each) → ~<strong>$9,000 raised</strong></li>
+          </ul>
+          <p>Cards are a high-motivation fundraiser because every family is selling a card with <em>their own child on it</em> — not generic candy or gift wrap.</p>
+          <p><a href="fundraising.html">Use our fundraising calculator →</a></p>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          Who pays for the cards — the team or the players' families?
+          <span class="acc-arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p>You choose! There are two models:</p>
+          <ul>
+            <li><strong>Players Pay:</strong> Each family orders and pays for their child's card pack. Supporters then purchase cards from the family at the supporter price, and the family nets the difference.</li>
+            <li><strong>Team Pays Upfront:</strong> The team or organization buys the card packs at bulk pricing, distributes them to families, and collects fundraising revenue centrally.</li>
+          </ul>
+          <p>For schools and PTAs, the "Team Pays Upfront" model is usually cleaner — the organization invoices are handled through our partner program.</p>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          Can non-sports groups (dance studios, scout troops, PTAs) run campaigns?
+          <span class="acc-arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p>Yes — and they often outperform sports teams because the buyer pool is just as motivated. A grandparent is just as excited to buy their grandchild's honor roll card as their soccer card.</p>
+          <p>Any organized youth group can run an MVP Kids Cards campaign:</p>
+          <ul>
+            <li>Dance studios and competition teams</li>
+            <li>Boy Scout and Girl Scout troops</li>
+            <li>School classrooms and grade-wide campaigns</li>
+            <li>PTAs and booster clubs</li>
+            <li>Church youth groups</li>
+            <li>Robotics and eSports teams</li>
+            <li>Theater and choir programs</li>
+          </ul>
+          <p><a href="organizations.html">See our organization partner program →</a></p>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          How does team billing work for large orders?
+          <span class="acc-arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p>For teams and organizations placing bulk orders, we support invoice billing. After you confirm your order details with us, we'll send an invoice — no need to pay by credit card per-family. <a href="contact.html">Reach out to get started →</a></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── SECTION 7: BLOCKCHAIN ── -->
+  <div class="faq-section" id="blockchain">
+    <div class="faq-section-header">
+      <div class="icon">🔗</div>
+      <h2>Blockchain &amp; Ownership</h2>
+    </div>
+    <div class="accordion">
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          What does "on-chain" mean for my child's card?
+          <span class="acc-arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p>When a card is minted on-chain, a permanent, tamper-proof record is created on the blockchain — like a digital birth certificate for the card. This record contains:</p>
+          <ul>
+            <li>The athlete or participant's name</li>
+            <li>The card edition (e.g., Rookie Edition, Gold Edition)</li>
+            <li>The serial number (e.g., #1 of 25)</li>
+            <li>The date the card was created</li>
+          </ul>
+          <p>This record <strong>cannot be altered or deleted</strong> — which means a card's authenticity can always be verified, even decades later.</p>
+          <p><a href="blog/what-does-on-chain-mean-for-your-kids-trading-card.html">Read our full blockchain explainer for parents →</a></p>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          Is my child's photo or personal data on the blockchain?
+          <span class="acc-arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p><strong>No.</strong> We take privacy very seriously, especially for minors. The blockchain record contains only non-sensitive card metadata:</p>
+          <ul>
+            <li>✅ First name only (or display name of your choice)</li>
+            <li>✅ Card edition and serial number</li>
+            <li>✅ Creation date</li>
+            <li>❌ No photo</li>
+            <li>❌ No last name (unless you choose to include it)</li>
+            <li>❌ No contact information</li>
+            <li>❌ No home address or school name</li>
+          </ul>
+          <p>Photos and full personal information are stored on our secure, encrypted servers — never on the public blockchain.</p>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          Is this an NFT?
+          <span class="acc-arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p>MVP Kids Cards are <strong>not NFTs</strong> in the speculative cryptocurrency sense. We use blockchain technology purely as a provenance and authenticity tool — the same way a certificate of authenticity works for a signed jersey.</p>
+          <p>We don't ask you to set up a crypto wallet, buy cryptocurrency, or think about gas fees. Blockchain is working quietly in the background to protect the authenticity and collectible value of your child's card.</p>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          Can I sell my child's card on the marketplace?
+          <span class="acc-arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p>Yes! MVP Kids Cards has a built-in secondary marketplace where parents can list cards for resale. The on-chain provenance record makes every card verifiably authentic — buyers know exactly what they're getting.</p>
+          <p>Marketplace resales are subject to a 15% platform fee. Cards cannot be transferred or resold without parent account authorization — your child's card stays in your control.</p>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          What happens to the blockchain record if I delete my account?
+          <span class="acc-arrow">▼</span>
+        </button>
+        <div class="acc-body">
+          <p>The on-chain record is permanent and cannot be deleted — that's what makes it trustworthy. If you close your account, the blockchain record for any minted cards remains intact.</p>
+          <p>However, your personal account data (photos, order history, contact information) can be deleted upon request per our Privacy Policy.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Still need help -->
+  <div class="still-help">
+    <h3>Still have questions?</h3>
+    <p>Our team is here to help — reach out and we'll get back to you within a few hours.</p>
+    <div class="help-btns">
+      <a href="contact.html" class="help-btn help-btn-gold">Contact Support</a>
+      <a href="blog.html" class="help-btn help-btn-outline">Visit Our Blog</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">MVP <span>Kids</span> Cards</div>
+      <p>Premium trading cards for every kid's milestone — sports, academics, arts, dance, scouting, and more. Create free, fundraise with purpose.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="about.html">About</a>
+      <a href="blog.html">Blog</a>
+      <a href="press.html">Press</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Product</h4>
+      <a href="dashboard.html">Create a Card</a>
+      <a href="fundraising.html">Fundraising</a>
+      <a href="organizations.html">Organizations</a>
+      <a href="faq.html">FAQ</a>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="coppa.html">COPPA Compliance</a>
+      <a href="refund.html">Refund Policy</a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 MVP Kids Cards. All rights reserved. Made with ❤️ for every kid's moment.</div>
+</footer>
+
+<script>
+  // Accordion toggle
+  function toggleAcc(btn) {
+    const body = btn.nextElementSibling;
+    const isOpen = btn.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.acc-trigger').forEach(b => b.classList.remove('open'));
+    document.querySelectorAll('.acc-body').forEach(b => b.classList.remove('open'));
+    if (!isOpen) {
+      btn.classList.add('open');
+      body.classList.add('open');
+    }
+  }
+
+  // Scroll to section
+  function scrollTo(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Update active tab
+    document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+
+  // Search filter
+  function filterFAQ(query) {
+    const q = query.toLowerCase().trim();
+    document.querySelectorAll('.acc-item').forEach(item => {
+      const text = item.innerText.toLowerCase();
+      item.style.display = (!q || text.includes(q)) ? '' : 'none';
+    });
+  }
+</script>
+
+</body>
+</html>

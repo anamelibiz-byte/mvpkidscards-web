@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Youth Fundraising with Trading Cards | MVP Kids Cards</title>
+  <meta name="description" content="The fundraiser every family actually wants to do. Turn your child's custom trading card into a powerful fundraising tool for sports teams, dance studios, schools, PTAs, scout troops, and more.">
+  <meta name="keywords" content="youth sports fundraising, school fundraiser ideas, trading card fundraiser, PTA fundraising, dance studio fundraiser, scout troop fundraiser, kids fundraising cards">
+  <meta property="og:title" content="Fundraise with MVP Kids Cards — Every Kid's Moment, Every Group's Goal">
+  <meta property="og:description" content="Run a card fundraiser for any youth group. Sports teams, schools, dance studios, scout troops, and more. Free to set up — families only pay when cards sell.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://mvpkidscards-web.vercel.app/fundraising.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --navy-deep: #0B1E3F;
+      --navy-mid:  #1A3260;
+      --gold:      #E8A020;
+      --gold-light:#F5C84A;
+      --green-win: #1AAF5D;
+      --slate-gray:#8A9BB0;
+      --off-white: #F8F9FC;
+      --red:       #E84040;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Montserrat', sans-serif; background: var(--off-white); color: #1a1a2e; }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--navy-deep);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px; height: 68px;
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 16px rgba(0,0,0,.4);
+    }
+    .nav-logo { font-family:'Oswald',sans-serif; font-size:1.35rem; font-weight:700; color:#fff; text-decoration:none; letter-spacing:.04em; }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display:flex; align-items:center; gap:28px; }
+    .nav-links a { color:var(--slate-gray); text-decoration:none; font-size:.85rem; font-weight:600; font-family:'Oswald',sans-serif; letter-spacing:.06em; text-transform:uppercase; transition:color .2s; }
+    .nav-links a:hover, .nav-links a.active { color:#fff; }
+    .nav-cta { background:var(--gold); color:var(--navy-deep) !important; padding:8px 20px; border-radius:6px; font-weight:700 !important; }
+    .nav-cta:hover { background:var(--gold-light) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(145deg, var(--navy-deep) 0%, #102844 60%, #0d3320 100%);
+      color: #fff;
+      padding: 80px 24px 64px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(232,160,32,.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -60px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(26,175,93,.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero .eyebrow {
+      font-family: 'Oswald', sans-serif;
+      font-size: .75rem; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--green-win); margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(2.2rem, 6vw, 3.6rem);
+      font-weight: 700; line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .hero h1 em { color: var(--gold); font-style: normal; }
+    .hero p {
+      font-size: 1.05rem; color: var(--slate-gray);
+      max-width: 620px; margin: 0 auto 36px; line-height: 1.7;
+    }
+    .hero-btns { display:flex; flex-wrap:wrap; gap:14px; justify-content:center; }
+    .btn-primary {
+      background: var(--gold); color: var(--navy-deep);
+      padding: 14px 32px; border-radius: 8px;
+      font-family: 'Oswald', sans-serif; font-size: .9rem; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase; text-decoration: none;
+      transition: background .2s, transform .1s;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-secondary {
+      background: transparent; color: #fff;
+      padding: 14px 32px; border-radius: 8px; border: 2px solid rgba(255,255,255,.25);
+      font-family: 'Oswald', sans-serif; font-size: .9rem; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase; text-decoration: none;
+      transition: border-color .2s;
+    }
+    .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* Hero stat bar */
+    .hero-stats {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 0;
+      background: rgba(255,255,255,.06);
+      border-radius: 16px; margin: 48px auto 0;
+      max-width: 700px; overflow: hidden;
+    }
+    .hero-stat {
+      flex: 1; min-width: 140px;
+      padding: 28px 20px; text-align: center;
+      border-right: 1px solid rgba(255,255,255,.08);
+    }
+    .hero-stat:last-child { border-right: none; }
+    .hero-stat .num {
+      font-family: 'Oswald', sans-serif; font-size: 2rem; font-weight: 700;
+      color: var(--gold); display: block; margin-bottom: 4px;
+    }
+    .hero-stat .lbl { font-size: .75rem; color: var(--slate-gray); line-height: 1.4; }
+
+    /* ── SECTIONS ── */
+    .section { padding: 72px 24px; }
+    .section-inner { max-width: 1060px; margin: 0 auto; }
+    .section-label {
+      font-family: 'Oswald', sans-serif; font-size: .72rem;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Oswald', sans-serif; font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 700; color: var(--navy-deep); margin-bottom: 16px; line-height: 1.2;
+    }
+    .section-sub { font-size: .95rem; color: #555; max-width: 580px; line-height: 1.75; }
+
+    /* ── CALCULATOR ── */
+    .calc-section { background: var(--navy-deep); }
+    .calc-section .section-title { color: #fff; }
+    .calc-section .section-label { color: var(--green-win); }
+    .calc-section .section-sub { color: var(--slate-gray); }
+    .calc-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+      align-items: start; margin-top: 40px;
+    }
+    .calc-inputs { display: flex; flex-direction: column; gap: 24px; }
+    .input-group label {
+      display: block; font-size: .78rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .06em;
+      color: var(--slate-gray); margin-bottom: 8px;
+    }
+    .input-row { display: flex; align-items: center; gap: 16px; }
+    .input-row input[type=range] {
+      flex: 1; accent-color: var(--gold); height: 6px; cursor: pointer;
+    }
+    .input-row .val {
+      font-family: 'Oswald', sans-serif; font-size: 1.4rem;
+      font-weight: 700; color: var(--gold); min-width: 60px; text-align: right;
+    }
+    .calc-result {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 16px; padding: 32px;
+    }
+    .calc-result h3 {
+      font-family: 'Oswald', sans-serif; font-size: .85rem;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--slate-gray); margin-bottom: 20px;
+    }
+    .calc-line {
+      display: flex; justify-content: space-between;
+      padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,.06);
+      font-size: .88rem; color: var(--slate-gray);
+    }
+    .calc-line:last-of-type { border-bottom: none; }
+    .calc-line strong { color: #fff; }
+    .calc-total {
+      background: var(--green-win); border-radius: 12px;
+      padding: 20px 24px; margin-top: 20px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .calc-total .t-label {
+      font-family: 'Oswald', sans-serif; font-size: .8rem;
+      letter-spacing: .1em; text-transform: uppercase; color: #fff;
+    }
+    .calc-total .t-amount {
+      font-family: 'Oswald', sans-serif; font-size: 2rem;
+      font-weight: 700; color: #fff;
+    }
+    .calc-note { font-size: .75rem; color: var(--slate-gray); margin-top: 12px; line-height: 1.6; }
+
+    /* ── WHO IT'S FOR ── */
+    .who-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px; margin-top: 40px;
+    }
+    .who-card {
+      background: #fff; border-radius: 14px;
+      padding: 28px 22px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.07);
+      border-bottom: 4px solid transparent;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .who-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.12); }
+    .who-card.sports  { border-color: var(--gold); }
+    .who-card.arts    { border-color: #9b59b6; }
+    .who-card.academic{ border-color: #3498db; }
+    .who-card.dance   { border-color: #e91e8c; }
+    .who-card.scouts  { border-color: var(--green-win); }
+    .who-card.faith   { border-color: #f39c12; }
+    .who-card.esports { border-color: #e74c3c; }
+    .who-card.school  { border-color: var(--navy-mid); }
+    .who-card .icon { font-size: 2rem; margin-bottom: 12px; }
+    .who-card h3 {
+      font-family: 'Oswald', sans-serif; font-size: 1rem;
+      font-weight: 700; color: var(--navy-deep); margin-bottom: 6px;
+    }
+    .who-card p { font-size: .82rem; color: #666; line-height: 1.6; }
+
+    /* ── HOW IT WORKS ── */
+    .how-bg { background: #fff; }
+    .steps {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px; margin-top: 48px; counter-reset: step;
+    }
+    .step { position: relative; padding-left: 0; text-align: center; }
+    .step-num {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--navy-deep); color: var(--gold);
+      font-family: 'Oswald', sans-serif; font-size: 1.4rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px;
+    }
+    .step h3 {
+      font-family: 'Oswald', sans-serif; font-size: 1rem; font-weight: 700;
+      color: var(--navy-deep); margin-bottom: 8px;
+    }
+    .step p { font-size: .85rem; color: #555; line-height: 1.65; }
+    .step-connector {
+      display: none;
+    }
+
+    /* ── VS COMPARISON ── */
+    .compare-bg { background: var(--off-white); }
+    .compare-table {
+      width: 100%; border-collapse: collapse;
+      background: #fff; border-radius: 14px; overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,.07);
+      margin-top: 40px; font-size: .88rem;
+    }
+    .compare-table thead { background: var(--navy-deep); color: #fff; }
+    .compare-table thead th {
+      padding: 16px 20px; text-align: left;
+      font-family: 'Oswald', sans-serif; font-size: .82rem;
+      letter-spacing: .08em; text-transform: uppercase;
+    }
+    .compare-table thead th:not(:first-child) { text-align: center; }
+    .compare-table tbody tr:nth-child(even) { background: #f7f9fc; }
+    .compare-table tbody td {
+      padding: 14px 20px; border-bottom: 1px solid #eef0f7;
+      vertical-align: middle;
+    }
+    .compare-table tbody td:not(:first-child) { text-align: center; }
+    .compare-table tbody tr:last-child td { border-bottom: none; }
+    .check { color: var(--green-win); font-size: 1.2rem; }
+    .cross { color: var(--red); font-size: 1.1rem; }
+    .partial { color: #d97706; font-size: .9rem; }
+    .col-mvp { background: rgba(26,175,93,.06); }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials-bg { background: var(--navy-deep); }
+    .testimonials-bg .section-title { color: #fff; }
+    .testimonials-bg .section-label { color: var(--green-win); }
+    .testi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; margin-top:40px; }
+    .testi-card {
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 14px; padding: 28px 24px;
+    }
+    .testi-card .stars { color: var(--gold); font-size: 1rem; margin-bottom: 14px; letter-spacing: 2px; }
+    .testi-card blockquote {
+      font-size: .9rem; color: #c8d4e8; line-height: 1.7;
+      margin-bottom: 18px; font-style: italic;
+    }
+    .testi-card .author { font-size: .8rem; font-weight: 700; color: var(--gold); }
+    .testi-card .role { font-size: .75rem; color: var(--slate-gray); }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: linear-gradient(135deg, var(--green-win) 0%, #12834a 100%);
+      padding: 72px 24px; text-align: center; color: #fff;
+    }
+    .cta-section h2 {
+      font-family: 'Oswald', sans-serif; font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700; margin-bottom: 14px;
+    }
+    .cta-section p { font-size: .95rem; opacity: .85; max-width: 500px; margin: 0 auto 32px; line-height: 1.7; }
+    .cta-section .btn-white {
+      background: #fff; color: var(--green-win);
+      padding: 16px 40px; border-radius: 8px;
+      font-family: 'Oswald', sans-serif; font-size: .9rem; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase; text-decoration: none;
+      display: inline-block; transition: transform .1s;
+    }
+    .cta-section .btn-white:hover { transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer { background:var(--navy-deep); color:var(--slate-gray); padding:48px 32px 28px; }
+    .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:32px; max-width:1100px; margin:0 auto 32px; }
+    .footer-brand .logo { font-family:'Oswald',sans-serif; font-size:1.2rem; font-weight:700; color:#fff; margin-bottom:10px; }
+    .footer-brand .logo span { color:var(--gold); }
+    .footer-brand p { font-size:.82rem; line-height:1.7; }
+    .footer-col h4 { font-family:'Oswald',sans-serif; font-size:.75rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#fff; margin-bottom:14px; }
+    .footer-col a { display:block; color:var(--slate-gray); text-decoration:none; font-size:.85rem; margin-bottom:8px; transition:color .2s; }
+    .footer-col a:hover { color:var(--gold); }
+    .footer-bottom { text-align:center; font-size:.78rem; border-top:1px solid rgba(255,255,255,.08); padding-top:20px; max-width:1100px; margin:0 auto; }
+
+    @media (max-width: 760px) {
+      .calc-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .nav-links .hide-mobile { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">MVP <span>Kids</span> Cards</a>
+  <div class="nav-links">
+    <a href="index.html" class="hide-mobile">Home</a>
+    <a href="faq.html" class="hide-mobile">FAQ</a>
+    <a href="fundraising.html" class="active">Fundraising</a>
+    <a href="organizations.html" class="hide-mobile">Organizations</a>
+    <a href="dashboard.html" class="nav-cta">Get Started</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="eyebrow">The Fundraiser Every Family Actually Wants to Do</div>
+  <h1>Turn Your Kid's Card Into<br><em>Your Team's Biggest Win</em></h1>
+  <p>Sports teams, dance studios, schools, scout troops, PTAs, and every youth group in between. Stop selling candy. Start selling something families are proud to share.</p>
+  <div class="hero-btns">
+    <a href="dashboard.html" class="btn-primary">Start Your Campaign — Free</a>
+    <a href="organizations.html" class="btn-secondary">I'm an Organization →</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="num">$0</span>
+      <span class="lbl">Upfront cost to get started</span>
+    </div>
+    <div class="hero-stat">
+      <span class="num">$12+</span>
+      <span class="lbl">Average net profit per card sold</span>
+    </div>
+    <div class="hero-stat">
+      <span class="num">2 min</span>
+      <span class="lbl">To set up your team campaign</span>
+    </div>
+    <div class="hero-stat">
+      <span class="num">Any</span>
+      <span class="lbl">Youth group — not just sports</span>
+    </div>
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<section class="section calc-section">
+  <div class="section-inner">
+    <div class="section-label">Fundraising Calculator</div>
+    <h2 class="section-title">How Much Could Your Group Raise?</h2>
+    <p class="section-sub">Slide the numbers below to see your estimated fundraising total. No sign-up required — just see what's possible.</p>
+
+    <div class="calc-grid">
+      <div class="calc-inputs">
+
+        <div class="input-group">
+          <label>Number of participants</label>
+          <div class="input-row">
+            <input type="range" id="players" min="5" max="100" value="15" oninput="updateCalc()">
+            <div class="val" id="playersVal">15</div>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>Cards each participant sells</label>
+          <div class="input-row">
+            <input type="range" id="cards" min="5" max="50" value="20" oninput="updateCalc()">
+            <div class="val" id="cardsVal">20</div>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>Supporter price per card ($)</label>
+          <div class="input-row">
+            <input type="range" id="price" min="20" max="45" value="30" step="1" oninput="updateCalc()">
+            <div class="val" id="priceVal">$30</div>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>Your cost per card ($)</label>
+          <div class="input-row">
+            <input type="range" id="cost" min="14" max="22" value="18" step="1" oninput="updateCalc()">
+            <div class="val" id="costVal">$18</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="calc-result">
+        <h3>Your Estimated Campaign Result</h3>
+        <div class="calc-line"><span>Participants</span><strong id="r-players">15</strong></div>
+        <div class="calc-line"><span>Cards sold (total)</span><strong id="r-cards">300</strong></div>
+        <div class="calc-line"><span>Gross revenue</span><strong id="r-gross">$9,000</strong></div>
+        <div class="calc-line"><span>Card production cost</span><strong id="r-cost">$5,400</strong></div>
+        <div class="calc-total">
+          <span class="t-label">Your Team Raises</span>
+          <span class="t-amount" id="r-total">$3,600</span>
+        </div>
+        <p class="calc-note">* Estimates based on typical campaign performance. Actual results vary by group size, engagement, and supporter reach. Card production cost uses your selected per-card cost.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO IT'S FOR -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-label">Every Youth Group Welcome</div>
+    <h2 class="section-title">Built for Every Kid's World</h2>
+    <p class="section-sub">MVP Kids Cards isn't a sports-only platform. If kids are involved and there's a milestone worth celebrating, we have a card for it — and a fundraiser ready to go.</p>
+
+    <div class="who-grid">
+      <div class="who-card sports">
+        <div class="icon">🏆</div>
+        <h3>Sports Teams</h3>
+        <p>Soccer, baseball, basketball, football, swimming, track, lacrosse, hockey, gymnastics — every sport, every position, every player.</p>
+      </div>
+      <div class="who-card dance">
+        <div class="icon">💃</div>
+        <h3>Dance Studios</h3>
+        <p>Ballet, hip-hop, contemporary, tap, competition teams. Cards show style, level, studio, and performance season.</p>
+      </div>
+      <div class="who-card academic">
+        <div class="icon">📚</div>
+        <h3>Academic Programs</h3>
+        <p>Honor roll, science fair, spelling bee, debate teams, valedictorians. A scholar's achievements deserve a card too.</p>
+      </div>
+      <div class="who-card arts">
+        <div class="icon">🎭</div>
+        <h3>Arts & Performance</h3>
+        <p>Theater productions, band, orchestra, choir, visual art, film programs. Every performer has a story worth telling.</p>
+      </div>
+      <div class="who-card scouts">
+        <div class="icon">⚜️</div>
+        <h3>Scouting & Service</h3>
+        <p>Boy Scouts, Girl Scouts, Eagle Scouts, Venturers, community service milestones. Celebrate the journey, not just the badges.</p>
+      </div>
+      <div class="who-card faith">
+        <div class="icon">✝️</div>
+        <h3>Faith Milestones</h3>
+        <p>Confirmation, Bar/Bat Mitzvah, First Communion, youth group achievements. Milestone cards for life's most meaningful moments.</p>
+      </div>
+      <div class="who-card esports">
+        <div class="icon">🎮</div>
+        <h3>eSports & Robotics</h3>
+        <p>Competitive gaming teams, coding clubs, FIRST Robotics, Lego League. Your digital athletes deserve real cards.</p>
+      </div>
+      <div class="who-card school">
+        <div class="icon">🏫</div>
+        <h3>Schools & PTAs</h3>
+        <p>Class-wide and school-wide campaigns where every student gets a card. The fundraiser that sells itself — because it's personal.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section how-bg">
+  <div class="section-inner">
+    <div class="section-label">Step by Step</div>
+    <h2 class="section-title">From Idea to "We Raised How Much?!" in Five Steps</h2>
+    <p class="section-sub">Setting up your campaign takes about two minutes. Everything else runs itself.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Create Your Campaign</h3>
+        <p>Sign up free and set up your group — name, category (sport, dance, school, etc.), number of participants, and your fundraising goal.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Everyone Gets Their Card</h3>
+        <p>Each participant (or their parent) uploads a photo and customizes their card. Sports stats, academic achievements, dance style — it all fits.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Share the Link</h3>
+        <p>Every family gets a shareable card link. Text it to grandma, post it in the family group chat, share it on Facebook. Cards sell themselves.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>Supporters Buy Online</h3>
+        <p>Family and friends purchase cards directly — secure, simple checkout. No collecting cash at practice or chasing down payments.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <h3>Cards Ship, Funds Land</h3>
+        <p>Cards ship to your team organizer for distribution at the next practice or meeting. Fundraising proceeds are transferred to your organization.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VS COMPARISON -->
+<section class="section compare-bg">
+  <div class="section-inner">
+    <div class="section-label">Why Cards Beat Everything Else</div>
+    <h2 class="section-title">The Fundraiser Nobody Dreads</h2>
+    <p class="section-sub">Every parent has sold candy bars and wrapping paper. Here's how MVP Kids Cards compares to traditional fundraisers.</p>
+
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>What matters</th>
+          <th>Candy / Wrapping Paper</th>
+          <th>Car Wash</th>
+          <th>Restaurant Night</th>
+          <th class="col-mvp">MVP Kids Cards</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Families motivated to sell?</strong></td>
+          <td><span class="cross">✗</span> Generic product</td>
+          <td><span class="cross">✗</span> Attendance-dependent</td>
+          <td><span class="cross">✗</span> Convenience-dependent</td>
+          <td class="col-mvp"><span class="check">✓</span> Their child is the product</td>
+        </tr>
+        <tr>
+          <td><strong>Works for out-of-town family?</strong></td>
+          <td><span class="cross">✗</span> Shipping is a hassle</td>
+          <td><span class="cross">✗</span> Must be local</td>
+          <td><span class="cross">✗</span> Must be local</td>
+          <td class="col-mvp"><span class="check">✓</span> Ships anywhere in the US</td>
+        </tr>
+        <tr>
+          <td><strong>Keepsake value after purchase?</strong></td>
+          <td><span class="cross">✗</span> Eaten / discarded</td>
+          <td><span class="cross">✗</span> None</td>
+          <td><span class="cross">✗</span> None</td>
+          <td class="col-mvp"><span class="check">✓</span> Collected, displayed, treasured</td>
+        </tr>
+        <tr>
+          <td><strong>Profit per sale</strong></td>
+          <td><span class="partial">~$2–4</span></td>
+          <td><span class="partial">Varies</span></td>
+          <td><span class="partial">~10–15%</span></td>
+          <td class="col-mvp"><span class="check">$10–15 per card</span></td>
+        </tr>
+        <tr>
+          <td><strong>Requires weekend volunteering?</strong></td>
+          <td><span class="partial">Distribution day</span></td>
+          <td><span class="cross">✗</span> Full day event</td>
+          <td><span class="partial">Coordination needed</span></td>
+          <td class="col-mvp"><span class="check">✓</span> Fully online — no events needed</td>
+        </tr>
+        <tr>
+          <td><strong>Works for non-sports groups?</strong></td>
+          <td><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+          <td class="col-mvp"><span class="check">✓</span> Every youth group welcome</td>
+        </tr>
+        <tr>
+          <td><strong>Authentic digital ownership</strong></td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="cross">✗</span></td>
+          <td class="col-mvp"><span class="check">✓</span> Blockchain verified, serial numbered</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section testimonials-bg">
+  <div class="section-inner">
+    <div class="section-label">Real Campaigns, Real Results</div>
+    <h2 class="section-title">What Organizers Are Saying</h2>
+
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"I set up our soccer team's campaign on a Tuesday. By Friday we had already raised $1,200. The grandparents alone were buying three cards each. I've never seen a fundraiser work this fast."</blockquote>
+        <div class="author">Maria T.</div>
+        <div class="role">U10 Travel Soccer, Team Manager</div>
+      </div>
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"We did a class-wide campaign for our 4th grade. Every student got their own card. Parents were sharing them everywhere — the school raised $4,800. Way better than our usual wrapping paper sale."</blockquote>
+        <div class="author">Jennifer M.</div>
+        <div class="role">PTA President, Elementary School</div>
+      </div>
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Our dance studio did a fundraiser before the recital season. Each dancer had a card with their headshot and specialty. Parents couldn't stop ordering — even the cousins and neighbors wanted one."</blockquote>
+        <div class="author">Coach Denise R.</div>
+        <div class="role">Dance Studio Director</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="cta-section">
+  <h2>Ready to Run Your Campaign?</h2>
+  <p>Free to set up. No upfront cost. Every kid gets their moment — and every group hits their goal.</p>
+  <a href="dashboard.html" class="btn-white">Start Your Free Campaign</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">MVP <span>Kids</span> Cards</div>
+      <p>Premium trading cards for every kid's milestone — sports, academics, arts, dance, scouting, and more. Create free, fundraise with purpose.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="about.html">About</a>
+      <a href="blog.html">Blog</a>
+      <a href="press.html">Press</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Fundraising</h4>
+      <a href="fundraising.html">How It Works</a>
+      <a href="organizations.html">Organizations</a>
+      <a href="dashboard.html">Start a Campaign</a>
+      <a href="faq.html">FAQ</a>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="coppa.html">COPPA Compliance</a>
+      <a href="refund.html">Refund Policy</a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 MVP Kids Cards. All rights reserved. Made with ❤️ for every kid's moment.</div>
+</footer>
+
+<script>
+  function updateCalc() {
+    const players = +document.getElementById('players').value;
+    const cards   = +document.getElementById('cards').value;
+    const price   = +document.getElementById('price').value;
+    const cost    = +document.getElementById('cost').value;
+
+    document.getElementById('playersVal').textContent = players;
+    document.getElementById('cardsVal').textContent   = cards;
+    document.getElementById('priceVal').textContent   = '$' + price;
+    document.getElementById('costVal').textContent    = '$' + cost;
+
+    const totalCards  = players * cards;
+    const gross       = totalCards * price;
+    const totalCost   = totalCards * cost;
+    const net         = gross - totalCost;
+
+    document.getElementById('r-players').textContent = players;
+    document.getElementById('r-cards').textContent   = totalCards.toLocaleString();
+    document.getElementById('r-gross').textContent   = '$' + gross.toLocaleString();
+    document.getElementById('r-cost').textContent    = '$' + totalCost.toLocaleString();
+    document.getElementById('r-total').textContent   = '$' + net.toLocaleString();
+  }
+
+  // Initialize
+  updateCalc();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog — MVP Kids Cards</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy-deep: #0B1E3F; --navy-mid: #1A3260; --gold: #E8A020;
+      --gold-light: #F5C84A; --green-win: #1AAF5D; --slate-gray: #8A9BB0;
+      --off-white: #F8F9FC; --white: #ffffff;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Montserrat', sans-serif; background: var(--off-white); color: var(--navy-deep); overflow-x: hidden; }
+
+    nav { position: fixed; top: 0; width: 100%; z-index: 100; background: rgba(11,30,63,0.96); backdrop-filter: blur(8px); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .nav-logo { font-family: 'Oswald', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--white); letter-spacing: 1px; line-height: 1.1; text-decoration: none; }
+    .nav-logo .mvp { color: var(--gold); }
+    .nav-logo .sub { display: block; font-size: 0.55rem; letter-spacing: 2px; color: var(--slate-gray); font-weight: 400; text-transform: uppercase; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--slate-gray); text-decoration: none; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.5px; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta { background: var(--gold); color: var(--navy-deep); border: none; border-radius: 6px; padding: 0.5rem 1.25rem; cursor: pointer; font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: background 0.2s; }
+    .nav-cta:hover { background: var(--gold-light); }
+
+    .page-hero { background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy-mid) 100%); padding: 8rem 2rem 5rem; text-align: center; }
+    .page-hero .label { font-family: 'Oswald', sans-serif; font-size: 0.75rem; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; margin-bottom: 1rem; }
+    .page-hero h1 { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: clamp(2.2rem, 5vw, 3.5rem); color: var(--white); line-height: 1.1; margin-bottom: 1.25rem; }
+    .page-hero h1 span { color: var(--gold); }
+    .page-hero p { color: #a8bcd4; font-size: 1.05rem; line-height: 1.7; max-width: 540px; margin: 0 auto; }
+
+    .blog-section { max-width: 1100px; margin: 0 auto; padding: 5rem 2rem; }
+
+    /* FEATURED */
+    .featured-post { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 32px rgba(11,30,63,0.1); display: grid; grid-template-columns: 1fr 1fr; margin-bottom: 4rem; }
+    .featured-image { background: linear-gradient(135deg, var(--navy-deep), var(--navy-mid)); display: flex; align-items: center; justify-content: center; font-size: 6rem; min-height: 320px; }
+    .featured-body { padding: 3rem; display: flex; flex-direction: column; justify-content: center; }
+    .post-tag { display: inline-block; background: rgba(232,160,32,0.12); color: var(--gold); font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; border-radius: 100px; padding: 0.3rem 0.85rem; margin-bottom: 1rem; }
+    .post-tag.green { background: rgba(26,175,93,0.12); color: var(--green-win); }
+    .post-tag.blue { background: rgba(74,144,217,0.12); color: #4A90D9; }
+    .featured-body h2 { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1.7rem; color: var(--navy-deep); line-height: 1.2; margin-bottom: 0.75rem; }
+    .featured-body p { font-size: 0.9rem; color: #5a6f88; line-height: 1.7; margin-bottom: 1.5rem; }
+    .post-meta { font-size: 0.78rem; color: var(--slate-gray); margin-bottom: 1.25rem; }
+    .read-more { color: var(--gold); font-weight: 700; font-size: 0.85rem; text-decoration: none; font-family: 'Oswald', sans-serif; letter-spacing: 0.5px; }
+    .read-more:hover { color: var(--gold-light); }
+
+    /* GRID */
+    .section-label { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 0.75rem; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; margin-bottom: 1.5rem; }
+    .posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
+    .post-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 20px rgba(11,30,63,0.07); transition: transform 0.2s, box-shadow 0.2s; }
+    .post-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(11,30,63,0.12); }
+    .post-thumb { height: 160px; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; }
+    .post-thumb.navy { background: linear-gradient(135deg, var(--navy-deep), var(--navy-mid)); }
+    .post-thumb.green { background: linear-gradient(135deg, #0a2a00, #0f3a00); }
+    .post-thumb.gold { background: linear-gradient(135deg, #3d2400, #5a3800); }
+    .post-body { padding: 1.5rem; }
+    .post-body h3 { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--navy-deep); margin: 0.5rem 0 0.6rem; line-height: 1.3; }
+    .post-body p { font-size: 0.855rem; color: #5a6f88; line-height: 1.6; margin-bottom: 1rem; }
+
+    /* NEWSLETTER */
+    .newsletter-band { background: var(--navy-deep); border-radius: 20px; padding: 3rem; text-align: center; margin-top: 4rem; }
+    .newsletter-band h2 { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1.8rem; color: white; margin-bottom: 0.75rem; }
+    .newsletter-band h2 span { color: var(--gold); }
+    .newsletter-band p { color: var(--slate-gray); font-size: 0.9rem; margin-bottom: 1.5rem; }
+    .nl-form { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; max-width: 480px; margin: 0 auto; }
+    .nl-input { flex: 1; min-width: 220px; padding: 0.85rem 1.1rem; border-radius: 8px; border: 1.5px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); color: white; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; outline: none; }
+    .nl-input::placeholder { color: rgba(255,255,255,0.35); }
+    .nl-input:focus { border-color: var(--gold); }
+    .btn-gold { background: var(--gold); color: var(--navy-deep); font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 0.95rem; padding: 0.85rem 1.75rem; border: none; border-radius: 8px; cursor: pointer; }
+    .btn-gold:hover { background: var(--gold-light); }
+
+    footer { background: #07121f; padding: 3rem 2rem 2rem; color: var(--slate-gray); }
+    .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 2rem; margin-bottom: 2rem; }
+    .footer-logo { font-family: 'Oswald', sans-serif; font-size: 1.3rem; font-weight: 700; color: white; }
+    .footer-logo .mvp { color: var(--gold); }
+    .footer-logo .sub { display: block; font-size: 0.55rem; letter-spacing: 2px; color: var(--slate-gray); font-weight: 400; text-transform: uppercase; margin-top: 2px; }
+    .footer-tagline { font-size: 0.8rem; color: var(--slate-gray); max-width: 220px; line-height: 1.5; margin-top: 0.5rem; }
+    .footer-links { display: flex; gap: 3rem; flex-wrap: wrap; }
+    .footer-col h4 { font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 0.8rem; letter-spacing: 1px; color: white; text-transform: uppercase; margin-bottom: 1rem; }
+    .footer-col a { display: block; color: var(--slate-gray); text-decoration: none; font-size: 0.82rem; margin-bottom: 0.5rem; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom { max-width: 1100px; margin: 0 auto; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 0.78rem; }
+    .footer-bottom .copy { color: #3d5060; }
+    .footer-bottom .legal { display: flex; gap: 1.5rem; }
+    .footer-bottom .legal a { color: #3d5060; text-decoration: none; }
+    .footer-bottom .legal a:hover { color: var(--gold); }
+
+    @media (max-width: 768px) { .nav-links { display: none; } .featured-post { grid-template-columns: 1fr; } .featured-image { min-height: 200px; } }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo"><span class="mvp">MVP</span> Kids Cards<span class="sub">ProspectCard by MVP Kids Cards</span></a>
+    <ul class="nav-links">
+      <li><a href="/#how-it-works">How It Works</a></li>
+      <li><a href="/#cards">The Cards</a></li>
+      <li><a href="/#why">Why Us</a></li>
+    </ul>
+    <a href="/#waitlist" class="nav-cta">Join Waitlist</a>
+  </nav>
+
+  <div class="page-hero">
+    <div class="label">The MVP Blog</div>
+    <h1>Stories, tips & ideas for <span>youth sports families.</span></h1>
+    <p>Fundraising advice, athlete spotlights, sports parenting tips, and behind-the-scenes looks at how MVP Kids Cards is built.</p>
+  </div>
+
+  <div class="blog-section">
+
+    <!-- FEATURED -->
+    <div class="featured-post">
+      <div class="featured-image">🏆</div>
+      <div class="featured-body">
+        <span class="post-tag">Fundraising</span>
+        <div class="post-meta">June 12, 2025 &nbsp;·&nbsp; 6 min read</div>
+        <h2>How One Soccer Mom Raised $412 in a Single Weekend — Without Leaving Her Couch</h2>
+        <p>Maria had tried GoFundMe, bake sales, and car washes. None of them felt right. Then she created an MVP Kids Card for her daughter Sofia — and everything changed. Here's her story.</p>
+        <a href="blog/how-one-soccer-mom-raised-412-in-a-weekend.html" class="read-more">Read the story →</a>
+      </div>
+    </div>
+
+    <!-- RECENT POSTS -->
+    <div class="section-label">Recent Posts</div>
+    <div class="posts-grid">
+
+      <div class="post-card">
+        <div class="post-thumb navy">🃏</div>
+        <div class="post-body">
+          <span class="post-tag">Cards & Collecting</span>
+          <h3>Why Youth Athlete Cards Could Be the Next Big Collectible Market</h3>
+          <p>The sports card market hit $5.4B in 2023. But almost none of that is for the youngest athletes — the ones whose stories start right now.</p>
+          <div class="post-meta">May 28, 2025 &nbsp;·&nbsp; 5 min read</div>
+          <a href="blog/why-youth-athlete-cards-are-the-next-big-collectible.html" class="read-more">Read more →</a>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-thumb green">🏀</div>
+        <div class="post-body">
+          <span class="post-tag green">Tips for Parents</span>
+          <h3>5 Ways to Share Your Athlete's Card Link Without Being That Parent</h3>
+          <p>We know — asking people to buy stuff feels awkward. Here's how to share your fundraising link in a way that feels natural and gets results.</p>
+          <div class="post-meta">May 15, 2025 &nbsp;·&nbsp; 4 min read</div>
+          <a href="blog/5-ways-to-share-your-card-without-being-that-parent.html" class="read-more">Read more →</a>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-thumb gold">📸</div>
+        <div class="post-body">
+          <span class="post-tag">Card Design</span>
+          <h3>How to Take the Perfect Athlete Photo for Your Card</h3>
+          <p>Your child's photo is the most important part of their card. These simple tips — no fancy camera required — will make it look incredible.</p>
+          <div class="post-meta">May 3, 2025 &nbsp;·&nbsp; 3 min read</div>
+          <a href="blog/how-to-take-the-perfect-athlete-photo.html" class="read-more">Read more →</a>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-thumb navy">🔒</div>
+        <div class="post-body">
+          <span class="post-tag blue">Safety & Privacy</span>
+          <h3>How We Keep Kids Safe: Our Approach to COPPA, Data, and Parental Control</h3>
+          <p>We built MVP Kids Cards with one non-negotiable: parents are always in control. Here's exactly how we protect your child's data and likeness.</p>
+          <div class="post-meta">April 20, 2025 &nbsp;·&nbsp; 7 min read</div>
+          <a href="blog/how-we-keep-kids-safe-coppa-data-parental-control.html" class="read-more">Read more →</a>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-thumb green">⚽</div>
+        <div class="post-body">
+          <span class="post-tag green">Team & League</span>
+          <h3>How Travel Teams Are Using MVP Kids Cards to Fund Entire Tournament Seasons</h3>
+          <p>Coaches are discovering that when every family on the team creates a card, the whole team wins — enough to cover travel, hotels, and entry fees.</p>
+          <div class="post-meta">April 8, 2025 &nbsp;·&nbsp; 5 min read</div>
+          <a href="blog/how-travel-teams-fund-entire-seasons.html" class="read-more">Read more →</a>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-thumb gold">📈</div>
+        <div class="post-body">
+          <span class="post-tag">Blockchain & Value</span>
+          <h3>What Does "On-Chain" Actually Mean for Your Kid's Trading Card?</h3>
+          <p>We record every MVP Kids Card on the blockchain. Here's a jargon-free explanation of what that means, why it matters, and what happens if your athlete goes pro.</p>
+          <div class="post-meta">March 25, 2025 &nbsp;·&nbsp; 6 min read</div>
+          <a href="blog/what-does-on-chain-mean-for-your-kids-trading-card.html" class="read-more">Read more →</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- NEWSLETTER -->
+    <div class="newsletter-band">
+      <h2>Get the <span>good stuff</span> in your inbox.</h2>
+      <p>Fundraising tips, athlete spotlights, and updates — delivered once a week. No spam, ever.</p>
+      <div class="nl-form">
+        <input type="email" class="nl-input" placeholder="Your email address" />
+        <button class="btn-gold">Subscribe</button>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo"><span class="mvp">MVP</span> Kids Cards<span class="sub">ProspectCard by MVP Kids Cards</span></div>
+        <div class="footer-tagline">Youth athlete trading cards that fundraise today and appreciate forever.</div>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Product</h4>
+          <a href="/#how-it-works">How It Works</a>
+          <a href="/#cards">Card Editions</a>
+          <a href="/#why">Why MVP Kids Cards</a>
+          <a href="/#waitlist">Join Waitlist</a>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="/about.html">About</a>
+          <a href="/blog.html">Blog</a>
+          <a href="/press.html">Press</a>
+          <a href="/contact.html">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="/privacy.html">Privacy Policy</a>
+          <a href="/terms.html">Terms of Service</a>
+          <a href="/coppa.html">COPPA Compliance</a>
+          <a href="/refund.html">Refund Policy</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="copy">© 2025 MVP Kids Cards. All rights reserved.</div>
+      <div class="legal"><a href="mailto:hello@mvpkidscards.com">hello@mvpkidscards.com</a></div>
+    </div>
+  </footer>
+
+</body>
+</html>

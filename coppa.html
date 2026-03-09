@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>COPPA Compliance — MVP Kids Cards</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --navy-deep: #0B1E3F; --navy-mid: #1A3260; --gold: #E8A020; --gold-light: #F5C84A; --green-win: #1AAF5D; --slate-gray: #8A9BB0; --off-white: #F8F9FC; --white: #ffffff; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Montserrat', sans-serif; background: var(--off-white); color: var(--navy-deep); overflow-x: hidden; }
+    nav { position: fixed; top: 0; width: 100%; z-index: 100; background: rgba(11,30,63,0.96); backdrop-filter: blur(8px); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .nav-logo { font-family: 'Oswald', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--white); letter-spacing: 1px; line-height: 1.1; text-decoration: none; }
+    .nav-logo .mvp { color: var(--gold); }
+    .nav-logo .sub { display: block; font-size: 0.55rem; letter-spacing: 2px; color: var(--slate-gray); font-weight: 400; text-transform: uppercase; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--slate-gray); text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta { background: var(--gold); color: var(--navy-deep); border: none; border-radius: 6px; padding: 0.5rem 1.25rem; font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: background 0.2s; }
+    .nav-cta:hover { background: var(--gold-light); }
+    .page-hero { background: linear-gradient(135deg, #062a0a 0%, #0a3a10 100%); padding: 8rem 2rem 4rem; text-align: center; }
+    .page-hero .label { font-family: 'Oswald', sans-serif; font-size: 0.75rem; letter-spacing: 3px; color: var(--green-win); text-transform: uppercase; margin-bottom: 1rem; }
+    .page-hero h1 { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: clamp(2rem, 4vw, 3rem); color: var(--white); margin-bottom: 0.75rem; }
+    .page-hero .updated { color: rgba(255,255,255,0.5); font-size: 0.85rem; }
+    .legal-layout { max-width: 900px; margin: 0 auto; padding: 4rem 2rem 5rem; display: grid; grid-template-columns: 200px 1fr; gap: 3rem; align-items: start; }
+    .toc { position: sticky; top: 84px; }
+    .toc h4 { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 0.75rem; letter-spacing: 2px; color: var(--green-win); text-transform: uppercase; margin-bottom: 1rem; }
+    .toc a { display: block; color: #5a6f88; text-decoration: none; font-size: 0.8rem; margin-bottom: 0.5rem; transition: color 0.2s; line-height: 1.4; }
+    .toc a:hover { color: var(--green-win); }
+    .legal-body h2 { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1.4rem; color: var(--navy-deep); margin-top: 2.5rem; margin-bottom: 0.75rem; padding-top: 0.5rem; border-top: 2px solid rgba(11,30,63,0.06); }
+    .legal-body h2:first-child { margin-top: 0; border-top: none; }
+    .legal-body h3 { font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 1rem; color: var(--navy-deep); margin-top: 1.5rem; margin-bottom: 0.5rem; }
+    .legal-body p { font-size: 0.9rem; color: #3a4a5a; line-height: 1.85; margin-bottom: 1rem; }
+    .legal-body ul { margin: 0.5rem 0 1rem 1.5rem; }
+    .legal-body ul li { font-size: 0.9rem; color: #3a4a5a; line-height: 1.8; margin-bottom: 0.4rem; }
+    .legal-body a { color: var(--green-win); text-decoration: none; }
+    .legal-body a:hover { text-decoration: underline; }
+    .green-box { background: rgba(26,175,93,0.08); border: 1.5px solid rgba(26,175,93,0.3); border-radius: 12px; padding: 1.5rem; margin: 1.25rem 0; }
+    .green-box p { margin: 0; font-size: 0.9rem; color: #1a3a1a; line-height: 1.7; }
+    .commitment-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; margin: 1.5rem 0; }
+    .commit-card { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 16px rgba(11,30,63,0.07); border-top: 3px solid var(--green-win); }
+    .commit-icon { font-size: 1.75rem; margin-bottom: 0.75rem; }
+    .commit-card h4 { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 0.9rem; color: var(--navy-deep); margin-bottom: 0.4rem; }
+    .commit-card p { font-size: 0.82rem; color: #5a6f88; line-height: 1.6; margin: 0; }
+    footer { background: #07121f; padding: 3rem 2rem 2rem; color: var(--slate-gray); }
+    .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 2rem; margin-bottom: 2rem; }
+    .footer-logo { font-family: 'Oswald', sans-serif; font-size: 1.3rem; font-weight: 700; color: white; }
+    .footer-logo .mvp { color: var(--gold); }
+    .footer-logo .sub { display: block; font-size: 0.55rem; letter-spacing: 2px; color: var(--slate-gray); font-weight: 400; text-transform: uppercase; margin-top: 2px; }
+    .footer-tagline { font-size: 0.8rem; max-width: 220px; line-height: 1.5; margin-top: 0.5rem; }
+    .footer-links { display: flex; gap: 3rem; flex-wrap: wrap; }
+    .footer-col h4 { font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 0.8rem; letter-spacing: 1px; color: white; text-transform: uppercase; margin-bottom: 1rem; }
+    .footer-col a { display: block; color: var(--slate-gray); text-decoration: none; font-size: 0.82rem; margin-bottom: 0.5rem; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom { max-width: 1100px; margin: 0 auto; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 0.78rem; }
+    .footer-bottom .copy { color: #3d5060; }
+    .footer-bottom .legal { display: flex; gap: 1.5rem; }
+    .footer-bottom .legal a { color: #3d5060; text-decoration: none; }
+    .footer-bottom .legal a:hover { color: var(--gold); }
+    @media (max-width: 768px) { .nav-links { display: none; } .legal-layout { grid-template-columns: 1fr; } .toc { display: none; } }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo"><span class="mvp">MVP</span> Kids Cards<span class="sub">ProspectCard by MVP Kids Cards</span></a>
+    <ul class="nav-links">
+      <li><a href="/#how-it-works">How It Works</a></li>
+      <li><a href="/#cards">The Cards</a></li>
+      <li><a href="/#why">Why Us</a></li>
+    </ul>
+    <a href="/#waitlist" class="nav-cta">Join Waitlist</a>
+  </nav>
+
+  <div class="page-hero">
+    <div class="label">Children's Privacy</div>
+    <h1>COPPA Compliance</h1>
+    <div class="updated">Last updated: June 1, 2025</div>
+  </div>
+
+  <div class="legal-layout">
+    <div class="toc">
+      <h4>Contents</h4>
+      <a href="#s1">1. Our Commitment</a>
+      <a href="#s2">2. What Is COPPA?</a>
+      <a href="#s3">3. How We Comply</a>
+      <a href="#s4">4. Information About Minors</a>
+      <a href="#s5">5. Parental Rights</a>
+      <a href="#s6">6. How to Exercise Rights</a>
+      <a href="#s7">7. Data Retention</a>
+      <a href="#s8">8. Third Parties</a>
+      <a href="#s9">9. Contact Us</a>
+    </div>
+
+    <div class="legal-body">
+
+      <div class="green-box">
+        <p><strong>Our core promise:</strong> Children's safety and privacy are not compliance checkboxes for us — they are design principles. We built this platform from the ground up so that parents are always in control, children never have accounts, and we collect only what is absolutely necessary to create a trading card.</p>
+      </div>
+
+      <div class="commitment-grid">
+        <div class="commit-card">
+          <div class="commit-icon">🚫</div>
+          <h4>No Child Accounts</h4>
+          <p>Children under 18 do not create accounts or directly interact with our platform.</p>
+        </div>
+        <div class="commit-card">
+          <div class="commit-icon">👨‍👩‍👧</div>
+          <h4>Parent-Only Control</h4>
+          <p>Every athlete profile is created and managed exclusively by a verified adult parent or guardian.</p>
+        </div>
+        <div class="commit-card">
+          <div class="commit-icon">🔒</div>
+          <h4>Minimal Data Collection</h4>
+          <p>We collect only what is necessary to create the card: name, sport, stats, and one photo.</p>
+        </div>
+        <div class="commit-card">
+          <div class="commit-icon">🚫📣</div>
+          <h4>No Targeted Advertising</h4>
+          <p>We never use children's information for advertising, behavioral profiling, or marketing.</p>
+        </div>
+        <div class="commit-card">
+          <div class="commit-icon">🗑️</div>
+          <h4>Deletion on Request</h4>
+          <p>Parents can request complete deletion of their child's data at any time, no questions asked.</p>
+        </div>
+        <div class="commit-card">
+          <div class="commit-icon">📵</div>
+          <h4>Never Sold or Shared</h4>
+          <p>Children's personal information is never sold to, shared with, or used by third parties for any commercial purpose.</p>
+        </div>
+      </div>
+
+      <h2 id="s1">1. Our Commitment to Children's Privacy</h2>
+      <p>MVP Kids Cards is a platform built around youth athletes. We recognize that this places a special responsibility on us with respect to the privacy and safety of children. We are fully committed to compliance with the Children's Online Privacy Protection Act ("COPPA") and to exceeding COPPA's requirements wherever possible.</p>
+      <p>This COPPA Compliance Statement explains specifically how we handle information about children under the age of 13, and the rights parents have over that information.</p>
+
+      <h2 id="s2">2. What Is COPPA?</h2>
+      <p>The Children's Online Privacy Protection Act (COPPA), 15 U.S.C. §§ 6501–6506, and its implementing regulations (16 C.F.R. Part 312) are federal laws in the United States that impose requirements on operators of websites and online services directed to children under 13, or that have actual knowledge that they are collecting personal information from children under 13.</p>
+      <p>Key COPPA requirements include: providing notice to parents about information collected from children; obtaining verifiable parental consent before collecting personal information from children; giving parents access to and control over their child's information; maintaining the confidentiality and security of children's information; and not conditioning participation on the disclosure of more information than is reasonably necessary.</p>
+
+      <h2 id="s3">3. How We Comply</h2>
+      <h3>3.1 No Direct Child Registration</h3>
+      <p>Children under 13 may not create accounts on our platform. Our registration process is designed exclusively for adults. We ask users to confirm they are 18 or older during registration, and we have the right to terminate accounts where we discover a minor has created one directly.</p>
+      <h3>3.2 Verifiable Parental Consent</h3>
+      <p>By creating an athlete profile for a minor child, the parent or guardian provides verifiable parental consent as defined under COPPA. The consenting adult must be the registered account holder, and by creating the profile, they certify that they are the child's parent or legal guardian with authority to provide this consent.</p>
+      <h3>3.3 Notice to Parents</h3>
+      <p>Before a parent creates an athlete profile, we clearly disclose: what information we collect about the minor; how that information will be used; and the parent's rights to review, correct, or delete the information. This disclosure is provided through our Privacy Policy, these COPPA disclosures, and in-platform notices during the athlete profile creation process.</p>
+      <h3>3.4 Limited Purpose</h3>
+      <p>Information collected about a minor is used solely to create and fulfill the athlete's trading card and associated fundraising page. We do not use a minor's information for any other commercial purpose, including advertising, product recommendations, behavioral analytics, or sale to third parties.</p>
+
+      <h2 id="s4">4. Information We Collect About Minors</h2>
+      <p>When a parent creates an athlete profile, we collect only the following information about the minor child:</p>
+      <ul>
+        <li><strong>First name and last name</strong> — displayed on the card and fundraising page.</li>
+        <li><strong>Sport, team name, and position</strong> — displayed on the card.</li>
+        <li><strong>Athletic statistics</strong> (e.g., points per game, goals scored) — displayed on the card. These are entered by the parent and can be omitted entirely.</li>
+        <li><strong>One photograph</strong> — used to create the card design. This photo is stored securely and displayed only on the card and associated fundraising page.</li>
+        <li><strong>Card serial number and edition type</strong> — recorded on the blockchain for provenance purposes (name only, no contact information or photograph is on-chain).</li>
+      </ul>
+      <p>We do not collect: the child's email address, phone number, home address, date of birth, social media accounts, school name, or any other information beyond what is listed above. We do not ask children themselves for any information.</p>
+
+      <h2 id="s5">5. Parental Rights Under COPPA</h2>
+      <p>As the parent or legal guardian of a minor athlete on our platform, you have the following rights:</p>
+      <ul>
+        <li><strong>Right to Review:</strong> You may request a copy of all personal information we have collected about your child at any time.</li>
+        <li><strong>Right to Correct:</strong> You may update, edit, or correct any information in your child's athlete profile at any time through your account settings.</li>
+        <li><strong>Right to Delete:</strong> You may request deletion of your child's athlete profile and all associated personal information. We will complete deletion within 30 days of verified request, except where retention is required by law (e.g., financial transaction records from completed orders must be retained for 7 years).</li>
+        <li><strong>Right to Refuse Further Collection:</strong> You may close your account and athlete profiles at any time to stop any further collection of information about your child.</li>
+        <li><strong>Right to Refuse Without Penalty:</strong> Providing information about your child is always voluntary. We will not condition the core service (card creation) on collection of more information than is reasonably necessary.</li>
+      </ul>
+
+      <h2 id="s6">6. How to Exercise Your Parental Rights</h2>
+      <p>To review, correct, or delete your child's information, you may:</p>
+      <ul>
+        <li>Log in to your account and edit or delete athlete profiles directly from your dashboard.</li>
+        <li>Email us at <a href="mailto:privacy@mvpkidscards.com">privacy@mvpkidscards.com</a> with the subject line "COPPA Request." Please include your account email address and a description of your request.</li>
+        <li>Use our <a href="/contact.html">contact form</a> and select "Safety or privacy concern" as the topic.</li>
+      </ul>
+      <p>We will respond to all COPPA-related requests within 5 business days and complete verified requests within 30 days. We may ask you to verify your identity before processing requests to protect your child's information from unauthorized access.</p>
+
+      <h2 id="s7">7. Data Retention for Minor Athletes</h2>
+      <p>We retain athlete profile information only as long as your account is active. Upon account closure or verified parental deletion request, we delete athlete profile data (name, photo, statistics) within 30 days.</p>
+      <p>The following data is retained longer due to legal requirements:</p>
+      <ul>
+        <li>Transaction records associated with card sales (7 years, required for financial compliance). These records identify the card sold and purchase amount but can be separated from the athlete profile data upon deletion request.</li>
+        <li>On-chain provenance records (athlete name, card edition, serial number) are permanent by the nature of blockchain technology and cannot be deleted. We limit on-chain data to the minimum necessary — no contact information, no photographs, no financial data is recorded on-chain.</li>
+      </ul>
+
+      <h2 id="s8">8. Third-Party Services and Children's Data</h2>
+      <p>We work with a small number of trusted third-party service providers who may process data about minor athletes solely to provide services to us. These include:</p>
+      <ul>
+        <li><strong>Print fulfillment partner</strong> — receives the athlete's card design (including name and photograph) solely for the purpose of printing the physical card. They are contractually prohibited from using this data for any other purpose.</li>
+        <li><strong>Supabase</strong> — provides our database infrastructure and stores athlete profile data securely. Supabase does not have independent access to use this data for commercial purposes.</li>
+      </ul>
+      <p>We do not share minor athletes' information with any advertising networks, data brokers, social media platforms, or other third parties for commercial purposes. We do not permit any third party to independently market to users based on data collected on our platform.</p>
+
+      <h2 id="s9">9. Contact Us About Children's Privacy</h2>
+      <p>If you have questions, concerns, or complaints about how we handle your child's information, or if you believe we have inadvertently collected information from a child without proper parental consent, please contact us immediately:</p>
+      <ul>
+        <li><strong>Email:</strong> <a href="mailto:privacy@mvpkidscards.com">privacy@mvpkidscards.com</a></li>
+        <li><strong>Subject line:</strong> "COPPA Inquiry" or "Child Privacy Concern"</li>
+        <li><strong>Response time:</strong> Within 5 business days for all COPPA-related matters</li>
+      </ul>
+      <p>You may also file a complaint with the Federal Trade Commission at <a href="https://www.ftc.gov" target="_blank">ftc.gov</a> or 1-877-FTC-HELP (1-877-382-4357).</p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo"><span class="mvp">MVP</span> Kids Cards<span class="sub">ProspectCard by MVP Kids Cards</span></div>
+        <div class="footer-tagline">Youth athlete trading cards that fundraise today and appreciate forever.</div>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Product</h4>
+          <a href="/#how-it-works">How It Works</a>
+          <a href="/#cards">Card Editions</a>
+          <a href="/#why">Why MVP Kids Cards</a>
+          <a href="/#waitlist">Join Waitlist</a>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="/about.html">About</a>
+          <a href="/blog.html">Blog</a>
+          <a href="/press.html">Press</a>
+          <a href="/contact.html">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="/privacy.html">Privacy Policy</a>
+          <a href="/terms.html">Terms of Service</a>
+          <a href="/coppa.html">COPPA Compliance</a>
+          <a href="/refund.html">Refund Policy</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="copy">© 2025 MVP Kids Cards. All rights reserved.</div>
+      <div class="legal"><a href="mailto:hello@mvpkidscards.com">hello@mvpkidscards.com</a></div>
+    </div>
+  </footer>
+
+</body>
+</html>

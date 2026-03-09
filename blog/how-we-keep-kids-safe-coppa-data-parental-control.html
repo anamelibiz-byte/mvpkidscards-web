@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How We Keep Kids Safe: Our Approach to COPPA, Data & Parental Control | MVP Kids Cards</title>
+  <meta name="description" content="MVP Kids Cards was built with one non-negotiable: parents are always in control. Here's exactly how we protect your child's data, likeness, and privacy — in plain English." />
+  <meta name="keywords" content="COPPA youth sports app, kids data privacy sports, youth athlete data protection, parental control sports app, MVP Kids Cards safety" />
+  <meta property="og:title" content="How We Keep Kids Safe: Our Approach to COPPA, Data, and Parental Control" />
+  <meta property="og:description" content="We built MVP Kids Cards with one non-negotiable: parents are always in control. Here's exactly how we protect your child's data and likeness." />
+  <meta property="og:type" content="article" />
+  <link rel="canonical" href="https://mvpkidscards-web.vercel.app/blog/how-we-keep-kids-safe-coppa-data-parental-control.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --navy-deep: #0B1E3F; --navy-mid: #1A3260; --gold: #E8A020; --gold-light: #F5C84A; --green-win: #1AAF5D; --slate-gray: #8A9BB0; --off-white: #F8F9FC; }
+    body { font-family: 'Montserrat', sans-serif; background: var(--off-white); color: #1a1a2e; line-height: 1.7; }
+    nav { position: sticky; top: 0; width: 100%; z-index: 100; background: rgba(11,30,63,0.97); backdrop-filter: blur(8px); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .nav-logo { font-family: 'Oswald', sans-serif; font-size: 1.3rem; font-weight: 700; color: white; text-decoration: none; }
+    .nav-logo .mvp { color: var(--gold); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--slate-gray); text-decoration: none; font-size: 0.85rem; font-weight: 600; }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta { background: var(--gold); color: var(--navy-deep); border-radius: 6px; padding: 0.5rem 1.25rem; font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 0.9rem; text-decoration: none; }
+
+    .article-hero { background: linear-gradient(135deg, #041628 0%, #082040 100%); padding: 4rem 2rem 3.5rem; text-align: center; }
+    .breadcrumb { font-size: 0.78rem; color: var(--slate-gray); margin-bottom: 1.25rem; }
+    .breadcrumb a { color: var(--slate-gray); text-decoration: none; }
+    .post-tag { display: inline-block; background: rgba(74,144,217,0.15); border: 1px solid rgba(74,144,217,0.35); color: #4A90D9; font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; border-radius: 100px; padding: 0.3rem 0.85rem; margin-bottom: 1.25rem; }
+    .article-hero h1 { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: clamp(1.8rem, 4vw, 2.8rem); color: white; line-height: 1.15; max-width: 780px; margin: 0 auto 1.25rem; }
+    .article-meta { font-size: 0.82rem; color: var(--slate-gray); display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .hero-emoji { font-size: 5rem; margin-bottom: 1.5rem; display: block; }
+
+    .article-wrap { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem; display: grid; grid-template-columns: 1fr 320px; gap: 4rem; align-items: start; }
+    .article-body { background: white; border-radius: 16px; padding: 3rem; box-shadow: 0 2px 24px rgba(0,0,0,0.06); }
+    .article-body .lead { font-size: 1.15rem; color: #2a3a55; line-height: 1.8; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 2px solid var(--off-white); font-weight: 500; }
+    .article-body h2 { font-family: 'Oswald', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--navy-deep); margin: 2.5rem 0 1rem; }
+    .article-body h3 { font-family: 'Oswald', sans-serif; font-size: 1.15rem; font-weight: 600; color: var(--navy-mid); margin: 1.75rem 0 0.6rem; }
+    .article-body p { font-size: 0.95rem; color: #333; margin-bottom: 1.25rem; line-height: 1.8; }
+    .article-body ul, .article-body ol { margin: 0.75rem 0 1.25rem 1.5rem; }
+    .article-body li { font-size: 0.95rem; color: #333; margin-bottom: 0.65rem; line-height: 1.7; }
+    .article-body strong { color: var(--navy-deep); }
+    .article-body a { color: var(--navy-mid); }
+
+    .commitment-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1.75rem 0; }
+    .commitment-item { background: var(--off-white); border-radius: 10px; padding: 1.25rem; }
+    .commitment-item .ci-icon { font-size: 1.5rem; margin-bottom: 0.5rem; display: block; }
+    .commitment-item h4 { font-family: 'Oswald', sans-serif; font-size: 0.95rem; color: var(--navy-deep); margin-bottom: 0.4rem; }
+    .commitment-item p { font-size: 0.82rem; color: #555; margin: 0; line-height: 1.6; }
+
+    .highlight-green { background: rgba(26,175,93,0.07); border-left: 4px solid var(--green-win); border-radius: 0 10px 10px 0; padding: 1.25rem 1.5rem; margin: 1.75rem 0; }
+    .highlight-green p { margin: 0; font-size: 0.9rem; color: #1a3a2a; }
+
+    .highlight-gold { background: rgba(232,160,32,0.08); border-left: 4px solid var(--gold); border-radius: 0 10px 10px 0; padding: 1.25rem 1.5rem; margin: 1.75rem 0; }
+    .highlight-gold p { margin: 0; font-size: 0.9rem; color: #4a3200; }
+
+    .data-table { width: 100%; border-collapse: collapse; margin: 1.25rem 0; font-size: 0.88rem; }
+    .data-table th { background: var(--navy-deep); color: white; padding: 0.75rem 1rem; text-align: left; font-family: 'Oswald', sans-serif; font-size: 0.85rem; }
+    .data-table th:first-child { border-radius: 8px 0 0 0; }
+    .data-table th:last-child { border-radius: 0 8px 0 0; }
+    .data-table td { padding: 0.7rem 1rem; border-bottom: 1px solid #f0f0f0; color: #333; }
+    .data-table tr:nth-child(even) td { background: var(--off-white); }
+    .yes { color: var(--green-win); font-weight: 700; }
+    .no { color: #e84040; font-weight: 700; }
+
+    .pull-quote { background: linear-gradient(135deg, var(--navy-deep), var(--navy-mid)); border-radius: 12px; padding: 2rem 2.25rem; margin: 2.5rem 0; }
+    .pull-quote p { font-family: 'Oswald', sans-serif; font-size: 1.3rem; color: white; line-height: 1.4; margin: 0; font-weight: 400; }
+
+    .author-box { display: flex; gap: 1rem; align-items: center; background: var(--off-white); border-radius: 12px; padding: 1.25rem; margin-top: 3rem; }
+    .author-avatar { width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, var(--navy-deep), var(--navy-mid)); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; }
+    .author-info .name { font-family: 'Oswald', sans-serif; font-size: 1rem; color: var(--navy-deep); font-weight: 600; }
+    .author-info .bio { font-size: 0.8rem; color: var(--slate-gray); margin-top: 0.2rem; }
+
+    .share-bar { display: flex; align-items: center; gap: 0.75rem; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #eee; flex-wrap: wrap; }
+    .share-label { font-size: 0.8rem; font-weight: 700; color: var(--slate-gray); text-transform: uppercase; letter-spacing: 0.08em; }
+    .share-btn { display: inline-flex; align-items: center; padding: 0.45rem 1rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600; text-decoration: none; cursor: pointer; border: none; font-family: 'Montserrat', sans-serif; }
+    .share-twitter { background: #000; color: white; }
+    .share-facebook { background: #1877F2; color: white; }
+    .share-copy { background: var(--off-white); color: var(--navy-deep); border: 1px solid #ddd; }
+
+    .sidebar { position: sticky; top: 84px; display: flex; flex-direction: column; gap: 1.5rem; }
+    .sidebar-card { background: white; border-radius: 14px; padding: 1.5rem; box-shadow: 0 2px 16px rgba(0,0,0,0.06); }
+    .sidebar-card h4 { font-family: 'Oswald', sans-serif; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--slate-gray); margin-bottom: 1rem; }
+    .related-post { display: flex; gap: 0.75rem; align-items: flex-start; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #f0f0f0; text-decoration: none; }
+    .related-post:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .related-emoji { width: 40px; height: 40px; border-radius: 8px; background: var(--off-white); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+    .related-post h5 { font-family: 'Oswald', sans-serif; font-size: 0.9rem; color: var(--navy-deep); line-height: 1.3; margin-bottom: 0.2rem; }
+    .related-post span { font-size: 0.75rem; color: var(--slate-gray); }
+    .cta-sidebar { background: linear-gradient(135deg, var(--navy-deep), var(--navy-mid)); border-radius: 14px; padding: 1.75rem; text-align: center; }
+    .cta-sidebar h4 { font-family: 'Oswald', sans-serif; font-size: 1.1rem; color: white; margin-bottom: 0.6rem; letter-spacing: normal; text-transform: none; }
+    .cta-sidebar p { font-size: 0.8rem; color: var(--slate-gray); margin-bottom: 1.25rem; line-height: 1.5; }
+    .cta-sidebar a { display: block; background: var(--gold); color: var(--navy-deep); font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 0.9rem; padding: 0.75rem; border-radius: 8px; text-decoration: none; }
+
+    footer { background: #07121f; padding: 3rem 2rem 2rem; color: var(--slate-gray); margin-top: 2rem; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+    .footer-logo { font-family: 'Oswald', sans-serif; font-size: 1.3rem; font-weight: 700; color: white; }
+    .footer-logo .mvp { color: var(--gold); }
+    .footer-tagline { font-size: 0.8rem; color: var(--slate-gray); max-width: 220px; line-height: 1.5; margin-top: 0.5rem; }
+    .footer-col h4 { font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 0.8rem; letter-spacing: 1px; color: white; text-transform: uppercase; margin-bottom: 1rem; }
+    .footer-col a { display: block; color: var(--slate-gray); text-decoration: none; font-size: 0.82rem; margin-bottom: 0.5rem; }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom { max-width: 1100px; margin: 0 auto; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1.5rem; display: flex; justify-content: space-between; font-size: 0.78rem; color: #3d5060; }
+
+    @media (max-width: 900px) { .article-wrap { grid-template-columns: 1fr; } .sidebar { position: static; } .nav-links { display: none; } .commitment-grid { grid-template-columns: 1fr; } .footer-inner { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .article-body { padding: 1.75rem; } }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/index.html" class="nav-logo"><span class="mvp">MVP</span> Kids Cards</a>
+    <ul class="nav-links">
+      <li><a href="/index.html#how-it-works">How It Works</a></li>
+      <li><a href="/blog.html">Blog</a></li>
+      <li><a href="/about.html">About</a></li>
+    </ul>
+    <a href="/index.html#waitlist" class="nav-cta">Join Waitlist</a>
+  </nav>
+
+  <div class="article-hero">
+    <div class="breadcrumb"><a href="/blog.html">Blog</a> &nbsp;/&nbsp; Safety &amp; Privacy</div>
+    <span class="hero-emoji">🔒</span>
+    <span class="post-tag">Safety &amp; Privacy</span>
+    <h1>How We Keep Kids Safe: Our Approach to COPPA, Data, and Parental Control</h1>
+    <div class="article-meta">
+      <span>By the MVP Kids Cards Team</span>
+      <span>•</span>
+      <span>April 20, 2025</span>
+      <span>•</span>
+      <span>7 min read</span>
+    </div>
+  </div>
+
+  <div class="article-wrap">
+    <article class="article-body">
+
+      <p class="lead">We built MVP Kids Cards with one non-negotiable: parents are always in control. No child ever creates an account. No child's contact information is ever collected. No data is sold. Ever. Here's exactly how we protect your child's data and likeness — in plain English.</p>
+
+      <p>When we were designing MVP Kids Cards, we talked to a lot of parents about what they worried about when it came to their kids and the internet. The answers were remarkably consistent: they worried about who could see their child's photo, who owned their child's data, and what happened to that information over time.</p>
+
+      <p>These are the right questions to ask. And we built our entire platform to answer them with complete transparency.</p>
+
+      <h2>The Fundamental Design Choice: Kids Don't Have Accounts</h2>
+
+      <p>The most important privacy decision we made is also the simplest: <strong>children never have accounts on MVP Kids Cards.</strong> Full stop.</p>
+
+      <p>When you create a card for your athlete, you — the parent or guardian — create the account. You upload the photo. You enter the stats. You manage the sales. You control who can purchase, and you receive all proceeds. Your child is the subject of the card, not a user of the platform.</p>
+
+      <p>This is a deliberate inversion of how most youth-facing apps work. Instead of building a platform that children use (and then trying to layer privacy protections on top), we built a platform that parents use to celebrate and fundraise for their children. The child's role is to be featured — not to interact with the software.</p>
+
+      <div class="pull-quote">
+        <p>Children never have accounts on MVP Kids Cards. The parent is always the account holder, decision-maker, and data controller.</p>
+      </div>
+
+      <h2>What Is COPPA and Why Does It Matter?</h2>
+
+      <p>COPPA — the Children's Online Privacy Protection Act — is a federal law (15 U.S.C. §§ 6501–6506) that regulates how websites and online services collect personal information from children under 13. It requires verifiable parental consent before any personal information from a child under 13 is collected, used, or shared.</p>
+
+      <p>Many apps in the youth sports space handle COPPA compliance by adding a consent checkbox to a sign-up form. We think that's insufficient. Our approach is structural: because children never create accounts and we never directly collect personal information from children, the most sensitive COPPA obligations simply don't apply to us in the same way.</p>
+
+      <p>The information on a child's card is entered by their parent, on a parent's account, under a parent's control. Parents can view, modify, or request deletion of all data at any time. For a full description of our COPPA approach, see our dedicated <a href="/coppa.html">COPPA Compliance page</a>.</p>
+
+      <h2>What Information Do We Actually Collect About Athletes?</h2>
+
+      <p>Here's a complete list of athlete information that appears on an MVP Kids Card:</p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Information</th>
+            <th>Where It Appears</th>
+            <th>Publicly Visible on Card?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>First and last name</td><td>Card front</td><td class="yes">✓ Yes</td></tr>
+          <tr><td>Sport and position</td><td>Card front</td><td class="yes">✓ Yes</td></tr>
+          <tr><td>Team name</td><td>Card front</td><td class="yes">✓ Yes (optional)</td></tr>
+          <tr><td>Athletic stats (height, weight, GPA, etc.)</td><td>Card back</td><td class="yes">✓ Yes (parent-selected)</td></tr>
+          <tr><td>One photo</td><td>Card front</td><td class="yes">✓ Yes</td></tr>
+          <tr><td>Edition and serial number</td><td>Card and blockchain</td><td class="yes">✓ Yes</td></tr>
+          <tr><td>Athlete's email address</td><td>Not collected</td><td class="no">✗ Never</td></tr>
+          <tr><td>Athlete's phone number</td><td>Not collected</td><td class="no">✗ Never</td></tr>
+          <tr><td>Athlete's home address</td><td>Not collected</td><td class="no">✗ Never</td></tr>
+          <tr><td>Athlete's school name</td><td>Not collected</td><td class="no">✗ Never</td></tr>
+          <tr><td>Athlete's date of birth</td><td>Not collected</td><td class="no">✗ Never</td></tr>
+        </tbody>
+      </table>
+
+      <p>Notice what we do <em>not</em> collect: contact information, location data, school information, or any personally identifying data beyond what appears on the card itself — and the card only shows what the parent chooses to include.</p>
+
+      <h2>Who Can See Your Child's Card?</h2>
+
+      <p>Your child's card is only visible to people you share it with. By default, an athlete's card page is not indexed by search engines, not discoverable through our platform's browse or search features, and not shared with any third party. The only way to reach a card page is to have the specific link that you, as the parent, choose to share.</p>
+
+      <div class="commitment-grid">
+        <div class="commitment-item">
+          <span class="ci-icon">🔗</span>
+          <h4>Link-Only Access</h4>
+          <p>Cards are only visible to people with the direct link. No public search or browse.</p>
+        </div>
+        <div class="commitment-item">
+          <span class="ci-icon">🚫</span>
+          <h4>No Search Indexing</h4>
+          <p>Athlete card pages are not indexed by Google or other search engines by default.</p>
+        </div>
+        <div class="commitment-item">
+          <span class="ci-icon">👤</span>
+          <h4>Parent-Controlled Visibility</h4>
+          <p>You decide who sees the link, when, and through which channels.</p>
+        </div>
+        <div class="commitment-item">
+          <span class="ci-icon">🗑️</span>
+          <h4>Right to Delete</h4>
+          <p>You can request deletion of all athlete data from our systems at any time.</p>
+        </div>
+      </div>
+
+      <h2>Photo Rights and Athlete Likeness</h2>
+
+      <p>Your child's photo belongs to you. You upload it, you retain ownership, and you grant MVP Kids Cards a limited license to use it for the sole purpose of producing the card you ordered. We do not use athlete photos in our marketing, advertising, or any other context without explicit written consent from the parent or guardian.</p>
+
+      <p>When you place an order, you confirm that you have the legal right to use the photo and likeness in question — typically because you are the parent or legal guardian of the athlete, and you took the photo (or own the rights to it). We cannot accept photos of athletes for which you do not have appropriate authorization.</p>
+
+      <div class="highlight-gold">
+        <p><strong>A note on AI and image use:</strong> We never use athlete photos to train AI models, and we never share photos with any third party except our print production partner, who uses them solely to print the cards you ordered.</p>
+      </div>
+
+      <h2>Payment Processing and Financial Security</h2>
+
+      <p>All payments on MVP Kids Cards are processed by <strong>Stripe</strong>, one of the world's most trusted payment processors. We never see, store, or handle your full credit card number — it goes directly to Stripe's PCI-DSS compliant servers and never touches ours. Stripe handles all card authorization, fraud detection, and payment security.</p>
+
+      <p>Card proceeds are held in escrow by our payment processor and disbursed to the parent account holder on a regular schedule. We do not have discretionary access to your funds.</p>
+
+      <h2>Our Data Promise in Plain English</h2>
+
+      <ul>
+        <li>We do not sell your data or your child's data to anyone, ever.</li>
+        <li>We do not share athlete information with advertisers.</li>
+        <li>We do not send marketing to children.</li>
+        <li>We do not use your child's photo for any purpose other than printing their card.</li>
+        <li>We do not allow other users to search for or discover your child's card without your link.</li>
+        <li>You can request deletion of all data at any time by emailing us.</li>
+      </ul>
+
+      <div class="highlight-green">
+        <p><strong>Have a specific question about privacy or data?</strong> We welcome it. Email us at <a href="mailto:hello@mvpkidscards.com">hello@mvpkidscards.com</a> or read our full <a href="/privacy.html">Privacy Policy</a> and <a href="/coppa.html">COPPA Compliance page</a>. We believe transparency builds trust, and we're happy to explain anything.</p>
+      </div>
+
+      <h2>Why This Matters to Us</h2>
+
+      <p>We're parents too. The people who built MVP Kids Cards have kids in youth sports. We know what it means to share a photo of your child online and wonder who's going to see it. We built the platform we wished existed — one where the answer to "who can see my kid's photo?" is simply: "only the people you choose to show it to."</p>
+
+      <p>We think protecting children online isn't a compliance checkbox. It's the foundation everything else is built on. And we're committed to earning your trust, one card at a time.</p>
+
+      <div class="share-bar">
+        <span class="share-label">Share</span>
+        <a href="https://twitter.com/intent/tweet?text=How+%40mvpkidscards+keeps+kids+safe+with+COPPA+compliance+and+parent+control&url=https://mvpkidscards-web.vercel.app/blog/how-we-keep-kids-safe-coppa-data-parental-control.html" target="_blank" rel="noopener" class="share-btn share-twitter">✕ Twitter</a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https://mvpkidscards-web.vercel.app/blog/how-we-keep-kids-safe-coppa-data-parental-control.html" target="_blank" rel="noopener" class="share-btn share-facebook">Facebook</a>
+        <button class="share-btn share-copy" onclick="navigator.clipboard.writeText(window.location.href).then(()=>this.textContent='Copied!')">🔗 Copy Link</button>
+      </div>
+
+      <div class="author-box">
+        <div class="author-avatar">✍️</div>
+        <div class="author-info">
+          <div class="name">MVP Kids Cards Team</div>
+          <div class="bio">We build tools that help youth athlete families fundraise, celebrate their athletes, and create memories that last well past the final whistle.</div>
+        </div>
+      </div>
+    </article>
+
+    <aside class="sidebar">
+      <div class="cta-sidebar">
+        <h4>Privacy You Can Trust</h4>
+        <p>Join the waitlist and create your athlete's card with complete confidence in how we protect your family's data.</p>
+        <a href="/index.html#waitlist">Join the Waitlist →</a>
+      </div>
+      <div class="sidebar-card">
+        <h4>Related Posts</h4>
+        <a href="/blog/what-does-on-chain-mean-for-your-kids-trading-card.html" class="related-post">
+          <div class="related-emoji">📈</div>
+          <div><h5>What Does "On-Chain" Actually Mean for Your Kid's Card?</h5><span>Blockchain & Value</span></div>
+        </a>
+        <a href="/blog/5-ways-to-share-your-card-without-being-that-parent.html" class="related-post">
+          <div class="related-emoji">🏀</div>
+          <div><h5>5 Ways to Share Your Card Without Being "That Parent"</h5><span>Tips for Parents</span></div>
+        </a>
+        <a href="/blog/why-youth-athlete-cards-are-the-next-big-collectible.html" class="related-post">
+          <div class="related-emoji">🃏</div>
+          <div><h5>Why Youth Athlete Cards Could Be the Next Big Collectible Market</h5><span>Cards & Collecting</span></div>
+        </a>
+      </div>
+    </aside>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div><div class="footer-logo"><span class="mvp">MVP</span> Kids Cards</div><div class="footer-tagline">Youth athlete trading cards that fundraise today and appreciate forever.</div></div>
+      <div class="footer-col"><h4>Product</h4><a href="/index.html#how-it-works">How It Works</a><a href="/index.html#cards">Card Editions</a><a href="/index.html#waitlist">Join Waitlist</a></div>
+      <div class="footer-col"><h4>Company</h4><a href="/about.html">About</a><a href="/blog.html">Blog</a><a href="/press.html">Press</a><a href="/contact.html">Contact</a></div>
+      <div class="footer-col"><h4>Legal</h4><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a><a href="/coppa.html">COPPA Compliance</a><a href="/refund.html">Refund Policy</a></div>
+    </div>
+    <div class="footer-bottom"><span>© 2025 MVP Kids Cards. All rights reserved.</span><span>hello@mvpkidscards.com</span></div>
+  </footer>
+
+</body>
+</html>

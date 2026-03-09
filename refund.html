@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Refund Policy | MVP Kids Cards</title>
+  <meta name="description" content="MVP Kids Cards Refund &amp; Return Policy — understand your rights, our fulfillment process, and how to request a refund or reprint.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy-deep: #0B1E3F;
+      --navy-mid: #1A3260;
+      --gold: #E8A020;
+      --gold-light: #F5C84A;
+      --green-win: #1AAF5D;
+      --slate-gray: #8A9BB0;
+      --off-white: #F8F9FC;
+      --red-alert: #E84040;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--off-white);
+      color: #1a1a2e;
+      line-height: 1.7;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--navy-deep);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-logo {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: white;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .nav-logo .mvp { color: var(--gold); }
+
+    .nav-logo .sub {
+      font-size: 0.65rem;
+      color: var(--slate-gray);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+      margin-left: 4px;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-cta {
+      background: var(--gold);
+      color: var(--navy-deep);
+      padding: 0.5rem 1.25rem;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: background 0.2s;
+    }
+
+    .nav-cta:hover { background: var(--gold-light); }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      background: linear-gradient(135deg, var(--navy-deep) 0%, #1a2850 60%, #0d2040 100%);
+      padding: 4rem 2rem 3rem;
+      text-align: center;
+    }
+
+    .page-hero .badge {
+      display: inline-block;
+      background: rgba(232, 160, 32, 0.15);
+      border: 1px solid rgba(232, 160, 32, 0.4);
+      color: var(--gold);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.35rem 1rem;
+      border-radius: 20px;
+      margin-bottom: 1rem;
+    }
+
+    .page-hero h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      color: white;
+      margin-bottom: 0.75rem;
+    }
+
+    .page-hero .subtitle {
+      font-size: 1rem;
+      color: var(--slate-gray);
+      max-width: 560px;
+      margin: 0 auto 1.25rem;
+    }
+
+    .page-hero .effective-date {
+      font-size: 0.8rem;
+      color: rgba(138,155,176,0.7);
+    }
+
+    /* ── PLAIN ENGLISH BOX ── */
+    .plain-english {
+      max-width: 860px;
+      margin: 2.5rem auto 0;
+      background: rgba(232, 160, 32, 0.08);
+      border: 1px solid rgba(232, 160, 32, 0.3);
+      border-radius: 12px;
+      padding: 1.5rem 2rem;
+    }
+
+    .plain-english h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+
+    .plain-english p {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.6;
+    }
+
+    /* ── QUICK ANSWER GRID ── */
+    .quick-answers {
+      max-width: 1100px;
+      margin: 3rem auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .qa-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      border-top: 3px solid var(--gold);
+    }
+
+    .qa-card .qa-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .qa-card .qa-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--slate-gray);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.4rem;
+    }
+
+    .qa-card .qa-answer {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--navy-deep);
+    }
+
+    /* ── MAIN CONTENT LAYOUT ── */
+    .content-wrap {
+      max-width: 1100px;
+      margin: 0 auto 4rem;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    /* ── TOC ── */
+    .toc {
+      position: sticky;
+      top: 84px;
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+    }
+
+    .toc h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--slate-gray);
+      margin-bottom: 1rem;
+    }
+
+    .toc ol {
+      list-style: none;
+      counter-reset: toc-counter;
+    }
+
+    .toc ol li {
+      counter-increment: toc-counter;
+      margin-bottom: 0.4rem;
+    }
+
+    .toc ol li a {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      text-decoration: none;
+      color: #444;
+      font-size: 0.8rem;
+      font-weight: 500;
+      line-height: 1.4;
+      transition: color 0.2s;
+    }
+
+    .toc ol li a::before {
+      content: counter(toc-counter, decimal-leading-zero);
+      font-size: 0.7rem;
+      color: var(--gold);
+      font-weight: 700;
+      flex-shrink: 0;
+      padding-top: 1px;
+    }
+
+    .toc ol li a:hover { color: var(--navy-mid); }
+
+    /* ── LEGAL BODY ── */
+    .legal-body section {
+      background: white;
+      border-radius: 12px;
+      padding: 2.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      scroll-margin-top: 84px;
+    }
+
+    .legal-body .section-number {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+
+    .legal-body h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--navy-deep);
+      margin-bottom: 1.25rem;
+      border-bottom: 2px solid var(--off-white);
+      padding-bottom: 0.75rem;
+    }
+
+    .legal-body h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--navy-mid);
+      margin: 1.5rem 0 0.6rem;
+    }
+
+    .legal-body p {
+      font-size: 0.9rem;
+      color: #333;
+      margin-bottom: 1rem;
+      line-height: 1.75;
+    }
+
+    .legal-body ul, .legal-body ol {
+      margin: 0.75rem 0 1rem 1.25rem;
+    }
+
+    .legal-body li {
+      font-size: 0.9rem;
+      color: #333;
+      margin-bottom: 0.5rem;
+      line-height: 1.65;
+    }
+
+    /* ── CALLOUT BOXES ── */
+    .callout-green {
+      background: rgba(26, 175, 93, 0.07);
+      border-left: 4px solid var(--green-win);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.25rem;
+      margin: 1.25rem 0;
+    }
+
+    .callout-green p {
+      font-size: 0.875rem;
+      color: #1a3a2a;
+      margin: 0;
+    }
+
+    .callout-gold {
+      background: rgba(232, 160, 32, 0.08);
+      border-left: 4px solid var(--gold);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.25rem;
+      margin: 1.25rem 0;
+    }
+
+    .callout-gold p {
+      font-size: 0.875rem;
+      color: #4a3200;
+      margin: 0;
+    }
+
+    .callout-red {
+      background: rgba(232, 64, 64, 0.06);
+      border-left: 4px solid var(--red-alert);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.25rem;
+      margin: 1.25rem 0;
+    }
+
+    .callout-red p {
+      font-size: 0.875rem;
+      color: #4a1010;
+      margin: 0;
+    }
+
+    /* ── ELIGIBILITY TABLE ── */
+    .eligibility-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0;
+      font-size: 0.85rem;
+    }
+
+    .eligibility-table th {
+      background: var(--navy-deep);
+      color: white;
+      padding: 0.75rem 1rem;
+      text-align: left;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+    }
+
+    .eligibility-table th:first-child { border-radius: 8px 0 0 0; }
+    .eligibility-table th:last-child { border-radius: 0 8px 0 0; }
+
+    .eligibility-table td {
+      padding: 0.7rem 1rem;
+      border-bottom: 1px solid #f0f0f0;
+      vertical-align: top;
+      color: #333;
+    }
+
+    .eligibility-table tr:nth-child(even) td { background: var(--off-white); }
+
+    .eligible { color: var(--green-win); font-weight: 700; }
+    .not-eligible { color: var(--red-alert); font-weight: 700; }
+
+    /* ── PROCESS STEPS ── */
+    .steps-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+
+    .steps-list li {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      margin-bottom: 1.25rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .steps-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+    .step-num {
+      background: var(--navy-deep);
+      color: var(--gold);
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .step-text h4 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1rem;
+      color: var(--navy-deep);
+      margin-bottom: 0.25rem;
+    }
+
+    .step-text p {
+      margin: 0;
+      font-size: 0.85rem;
+    }
+
+    /* ── CTA BAND ── */
+    .cta-band {
+      background: linear-gradient(135deg, var(--navy-deep), var(--navy-mid));
+      padding: 3.5rem 2rem;
+      text-align: center;
+    }
+
+    .cta-band h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2rem;
+      color: white;
+      margin-bottom: 0.75rem;
+    }
+
+    .cta-band p {
+      color: var(--slate-gray);
+      margin-bottom: 1.75rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-band .btn-gold {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--navy-deep);
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-right: 0.75rem;
+      transition: background 0.2s;
+    }
+
+    .cta-band .btn-gold:hover { background: var(--gold-light); }
+
+    .cta-band .btn-outline {
+      display: inline-block;
+      border: 2px solid rgba(255,255,255,0.3);
+      color: white;
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .cta-band .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #060f1f;
+      padding: 3rem 2rem;
+      color: var(--slate-gray);
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .footer-brand .logo {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-brand .logo span { color: var(--gold); }
+
+    .footer-brand p {
+      font-size: 0.8rem;
+      line-height: 1.6;
+      color: var(--slate-gray);
+      max-width: 220px;
+    }
+
+    .footer-col h4 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: white;
+      margin-bottom: 0.85rem;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col ul li {
+      margin-bottom: 0.45rem;
+    }
+
+    .footer-col ul li a {
+      color: var(--slate-gray);
+      text-decoration: none;
+      font-size: 0.82rem;
+      transition: color 0.2s;
+    }
+
+    .footer-col ul li a:hover { color: var(--gold); }
+
+    .footer-bottom {
+      max-width: 1100px;
+      margin: 2rem auto 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: rgba(138,155,176,0.5);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .content-wrap { grid-template-columns: 1fr; }
+      .toc { display: none; }
+      .quick-answers { grid-template-columns: repeat(2, 1fr); }
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+      .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+      .eligibility-table { font-size: 0.78rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">
+      <span class="mvp">MVP</span> Kids Cards
+      <span class="sub">ProspectCard by MVP Kids Cards</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="index.html#waitlist" class="nav-cta">Join Waitlist</a>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="badge">Legal &mdash; Refund &amp; Return Policy</div>
+    <h1>Refund Policy</h1>
+    <p class="subtitle">Your satisfaction matters. Here's exactly what we cover, how to request a refund, and what happens when something goes wrong.</p>
+    <p class="effective-date">Effective Date: March 1, 2025 &nbsp;&bull;&nbsp; Last Updated: March 1, 2025</p>
+
+    <div class="plain-english">
+      <h3>⚡ Plain English Summary</h3>
+      <p>Physical cards can't be returned (they're personalized with your athlete's name and photo), but we will <strong>always</strong> reprint for free if we mess up the print quality or make an error on your order. Digital products are non-refundable once delivered. If something doesn't feel right, email us — we'll work it out.</p>
+    </div>
+  </div>
+
+  <!-- QUICK ANSWER CARDS -->
+  <div class="quick-answers">
+    <div class="qa-card">
+      <div class="qa-icon">🖨️</div>
+      <div class="qa-label">Defective Print</div>
+      <div class="qa-answer">Free Reprint</div>
+    </div>
+    <div class="qa-card">
+      <div class="qa-icon">📦</div>
+      <div class="qa-label">Wrong Order</div>
+      <div class="qa-answer">Free Reprint</div>
+    </div>
+    <div class="qa-card">
+      <div class="qa-icon">🚚</div>
+      <div class="qa-label">Lost in Mail</div>
+      <div class="qa-answer">Free Replacement</div>
+    </div>
+    <div class="qa-card">
+      <div class="qa-icon">⏱️</div>
+      <div class="qa-label">Refund Window</div>
+      <div class="qa-answer">30 Days</div>
+    </div>
+    <div class="qa-card">
+      <div class="qa-icon">💳</div>
+      <div class="qa-label">Refund Method</div>
+      <div class="qa-answer">Original Payment</div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="content-wrap">
+
+    <!-- TABLE OF CONTENTS -->
+    <aside class="toc">
+      <h3>Contents</h3>
+      <ol>
+        <li><a href="#sec-overview">Overview</a></li>
+        <li><a href="#sec-custom-nature">Custom &amp; Personalized Products</a></li>
+        <li><a href="#sec-eligibility">Refund &amp; Reprint Eligibility</a></li>
+        <li><a href="#sec-digital">Digital Products &amp; Subscriptions</a></li>
+        <li><a href="#sec-platform-fees">Platform Fees</a></li>
+        <li><a href="#sec-shipping">Shipping &amp; Delivery Issues</a></li>
+        <li><a href="#sec-how-to">How to Request a Refund or Reprint</a></li>
+        <li><a href="#sec-processing">Processing Time</a></li>
+        <li><a href="#sec-blockchain">Blockchain-Recorded Orders</a></li>
+        <li><a href="#sec-disputes">Chargebacks &amp; Disputes</a></li>
+        <li><a href="#sec-contact">Contact Us</a></li>
+      </ol>
+    </aside>
+
+    <!-- LEGAL SECTIONS -->
+    <div class="legal-body">
+
+      <!-- 1. Overview -->
+      <section id="sec-overview">
+        <p class="section-number">Section 01</p>
+        <h2>Overview</h2>
+        <p>MVP Kids Cards ("Company," "we," "us," or "our") creates personalized sports trading cards for youth athletes. Because each card is custom-produced to order with a specific athlete's name, photo, statistics, team, and sport, our refund policy is tailored to reflect the unique nature of made-to-order products while ensuring you are always protected when something goes wrong on our end.</p>
+        <p>We stand behind the quality of our work. If we produce a defective card, make an error, or your order is lost or damaged in transit, we will make it right — at no cost to you. This policy explains exactly when refunds or reprints are available, what the process looks like, and how to contact us.</p>
+        <p>By placing an order on the MVP Kids Cards platform, you agree to the terms of this Refund Policy, which is incorporated into and forms part of our <a href="terms.html">Terms of Service</a>.</p>
+      </section>
+
+      <!-- 2. Custom Nature -->
+      <section id="sec-custom-nature">
+        <p class="section-number">Section 02</p>
+        <h2>Custom &amp; Personalized Products</h2>
+        <p>All MVP Kids Cards products — physical trading cards, card packs, and collector editions — are <strong>made-to-order and personalized</strong>. Each card is produced specifically for the athlete listed on your order and includes:</p>
+        <ul>
+          <li>Athlete's first and last name</li>
+          <li>Athlete's photograph (uploaded by the parent or guardian)</li>
+          <li>Sport, team name, and position</li>
+          <li>Player statistics (age, height, weight, GPA, or other stats entered)</li>
+          <li>Edition type, serial number, and on-chain provenance record</li>
+        </ul>
+        <p>Because of this deep personalization, <strong>we cannot accept returns or exchanges on physical cards</strong> simply because you changed your mind or the order no longer suits your needs. This is consistent with standard consumer protection rules for custom-made goods under the Federal Trade Commission (FTC) guidelines and applicable state law.</p>
+        <div class="callout-gold">
+          <p><strong>Important:</strong> Before submitting your order, please review all athlete information, statistics, and photo previews carefully. Once an order is confirmed and submitted to our print partner, we cannot modify the card design, name, or statistics.</p>
+        </div>
+      </section>
+
+      <!-- 3. Eligibility -->
+      <section id="sec-eligibility">
+        <p class="section-number">Section 03</p>
+        <h2>Refund &amp; Reprint Eligibility</h2>
+        <p>The following table summarizes what is and is not eligible for a refund or reprint:</p>
+
+        <table class="eligibility-table">
+          <thead>
+            <tr>
+              <th>Situation</th>
+              <th>Eligible?</th>
+              <th>Remedy</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Print defect — blurry image, color shift, miscut, or visible manufacturing flaw</td>
+              <td class="eligible">✓ Yes</td>
+              <td>Free reprint or full refund</td>
+            </tr>
+            <tr>
+              <td>Our error — wrong name, stats, or design printed vs. what was submitted</td>
+              <td class="eligible">✓ Yes</td>
+              <td>Free reprint or full refund</td>
+            </tr>
+            <tr>
+              <td>Order damaged during shipping (visible damage on arrival)</td>
+              <td class="eligible">✓ Yes</td>
+              <td>Free reprint or full refund</td>
+            </tr>
+            <tr>
+              <td>Order lost in transit (not delivered after carrier confirms loss)</td>
+              <td class="eligible">✓ Yes</td>
+              <td>Free replacement reprint</td>
+            </tr>
+            <tr>
+              <td>Significant shipping delay beyond stated production window</td>
+              <td class="eligible">✓ Case-by-case</td>
+              <td>Partial or full refund depending on circumstances</td>
+            </tr>
+            <tr>
+              <td>Customer entered incorrect athlete information (wrong name, wrong stats)</td>
+              <td class="not-eligible">✗ No</td>
+              <td>New order required at standard price</td>
+            </tr>
+            <tr>
+              <td>Customer uploaded a low-resolution or blurry photo</td>
+              <td class="not-eligible">✗ No</td>
+              <td>We warn before checkout; reorder at your cost</td>
+            </tr>
+            <tr>
+              <td>Changed mind after order confirmed</td>
+              <td class="not-eligible">✗ No</td>
+              <td>No refund or return</td>
+            </tr>
+            <tr>
+              <td>Card design no longer desired (sport, team changed)</td>
+              <td class="not-eligible">✗ No</td>
+              <td>No refund; new order at standard price</td>
+            </tr>
+            <tr>
+              <td>Duplicate order placed by mistake (claimed within 2 hours of order)</td>
+              <td class="eligible">✓ Yes (if not yet sent to print)</td>
+              <td>Full refund if caught before print queue</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Defect Documentation Required</h3>
+        <p>To claim a refund or reprint for print defects or shipping damage, we require:</p>
+        <ul>
+          <li>At least two (2) photographs clearly showing the defect, damage, or error</li>
+          <li>Your order number (found in your confirmation email)</li>
+          <li>A brief description of the issue</li>
+        </ul>
+        <p>Claims must be submitted within <strong>30 days</strong> of the delivery date shown by your carrier's tracking system. Claims submitted after 30 days will be reviewed on a case-by-case basis and may not be eligible for remedy.</p>
+
+        <div class="callout-green">
+          <p><strong>Photo Quality Warning:</strong> Our platform automatically flags uploaded photos that fall below our minimum resolution threshold (800×800 px). You will see a warning before checkout. If you proceed past this warning, any resulting image quality issues are not eligible for a reprint.</p>
+        </div>
+      </section>
+
+      <!-- 4. Digital Products -->
+      <section id="sec-digital">
+        <p class="section-number">Section 04</p>
+        <h2>Digital Products &amp; Subscriptions</h2>
+
+        <h3>Digital Card Files</h3>
+        <p>If you purchase a digital edition of your MVP Kids Card (a high-resolution downloadable file for personal use, social sharing, or digital display), the file is delivered instantly upon payment. <strong>Digital products are non-refundable once delivered.</strong></p>
+        <p>An exception applies if the digital file is corrupted, unreadable, or contains a production error on our part. In that case, we will either deliver a corrected file or issue a full refund at your choice.</p>
+
+        <h3>Subscriptions &amp; Bundle Plans</h3>
+        <p>If MVP Kids Cards offers subscription-based or multi-card bundle plans, the following applies:</p>
+        <ul>
+          <li><strong>Unused credits:</strong> You may cancel a subscription plan at any time. Unused card credits that have not been submitted to production will be refunded on a pro-rated basis within 5–10 business days.</li>
+          <li><strong>Cards already in production:</strong> Credits applied to orders already submitted to our print partner cannot be refunded, though the standard defect/reprint policy still applies to those orders.</li>
+          <li><strong>Annual plans:</strong> Annual subscription fees are non-refundable after the first 14 days from purchase, except where required by applicable law.</li>
+        </ul>
+
+        <div class="callout-red">
+          <p><strong>No Chargebacks for Delivered Digital Files:</strong> Initiating a chargeback for a digital file that has been successfully delivered constitutes a dispute in bad faith. We reserve the right to suspend your account and pursue recovery of disputed amounts for confirmed deliveries.</p>
+        </div>
+      </section>
+
+      <!-- 5. Platform Fees -->
+      <section id="sec-platform-fees">
+        <p class="section-number">Section 05</p>
+        <h2>Platform Fees</h2>
+        <p>MVP Kids Cards charges a <strong>15% platform fee</strong> on all marketplace resale transactions. This fee is collected at the time of the secondary market sale and is non-refundable. Platform fees cover payment processing, blockchain provenance recording, fraud protection, and marketplace infrastructure.</p>
+        <p>The 15% fee is transparently displayed before any resale listing is finalized. By listing a card for resale, you acknowledge and accept the platform fee.</p>
+        <p>In the event of a transaction error on MVP Kids Cards' end (for example, a double charge or incorrect fee calculation), we will issue a corrected refund within 10 business days of identifying the error.</p>
+      </section>
+
+      <!-- 6. Shipping & Delivery -->
+      <section id="sec-shipping">
+        <p class="section-number">Section 06</p>
+        <h2>Shipping &amp; Delivery Issues</h2>
+
+        <h3>Production &amp; Shipping Timeline</h3>
+        <p>Our standard production and shipping timeline is <strong>7–10 business days</strong> from order confirmation to delivery. This timeline assumes normal carrier operations. During peak periods (holidays, league seasons), production may take up to 14 business days. Estimated timelines will be disclosed at checkout.</p>
+
+        <h3>Lost Packages</h3>
+        <p>A package is considered lost if the carrier's tracking system shows no movement for more than <strong>10 consecutive business days</strong> or if the carrier has officially declared the package lost. In either case, contact us at <a href="mailto:hello@mvpkidscards.com">hello@mvpkidscards.com</a> with your order number and carrier tracking number, and we will arrange a free replacement reprint.</p>
+        <p>We are not responsible for packages delayed or lost due to:</p>
+        <ul>
+          <li>Incorrect shipping address provided by the customer</li>
+          <li>Failed delivery attempts where no one was available to receive the package</li>
+          <li>Packages marked "delivered" by the carrier that the customer claims were not received (we will work with you to file a carrier claim)</li>
+          <li>Force majeure events (natural disasters, postal strikes, government restrictions)</li>
+        </ul>
+
+        <h3>Damaged Packages</h3>
+        <p>If your order arrives visibly damaged, please photograph both the outer packaging and the contents before opening fully, then contact us within 14 days of delivery. We will arrange a free reprint upon review of the damage photos.</p>
+      </section>
+
+      <!-- 7. How to Request -->
+      <section id="sec-how-to">
+        <p class="section-number">Section 07</p>
+        <h2>How to Request a Refund or Reprint</h2>
+        <p>We aim to make this process as easy as possible. Follow these steps:</p>
+
+        <ul class="steps-list">
+          <li>
+            <div class="step-num">1</div>
+            <div class="step-text">
+              <h4>Gather Your Information</h4>
+              <p>Have your order number ready (found in your confirmation email subject line: "Order Confirmed — MVP Kids Cards #XXXXX"), along with photos of any defects or damage if applicable.</p>
+            </div>
+          </li>
+          <li>
+            <div class="step-num">2</div>
+            <div class="step-text">
+              <h4>Email Us</h4>
+              <p>Send a message to <a href="mailto:hello@mvpkidscards.com">hello@mvpkidscards.com</a> with the subject line <strong>"Refund Request #[Your Order Number]"</strong> or <strong>"Reprint Request #[Your Order Number]"</strong>. Include your name, a description of the issue, and any supporting photos.</p>
+            </div>
+          </li>
+          <li>
+            <div class="step-num">3</div>
+            <div class="step-text">
+              <h4>We Respond Within 2 Business Days</h4>
+              <p>Our team will review your claim and respond within 2 business days. We may ask for additional photos or information to process your claim efficiently.</p>
+            </div>
+          </li>
+          <li>
+            <div class="step-num">4</div>
+            <div class="step-text">
+              <h4>Reprint or Refund Issued</h4>
+              <p>If approved, reprints are submitted to our print partner within 1 business day and follow the standard 7–10 business day fulfillment timeline. Refunds are returned to your original payment method (see Section 8 for timing).</p>
+            </div>
+          </li>
+        </ul>
+
+        <div class="callout-gold">
+          <p><strong>No Need to Return Cards:</strong> We do <em>not</em> require you to ship defective or damaged cards back to us. Keep them (or responsibly dispose of them). Attempting to ship cards back without being asked will not accelerate your claim and we cannot accept unsolicited returns.</p>
+        </div>
+      </section>
+
+      <!-- 8. Processing Time -->
+      <section id="sec-processing">
+        <p class="section-number">Section 08</p>
+        <h2>Processing Time</h2>
+
+        <h3>Refund Processing</h3>
+        <p>Once a refund is approved, it will be issued to the original payment method used for the order. Please allow the following timeframes:</p>
+        <ul>
+          <li><strong>Credit or debit card:</strong> 5–10 business days to appear on your statement, depending on your card issuer</li>
+          <li><strong>PayPal or digital wallet:</strong> 1–3 business days</li>
+          <li><strong>Store credit (if offered):</strong> Applied to your account within 1 business day</li>
+        </ul>
+        <p>We process approved refunds within <strong>3 business days</strong> of approval. We do not control the speed at which your bank or payment processor applies the credit to your account.</p>
+
+        <h3>Reprint Processing</h3>
+        <p>Approved reprint orders are submitted to our print partner within <strong>1 business day</strong> of approval. They then follow the standard production and shipping timeline of 7–10 business days. You will receive a new tracking number via email when the replacement ships.</p>
+
+        <h3>Currency &amp; Exchange Rates</h3>
+        <p>All MVP Kids Cards transactions are processed in U.S. Dollars (USD). If you made a purchase using a non-USD payment method, refunds will be returned in USD at the exchange rate applied on the day the refund is processed. MVP Kids Cards is not responsible for any gains or losses resulting from currency fluctuation.</p>
+      </section>
+
+      <!-- 9. Blockchain -->
+      <section id="sec-blockchain">
+        <p class="section-number">Section 09</p>
+        <h2>Blockchain-Recorded Orders</h2>
+        <p>MVP Kids Cards records certain non-personal card details on a public blockchain — specifically the athlete's first name, last name, edition type, and serial number. This provenance record is created when an order is confirmed and submitted to production.</p>
+        <p><strong>Blockchain records cannot be deleted or reversed.</strong> This is a fundamental property of blockchain technology. If a refund is issued for a blockchain-recorded order, the on-chain record will remain but will be marked as "Voided" or "Refunded" in our platform's metadata. The card itself will not be physically produced (or in the case of a reprint, a new record will be created for the replacement card).</p>
+        <p>This limitation does not affect your right to a refund — it simply means that an immutable provenance record exists even for orders that are subsequently refunded. If this is a concern, please contact us before placing an order.</p>
+      </section>
+
+      <!-- 10. Disputes -->
+      <section id="sec-disputes">
+        <p class="section-number">Section 10</p>
+        <h2>Chargebacks &amp; Disputes</h2>
+        <p>We strongly encourage you to contact us directly before initiating a chargeback with your bank or credit card issuer. Most issues can be resolved faster and more satisfactorily through our refund process than through a formal dispute.</p>
+        <p>If you initiate a chargeback:</p>
+        <ul>
+          <li>We will provide your bank with order confirmation, shipping tracking data, and any other relevant evidence to respond to the dispute.</li>
+          <li>Your MVP Kids Cards account may be suspended during the dispute period to prevent fraudulent activity.</li>
+          <li>If the chargeback is ruled in our favor and we incur chargeback fees, we reserve the right to recover those fees (typically $15–$25 per chargeback) from any refundable amount owed to you.</li>
+          <li>Repeated or abusive chargeback filings may result in permanent account termination.</li>
+        </ul>
+        <p>We want to resolve your issue. Please email <a href="mailto:hello@mvpkidscards.com">hello@mvpkidscards.com</a> before escalating to your financial institution.</p>
+        <p>Any disputes not resolved informally are subject to binding arbitration under the American Arbitration Association (AAA) Consumer Arbitration Rules, as described in our <a href="terms.html">Terms of Service</a>, Section 15.</p>
+      </section>
+
+      <!-- 11. Contact -->
+      <section id="sec-contact">
+        <p class="section-number">Section 11</p>
+        <h2>Contact Us</h2>
+        <p>If you have questions about this Refund Policy or need to submit a claim, please reach out through any of the following channels:</p>
+        <ul>
+          <li><strong>Email (refunds &amp; reprints):</strong> <a href="mailto:hello@mvpkidscards.com">hello@mvpkidscards.com</a></li>
+          <li><strong>Contact form:</strong> <a href="contact.html">mvpkidscards.com/contact</a></li>
+          <li><strong>Response time:</strong> Within 2 business days (Monday–Friday)</li>
+        </ul>
+        <p>When contacting us, please include your order number in the subject line to help us locate your order quickly and resolve your request as fast as possible.</p>
+        <p>This Refund Policy was last updated on March 1, 2025. We reserve the right to update this policy at any time. Material changes will be communicated via email to registered account holders or via a notice on our platform. Continued use of MVP Kids Cards following a policy update constitutes acceptance of the revised terms.</p>
+      </section>
+
+    </div><!-- /legal-body -->
+  </div><!-- /content-wrap -->
+
+  <!-- CTA BAND -->
+  <div class="cta-band">
+    <h2>Questions About Your Order?</h2>
+    <p>We're here to help. Reach out and we'll get back to you within 2 business days.</p>
+    <a href="contact.html" class="btn-gold">Contact Support</a>
+    <a href="index.html#waitlist" class="btn-outline">Join Waitlist</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="logo"><span>MVP</span> Kids Cards</div>
+        <p>Professional-grade trading cards for your young athlete. Built by parents, for parents.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="index.html#how-it-works">How It Works</a></li>
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="index.html#pricing">Pricing</a></li>
+          <li><a href="blog.html">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="press.html">Press</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+          <li><a href="coppa.html">COPPA Compliance</a></li>
+          <li><a href="refund.html">Refund Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 MVP Kids Cards. All rights reserved.</span>
+      <span>Made with ❤️ for young athletes everywhere.</span>
+    </div>
+  </footer>
+
+</body>
+</html>
