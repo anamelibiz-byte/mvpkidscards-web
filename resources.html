@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resources — Custom Trading Cards for Every Kid | MVP Kids Cards</title>
+  <meta name="description" content="Your complete resource center for creating custom trading cards for kids. How-to guides, templates, card makers, gift ideas, and fundraising tools for sports, dance, academics, scouts, and every youth activity.">
+  <meta name="keywords" content="custom trading cards, custom sports cards, personalized kids cards, youth trading card maker, card templates, sports card gift ideas, school fundraising cards, dance recital cards, academic achievement cards">
+  <meta property="og:title" content="MVP Kids Cards Resource Center — Everything You Need to Create Amazing Custom Cards">
+  <meta property="og:description" content="How-to guides, templates, tools, and gift ideas for custom trading cards for every kid — athletes, dancers, scholars, scouts, and more.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://mvpkidscards-web.vercel.app/resources.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --navy-deep: #0B1E3F;
+      --navy-mid:  #1A3260;
+      --gold:      #E8A020;
+      --gold-light:#F5C84A;
+      --green-win: #1AAF5D;
+      --slate-gray:#8A9BB0;
+      --off-white: #F8F9FC;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Montserrat', sans-serif; background: var(--off-white); color: #1a1a2e; }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--navy-deep);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px; height: 68px;
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 16px rgba(0,0,0,.4);
+    }
+    .nav-logo { font-family:'Oswald',sans-serif; font-size:1.35rem; font-weight:700; color:#fff; text-decoration:none; letter-spacing:.04em; }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display:flex; align-items:center; gap:28px; }
+    .nav-links a { color:var(--slate-gray); text-decoration:none; font-size:.85rem; font-weight:600; font-family:'Oswald',sans-serif; letter-spacing:.06em; text-transform:uppercase; transition:color .2s; }
+    .nav-links a:hover, .nav-links a.active { color:#fff; }
+    .nav-cta { background:var(--gold); color:var(--navy-deep) !important; padding:8px 20px; border-radius:6px; font-weight:700 !important; }
+    .nav-cta:hover { background:var(--gold-light) !important; }
+    @media(max-width:768px){.nav-links .hide-mobile{display:none;}}
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--navy-deep) 0%, #1a3260 50%, #0d3320 100%);
+      color: #fff;
+      padding: 80px 32px 64px;
+      text-align: center;
+    }
+    .eyebrow {
+      font-family: 'Oswald', sans-serif; font-size: .75rem; font-weight: 700;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-family: 'Oswald', sans-serif; font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 700; line-height: 1.1; margin-bottom: 20px;
+    }
+    .hero h1 span { color: var(--gold); }
+    .hero p {
+      font-size: 1.05rem; color: rgba(255,255,255,.8); max-width: 760px;
+      margin: 0 auto 32px; line-height: 1.7;
+    }
+    .hero-search {
+      display: flex; gap: 0; max-width: 540px; margin: 0 auto;
+      border-radius: 8px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,.3);
+    }
+    .hero-search input {
+      flex: 1; padding: 14px 20px; border: none; outline: none;
+      font-family: 'Montserrat', sans-serif; font-size: .95rem;
+      background: rgba(255,255,255,.96);
+    }
+    .hero-search button {
+      background: var(--gold); color: var(--navy-deep); border: none;
+      padding: 14px 24px; font-family: 'Oswald', sans-serif;
+      font-weight: 700; font-size: .95rem; cursor: pointer;
+      letter-spacing: .05em; transition: background .2s;
+    }
+    .hero-search button:hover { background: var(--gold-light); }
+
+    /* ── SECTION LAYOUT ── */
+    .resources-wrap {
+      max-width: 1200px; margin: 0 auto; padding: 60px 32px 80px;
+    }
+    .section-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
+      margin-bottom: 60px;
+    }
+    .resource-card {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 2px 16px rgba(11,30,63,.08);
+      overflow: hidden;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .resource-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(11,30,63,.14);
+    }
+    .card-header {
+      padding: 28px 28px 20px;
+      display: flex; align-items: flex-start; gap: 16px;
+    }
+    .card-icon {
+      width: 52px; height: 52px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; flex-shrink: 0;
+    }
+    .card-icon.blue   { background: rgba(26,50,96,.1); }
+    .card-icon.gold   { background: rgba(232,160,32,.12); }
+    .card-icon.green  { background: rgba(26,175,93,.1); }
+    .card-icon.purple { background: rgba(128,0,200,.1); }
+    .card-icon.pink   { background: rgba(220,40,120,.1); }
+    .card-icon.teal   { background: rgba(0,150,150,.1); }
+    .card-header-text h2 {
+      font-family: 'Oswald', sans-serif; font-size: 1.2rem; font-weight: 700;
+      color: var(--navy-deep); margin-bottom: 6px;
+    }
+    .card-header-text p {
+      font-size: .82rem; color: var(--slate-gray); line-height: 1.5;
+    }
+    .card-links {
+      padding: 0 28px 24px;
+      border-top: 1px solid rgba(11,30,63,.06);
+      margin-top: 4px;
+    }
+    .card-links a {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 0;
+      color: var(--navy-deep); text-decoration: none;
+      font-size: .88rem; font-weight: 500;
+      border-bottom: 1px solid rgba(11,30,63,.05);
+      transition: color .2s, padding-left .15s;
+    }
+    .card-links a:last-child { border-bottom: none; }
+    .card-links a:hover { color: var(--gold); padding-left: 6px; }
+    .card-links a::before {
+      content: '→'; font-size: .8rem; color: var(--gold);
+      flex-shrink: 0; transition: transform .15s;
+    }
+    .card-links a:hover::before { transform: translateX(3px); }
+    .badge {
+      display: inline-block; font-size: .65rem; font-weight: 700;
+      font-family: 'Oswald', sans-serif; letter-spacing: .08em;
+      text-transform: uppercase; padding: 2px 8px; border-radius: 20px;
+      margin-left: auto; flex-shrink: 0;
+    }
+    .badge-new   { background: rgba(232,160,32,.15); color: #b57a00; }
+    .badge-tool  { background: rgba(26,175,93,.12); color: #0f7a3c; }
+    .badge-hot   { background: rgba(220,60,60,.1); color: #c02020; }
+
+    /* ── SECTION HEADERS ── */
+    .section-header {
+      display: flex; align-items: baseline; gap: 16px;
+      margin-bottom: 24px;
+    }
+    .section-header h2 {
+      font-family: 'Oswald', sans-serif; font-size: 1.6rem; font-weight: 700;
+      color: var(--navy-deep);
+    }
+    .section-header .divider {
+      flex: 1; height: 1px; background: rgba(11,30,63,.1);
+    }
+    .section-header a {
+      font-size: .82rem; font-weight: 600; color: var(--gold);
+      text-decoration: none; white-space: nowrap;
+    }
+
+    /* ── SEO INTRO ── */
+    .seo-intro {
+      background: #fff; border-radius: 14px;
+      padding: 40px 48px; margin-bottom: 60px;
+      box-shadow: 0 2px 16px rgba(11,30,63,.07);
+    }
+    .seo-intro h2 {
+      font-family: 'Oswald', sans-serif; font-size: 1.4rem;
+      color: var(--navy-deep); margin-bottom: 14px;
+    }
+    .seo-intro p {
+      font-size: .93rem; color: #4a5568; line-height: 1.8; margin-bottom: 14px;
+    }
+    .seo-intro p:last-child { margin-bottom: 0; }
+
+    /* ── QUICK LINKS STRIP ── */
+    .quick-links {
+      background: var(--navy-deep);
+      padding: 40px 32px;
+      margin-bottom: 0;
+    }
+    .quick-links-inner {
+      max-width: 1200px; margin: 0 auto;
+    }
+    .quick-links h2 {
+      font-family: 'Oswald', sans-serif; color: #fff;
+      font-size: 1.1rem; font-weight: 700; margin-bottom: 20px;
+      letter-spacing: .05em; text-transform: uppercase;
+    }
+    .quick-links-grid {
+      display: flex; flex-wrap: wrap; gap: 10px;
+    }
+    .quick-links-grid a {
+      background: rgba(255,255,255,.07); color: rgba(255,255,255,.8);
+      text-decoration: none; padding: 8px 16px; border-radius: 20px;
+      font-size: .82rem; font-weight: 600; border: 1px solid rgba(255,255,255,.12);
+      transition: background .2s, color .2s;
+    }
+    .quick-links-grid a:hover { background: var(--gold); color: var(--navy-deep); border-color: var(--gold); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #07121f; padding: 48px 32px 24px; color: var(--slate-gray);
+    }
+    .footer-grid {
+      max-width: 1200px; margin: 0 auto 32px;
+      display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr;
+      gap: 40px;
+    }
+    .footer-brand .logo {
+      font-family: 'Oswald', sans-serif; font-size: 1.3rem; font-weight: 700;
+      color: #fff; margin-bottom: 10px;
+    }
+    .footer-brand .logo span { color: var(--gold); }
+    .footer-brand p { font-size: .82rem; line-height: 1.7; }
+    .footer-col h4 { font-family:'Oswald',sans-serif; font-size:.75rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#fff; margin-bottom:14px; }
+    .footer-col a { display:block; color:var(--slate-gray); text-decoration:none; font-size:.85rem; margin-bottom:8px; transition:color .2s; }
+    .footer-col a:hover { color:var(--gold); }
+    .footer-bottom { text-align:center; font-size:.78rem; border-top:1px solid rgba(255,255,255,.08); padding-top:20px; max-width:1200px; margin:0 auto; }
+    @media(max-width:900px){ .footer-grid{grid-template-columns:1fr 1fr;} .section-grid{grid-template-columns:1fr;} }
+    @media(max-width:600px){ .hero{padding:60px 20px 48px;} .resources-wrap{padding:40px 20px 60px;} .seo-intro{padding:28px 24px;} }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo"><span>MVP</span> Kids Cards</a>
+  <div class="nav-links">
+    <a href="templates.html" class="hide-mobile">Templates</a>
+    <a href="fundraising.html" class="hide-mobile">Fundraising</a>
+    <a href="resources.html" class="active">Resources</a>
+    <a href="faq.html" class="hide-mobile">FAQ</a>
+    <a href="dashboard.html" class="nav-cta">Create Free</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="eyebrow">Resource Center</div>
+  <h1>Everything You Need to Create<br><span>Amazing Custom Trading Cards</span></h1>
+  <p>Welcome to the MVP Kids Cards resource center — your complete guide to creating professional custom trading cards for every young achiever. Whether you're making cards for youth sports, dance recitals, academic achievements, scout milestones, or school fundraisers, we have guides, templates, and tools to help.</p>
+  <div class="hero-search">
+    <input type="text" id="resourceSearch" placeholder="Search resources, guides, tools…" oninput="filterResources(this.value)">
+    <button type="button" onclick="filterResources(document.getElementById('resourceSearch').value)">Search</button>
+  </div>
+</section>
+
+<!-- MAIN CONTENT -->
+<div class="resources-wrap">
+
+  <!-- CUSTOM CARDS -->
+  <div class="section-header">
+    <h2>Custom Cards</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="section-grid" id="allCards">
+
+    <div class="resource-card" data-tags="custom sports cards personalized youth trading">
+      <div class="card-header">
+        <div class="card-icon blue">🏅</div>
+        <div class="card-header-text">
+          <h2>Custom Sports Cards</h2>
+          <p>Professional-grade trading cards for youth athletes — every sport, every level.</p>
+        </div>
+      </div>
+      <div class="card-links">
+        <a href="custom-sports-cards.html">Custom Sports Cards <span class="badge badge-hot">Popular</span></a>
+        <a href="custom-trading-cards.html">Custom Trading Cards</a>
+        <a href="custom-baseball-cards.html">Custom Baseball Cards</a>
+        <a href="custom-football-cards.html">Custom Football Cards</a>
+        <a href="custom-basketball-cards.html">Custom Basketball Cards</a>
+        <a href="custom-soccer-cards.html">Custom Soccer Cards</a>
+        <a href="youth-sports-cards.html">Youth Sports Cards</a>
+        <a href="team-picture-cards.html">Team Picture Cards</a>
+      </div>
+    </div>
+
+    <div class="resource-card" data-tags="custom cards special edition hologram foil 1/1">
+      <div class="card-header">
+        <div class="card-icon gold">✨</div>
+        <div class="card-header-text">
+          <h2>Special Edition Cards</h2>
+          <p>Foil, hologram, and limited one-of-one cards for milestone moments.</p>
+        </div>
+      </div>
+      <div class="card-links">
+        <a href="hologram-cards.html">Hologram Cards <span class="badge badge-new">New</span></a>
+        <a href="one-of-one-cards.html">1/1 Collector Cards</a>
+        <a href="foil-trading-cards.html">Foil Trading Cards</a>
+        <a href="limited-edition-cards.html">Limited Edition Cards</a>
+        <a href="blockchain-cards.html">Blockchain-Verified Cards</a>
+      </div>
+    </div>
+
+    <div class="resource-card" data-tags="personalized cards non-sports dance arts academic scouting">
+      <div class="card-header">
+        <div class="card-icon purple">🎭</div>
+        <div class="card-header-text">
+          <h2>Beyond Sports Cards</h2>
+          <p>Cards for every young achiever — not just athletes.</p>
+        </div>
+      </div>
+      <div class="card-links">
+        <a href="dance-recital-cards.html">Dance Recital Cards <span class="badge badge-new">New</span></a>
+        <a href="academic-achievement-cards.html">Academic Achievement Cards</a>
+        <a href="scouting-milestone-cards.html">Scout & Service Cards</a>
+        <a href="arts-performance-cards.html">Arts & Performance Cards</a>
+        <a href="cheer-gymnastics-cards.html">Cheer & Gymnastics Cards</a>
+        <a href="faith-milestone-cards.html">Faith Milestone Cards</a>
+        <a href="esports-robotics-cards.html">eSports & Robotics Cards</a>
+        <a href="graduation-cards.html">Graduation Cards</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TOOLS & MAKERS -->
+  <div class="section-header">
+    <h2>Tools &amp; Makers</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="section-grid">
+
+    <div class="resource-card" data-tags="card maker builder tool create design">
+      <div class="card-header">
+        <div class="card-icon green">🛠️</div>
+        <div class="card-header-text">
+          <h2>Card Creation Tools</h2>
+          <p>Free online tools to design, preview, and order your custom cards.</p>
+        </div>
+      </div>
+      <div class="card-links">
+        <a href="dashboard.html">Card Builder <span class="badge badge-tool">Free Tool</span></a>
+        <a href="card-maker.html">Sports Card Maker</a>
+        <a href="card-generator.html">Trading Card Generator</a>
+        <a href="templates.html">Browse Card Templates <span class="badge badge-tool">22 Templates</span></a>
+        <a href="request-template.html">Request a Custom Template</a>
+        <a href="fundraising.html#calculator">Fundraising Calculator <span class="badge badge-tool">Free Tool</span></a>
+      </div>
+    </div>
+
+    <div class="resource-card" data-tags="team fundraising calculator groups organizations">
+      <div class="card-header">
+        <div class="card-icon teal">📊</div>
+        <div class="card-header-text">
+          <h2>Fundraising Tools</h2>
+          <p>Everything your team, school, or org needs to run a successful card campaign.</p>
+        </div>
+      </div>
+      <div class="card-links">
+        <a href="fundraising.html">How Card Fundraising Works</a>
+        <a href="fundraising.html#calculator">Live Earnings Calculator <span class="badge badge-tool">Free Tool</span></a>
+        <a href="organizations.html">Partner Program for Orgs</a>
+        <a href="team-signup.html">Start a Team Campaign</a>
+        <a href="sports-fundraising-ideas.html">Sports Fundraising Ideas</a>
+        <a href="school-fundraising-ideas.html">School Fundraising Ideas</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- HOW-TO GUIDES -->
+  <div class="section-header">
+    <h2>How-To Guides</h2>
+    <div class="divider"></div>
+    <a href="blog.html">All Guides →</a>
+  </div>
+  <div class="section-grid">
+
+    <div class="resource-card" data-tags="how to make create trading card tutorial guide">
+      <div class="card-header">
+        <div class="card-icon blue">📖</div>
+        <div class="card-header-text">
+          <h2>Creating Cards</h2>
+          <p>Step-by-step guides to designing and ordering your first custom card.</p>
+        </div>
+      </div>
+      <div class="card-links">
+        <a href="how-to-make-a-trading-card.html">How to Make a Custom Trading Card</a>
+        <a href="how-to-make-a-sports-card.html">How to Make a Sports Card</a>
+        <a href="how-to-make-a-baseball-card.html">How to Make a Baseball Card</a>
+        <a href="how-to-take-the-perfect-photo.html">How to Take the Perfect Card Photo</a>
+        <a href="blog/how-to-take-the-perfect-athlete-photo.html">Athlete Photo Tips &amp; Tricks</a>
+        <a href="card-design-guide.html">Card Design Best Practices</a>
+      </div>
+    </div>
+
+    <div class="resource-card" data-tags="fundraising how to run campaign tips steps">
+      <div class="card-header">
+        <div class="card-icon green">💡</div>
+        <div class="card-header-text">
+          <h2>Fundraising Guides</h2>
+          <p>Proven strategies for running a card fundraiser that actually works.</p>
+        </div>
+      </div>
+      <div class="card-links">
+        <a href="blog/how-travel-teams-fund-entire-seasons.html">How Travel Teams Fund Full Seasons</a>
+        <a href="blog/how-one-soccer-mom-raised-412-in-a-weekend.html">How One Mom Raised $412 in a Weekend</a>
+        <a href="blog/5-ways-to-share-your-card-without-being-that-parent.html">5 Ways to Share Without Being Pushy</a>
+        <a href="sports-fundraising-ideas.html">Sports Fundraising Ideas Guide</a>
+        <a href="school-fundraising-ideas.html">School &amp; PTA Fundraising Ideas</a>
+        <a href="fundraising.html">Full Fundraising Overview</a>
+      </div>
+    </div>
+
+    <div class="resource-card" data-tags="collecting blockchain ownership cards guide protect">
+      <div class="card-header">
+        <div class="card-icon gold">🏆</div>
+        <div class="card-header-text">
+          <h2>Collecting &amp; Ownership</h2>
+          <p>Learn about card value, protection, blockchain records, and collecting.</p>
+        </div>
+      </div>
+      <div class="card-links">
+        <a href="blog/why-youth-athlete-cards-are-the-next-big-collectible.html">Why Youth Cards Are the Next Big Collectible</a>
+        <a href="blog/what-does-on-chain-mean-for-your-kids-trading-card.html">What "On-Chain" Means for Your Card</a>
+        <a href="card-protection-guide.html">Card Protection &amp; Display Guide</a>
+        <a href="how-to-value-youth-trading-cards.html">How Card Value Works</a>
+        <a href="limited-edition-cards.html">Understanding Limited Editions</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- GIFT IDEAS -->
+  <div class="section-header">
+    <h2>Gift Ideas</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="section-grid">
+
+    <div class="resource-card" data-tags="gifts coaches sports fans athletes christmas holiday">
+      <div class="card-header">
+        <div class="card-icon pink">🎁</div>
+        <div class="card-header-text">
+          <h2>Gifts for Sports Families</h2>
+          <p>Unique, personalized gift ideas for coaches, fans, and young athletes.</p>
+        </div>
+      </div>
+      <div class="card-links">
+        <a href="gifts-for-coaches.html">Gifts for Sports Coaches <span class="badge badge-hot">Popular</span></a>
+        <a href="gifts-for-sports-fans.html">Gifts for Sports Fans</a>
+        <a href="gifts-for-young-athletes.html">Gifts for Young Athletes</a>
+        <a href="holiday-gift-guide.html">Holiday Gift Guide for Sports Families</a>
+        <a href="end-of-season-gift-ideas.html">End-of-Season Gift Ideas</a>
+        <a href="team-gift-ideas.html">Team Gift Ideas</a>
+      </div>
+    </div>
+
+    <div class="resource-card" data-tags="gifts non-sports dance arts academics scouting">
+      <div class="card-header">
+        <div class="card-icon purple">🌟</div>
+        <div class="card-header-text">
+          <h2>Gifts for Every Achievement</h2>
+          <p>Milestone cards make the perfect gift for any young achiever.</p>
+        </div>
+      </div>
+      <div class="card-links">
+        <a href="gifts-for-dancers.html">Gifts for Dancers</a>
+        <a href="gifts-for-honor-roll-students.html">Gifts for Honor Roll Students</a>
+        <a href="gifts-for-scouts.html">Gifts for Eagle Scouts &amp; Scouts</a>
+        <a href="gifts-for-performers.html">Gifts for Young Performers</a>
+        <a href="graduation-cards.html">Graduation Keepsakes</a>
+        <a href="recital-gifts.html">Dance &amp; Recital Gift Ideas</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TEAMS & ORGANIZATIONS -->
+  <div class="section-header">
+    <h2>Teams &amp; Organizations</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="section-grid">
+
+    <div class="resource-card" data-tags="teams leagues clubs sports organizations partners">
+      <div class="card-header">
+        <div class="card-icon teal">🏫</div>
+        <div class="card-header-text">
+          <h2>Teams &amp; Groups</h2>
+          <p>Bulk card programs, team sets, and organization partner packages.</p>
+        </div>
+      </div>
+      <div class="card-links">
+        <a href="team-signup.html">Start a Team Program</a>
+        <a href="organizations.html">Organization Partner Program</a>
+        <a href="bulk-card-orders.html">Bulk Card Orders</a>
+        <a href="school-fundraising-ideas.html">School &amp; PTA Programs</a>
+        <a href="youth-league-cards.html">Youth League Card Sets</a>
+      </div>
+    </div>
+
+    <div class="resource-card" data-tags="blog guides posts articles resources reading">
+      <div class="card-header">
+        <div class="card-icon blue">📝</div>
+        <div class="card-header-text">
+          <h2>Blog &amp; Deep Dives</h2>
+          <p>In-depth articles and guides on all things custom trading cards for kids.</p>
+        </div>
+      </div>
+      <div class="card-links">
+        <a href="blog.html">All Blog Posts</a>
+        <a href="blog/why-youth-athlete-cards-are-the-next-big-collectible.html">Ultimate Guide to Youth Cards</a>
+        <a href="blog/how-travel-teams-fund-entire-seasons.html">Team Fundraising Deep Dive</a>
+        <a href="blog/how-we-keep-kids-safe-coppa-data-parental-control.html">COPPA &amp; Child Safety Guide</a>
+        <a href="blog/what-does-on-chain-mean-for-your-kids-trading-card.html">Blockchain &amp; Ownership Explained</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- COMPANY -->
+  <div class="section-header">
+    <h2>Company</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="section-grid">
+
+    <div class="resource-card" data-tags="about company contact faq press careers">
+      <div class="card-header">
+        <div class="card-icon blue">🏢</div>
+        <div class="card-header-text">
+          <h2>About MVP Kids Cards</h2>
+          <p>Our story, mission, team, and how to get in touch.</p>
+        </div>
+      </div>
+      <div class="card-links">
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="faq.html">FAQ</a>
+        <a href="press.html">Press &amp; Media</a>
+        <a href="coppa.html">COPPA &amp; Child Safety</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SEO INTRO -->
+  <div class="seo-intro">
+    <h2>Why Choose MVP Kids Cards for Custom Trading Cards?</h2>
+    <p>MVP Kids Cards is the leading platform for creating professional-quality custom trading cards for every young achiever — not just athletes. Our free online card builder makes it easy for any family, coach, teacher, or organization to design beautiful, print-ready cards in minutes. Upload a photo, choose from 22+ professional templates spanning sports, dance, academics, scouting, arts, faith milestones, eSports, and more, and order premium printed cards delivered to your door.</p>
+    <p>All cards are printed on professional trading card stock with optional holographic foil editions, and every card comes with a blockchain-verified ownership record — the same technology used by premium collector platforms — ensuring each card is authentic, numbered, and traceable. Unlike other platforms, MVP Kids Cards is built around fundraising: teams, schools, dance studios, and organizations earn real money when supporters purchase cards, with no upfront costs.</p>
+    <p>Whether you're creating personalized baseball cards for a Little League team, academic achievement cards for an honor roll ceremony, recital keepsake cards for a dance studio, or fundraising card sets for a school PTA, MVP Kids Cards provides the tools, templates, COPPA-compliant safety features, and dedicated support you need to create trading cards that feel like the real thing — because every kid deserves one.</p>
+  </div>
+
+</div>
+
+<!-- QUICK LINKS SEO STRIP -->
+<section class="quick-links">
+  <div class="quick-links-inner">
+    <h2>Browse All Resources</h2>
+    <div class="quick-links-grid" id="quickLinksGrid">
+      <a href="custom-sports-cards.html">Custom Sports Cards</a>
+      <a href="custom-trading-cards.html">Custom Trading Cards</a>
+      <a href="custom-baseball-cards.html">Custom Baseball Cards</a>
+      <a href="custom-football-cards.html">Custom Football Cards</a>
+      <a href="custom-basketball-cards.html">Custom Basketball Cards</a>
+      <a href="hologram-cards.html">Hologram Cards</a>
+      <a href="one-of-one-cards.html">1/1 Collector Cards</a>
+      <a href="dance-recital-cards.html">Dance Recital Cards</a>
+      <a href="academic-achievement-cards.html">Academic Achievement Cards</a>
+      <a href="scouting-milestone-cards.html">Scout Milestone Cards</a>
+      <a href="arts-performance-cards.html">Arts & Performance Cards</a>
+      <a href="faith-milestone-cards.html">Faith Milestone Cards</a>
+      <a href="esports-robotics-cards.html">eSports & Robotics Cards</a>
+      <a href="card-maker.html">Sports Card Maker</a>
+      <a href="card-generator.html">Trading Card Generator</a>
+      <a href="templates.html">Card Templates</a>
+      <a href="request-template.html">Request Custom Template</a>
+      <a href="dashboard.html">Card Builder</a>
+      <a href="how-to-make-a-trading-card.html">Make Your Own Trading Card</a>
+      <a href="how-to-make-a-sports-card.html">Make Your Own Sports Card</a>
+      <a href="how-to-make-a-baseball-card.html">Make a Baseball Card</a>
+      <a href="gifts-for-coaches.html">Gifts for Sports Coaches</a>
+      <a href="gifts-for-sports-fans.html">Gifts for Sports Fans</a>
+      <a href="holiday-gift-guide.html">Holiday Gift Guide</a>
+      <a href="gifts-for-young-athletes.html">Gifts for Young Athletes</a>
+      <a href="team-signup.html">Teams & Partners</a>
+      <a href="sports-fundraising-ideas.html">Sports Fundraising Ideas</a>
+      <a href="school-fundraising-ideas.html">School Fundraising Ideas</a>
+      <a href="blog.html">All Blog Posts</a>
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact</a>
+      <a href="faq.html">FAQ</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo"><span>MVP</span> Kids Cards</div>
+      <p>Premium trading cards for every kid's milestone — sports, academics, arts, dance, scouting, and more. Create free, fundraise with purpose.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="about.html">About</a>
+      <a href="blog.html">Blog</a>
+      <a href="press.html">Press</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Product</h4>
+      <a href="templates.html">Templates</a>
+      <a href="fundraising.html">Fundraising</a>
+      <a href="organizations.html">Organizations</a>
+      <a href="resources.html">Resources</a>
+      <a href="faq.html">FAQ</a>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="coppa.html">COPPA Compliance</a>
+      <a href="refund.html">Refund Policy</a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 MVP Kids Cards. All rights reserved. Made with ❤️ for every kid's moment.</div>
+</footer>
+
+<script>
+function filterResources(query) {
+  const q = query.toLowerCase().trim();
+  document.querySelectorAll('.resource-card[data-tags]').forEach(card => {
+    const tags = card.dataset.tags.toLowerCase();
+    const text = card.innerText.toLowerCase();
+    card.style.display = (!q || tags.includes(q) || text.includes(q)) ? '' : 'none';
+  });
+}
+</script>
+
+</body>
+</html>

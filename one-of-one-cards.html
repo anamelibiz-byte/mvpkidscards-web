@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1/1 Collector Cards | MVP Kids Cards</title>
+  <meta name="description" content="Create custom trading cards for 1/1 collector cards at MVP Kids Cards. Free to design. Professional quality. Every kid deserves their own card.">
+  <meta name="keywords" content="one of one trading cards limited edition collector kids">
+  <meta property="og:title" content="1/1 Collector Cards | MVP Kids Cards">
+  <meta property="og:description" content="Create custom trading cards for 1/1 collector cards at MVP Kids Cards. Free to design. Professional quality. Every kid deserves their own card.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://mvpkidscards-web.vercel.app/one-of-one-cards.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --navy-deep:#0B1E3F; --navy-mid:#1A3260; --gold:#E8A020; --gold-light:#F5C84A; --green-win:#1AAF5D; --slate-gray:#8A9BB0; --off-white:#F8F9FC; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Montserrat',sans-serif;background:var(--off-white);color:#1a1a2e;}
+    nav{background:var(--navy-deep);display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:68px;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(0,0,0,.4);}
+    .nav-logo{font-family:'Oswald',sans-serif;font-size:1.35rem;font-weight:700;color:#fff;text-decoration:none;letter-spacing:.04em;}
+    .nav-logo span{color:var(--gold);}
+    .nav-links{display:flex;align-items:center;gap:28px;}
+    .nav-links a{color:var(--slate-gray);text-decoration:none;font-size:.85rem;font-weight:600;font-family:'Oswald',sans-serif;letter-spacing:.06em;text-transform:uppercase;transition:color .2s;}
+    .nav-links a:hover,.nav-links a.active{color:#fff;}
+    .nav-cta{background:var(--gold);color:var(--navy-deep)!important;padding:8px 20px;border-radius:6px;font-weight:700!important;}
+    .nav-cta:hover{background:var(--gold-light)!important;}
+    @media(max-width:768px){.nav-links .hide-mobile{display:none;}}
+    .hero{background:linear-gradient(135deg,var(--navy-deep) 0%,#1a3260 60%,var(--navy-mid) 100%);color:#fff;padding:72px 32px 56px;text-align:center;}
+    .eyebrow{font-family:'Oswald',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+    .hero h1{font-family:'Oswald',sans-serif;font-size:clamp(2rem,5vw,3rem);font-weight:700;line-height:1.1;margin-bottom:18px;}
+    .hero h1 span{color:var(--gold);}
+    .hero p{font-size:1rem;color:rgba(255,255,255,.8);max-width:680px;margin:0 auto 32px;line-height:1.7;}
+    .hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+    .btn-primary{background:var(--gold);color:var(--navy-deep);padding:14px 32px;border-radius:8px;font-family:'Oswald',sans-serif;font-weight:700;font-size:1rem;text-decoration:none;transition:background .2s,transform .15s;}
+    .btn-primary:hover{background:var(--gold-light);transform:translateY(-2px);}
+    .btn-secondary{background:rgba(255,255,255,.1);color:#fff;padding:14px 32px;border-radius:8px;font-family:'Oswald',sans-serif;font-weight:700;font-size:1rem;text-decoration:none;border:2px solid rgba(255,255,255,.3);transition:background .2s;}
+    .btn-secondary:hover{background:rgba(255,255,255,.18);}
+    .page-body{max-width:1100px;margin:0 auto;padding:60px 32px 80px;}
+    .section-title{font-family:'Oswald',sans-serif;font-size:1.7rem;font-weight:700;color:var(--navy-deep);margin-bottom:20px;}
+    .section-text{font-size:.95rem;color:#4a5568;line-height:1.8;margin-bottom:28px;}
+    .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin-bottom:48px;}
+    .feature-card{background:#fff;border-radius:12px;padding:28px;box-shadow:0 2px 12px rgba(11,30,63,.07);}
+    .feature-card .icon{font-size:1.8rem;margin-bottom:12px;}
+    .feature-card h3{font-family:'Oswald',sans-serif;font-size:1.05rem;font-weight:700;color:var(--navy-deep);margin-bottom:8px;}
+    .feature-card p{font-size:.85rem;color:#64748b;line-height:1.6;}
+    .steps{margin-bottom:48px;}
+    .step{display:flex;gap:20px;margin-bottom:24px;align-items:flex-start;}
+    .step-num{width:40px;height:40px;border-radius:50%;background:var(--navy-deep);color:var(--gold);font-family:'Oswald',sans-serif;font-weight:700;font-size:1.1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .step-body h4{font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700;color:var(--navy-deep);margin-bottom:4px;}
+    .step-body p{font-size:.88rem;color:#64748b;line-height:1.6;}
+    .related-links{background:#fff;border-radius:12px;padding:32px;box-shadow:0 2px 12px rgba(11,30,63,.07);margin-bottom:48px;}
+    .related-links h3{font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700;color:var(--navy-deep);margin-bottom:16px;letter-spacing:.05em;text-transform:uppercase;}
+    .related-links-grid{display:flex;flex-wrap:wrap;gap:10px;}
+    .related-links-grid a{background:var(--off-white);color:var(--navy-deep);padding:8px 16px;border-radius:20px;font-size:.83rem;font-weight:600;text-decoration:none;border:1px solid rgba(11,30,63,.1);transition:background .2s,color .2s;}
+    .related-links-grid a:hover{background:var(--gold);color:var(--navy-deep);border-color:var(--gold);}
+    .cta-section{background:linear-gradient(135deg,var(--navy-deep),#1a3260);color:#fff;border-radius:16px;padding:48px 40px;text-align:center;margin-bottom:48px;}
+    .cta-section h2{font-family:'Oswald',sans-serif;font-size:2rem;font-weight:700;margin-bottom:14px;}
+    .cta-section p{font-size:.95rem;color:rgba(255,255,255,.8);max-width:560px;margin:0 auto 28px;line-height:1.7;}
+    footer{background:#07121f;padding:48px 32px 24px;color:var(--slate-gray);}
+    .footer-grid{max-width:1100px;margin:0 auto 32px;display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:40px;}
+    .footer-brand .logo{font-family:'Oswald',sans-serif;font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:10px;}
+    .footer-brand .logo span{color:var(--gold);}
+    .footer-brand p{font-size:.82rem;line-height:1.7;}
+    .footer-col h4{font-family:'Oswald',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fff;margin-bottom:14px;}
+    .footer-col a{display:block;color:var(--slate-gray);text-decoration:none;font-size:.85rem;margin-bottom:8px;transition:color .2s;}
+    .footer-col a:hover{color:var(--gold);}
+    .footer-bottom{text-align:center;font-size:.78rem;border-top:1px solid rgba(255,255,255,.08);padding-top:20px;max-width:1100px;margin:0 auto;}
+    @media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;}.feature-grid{grid-template-columns:1fr;}}
+    @media(max-width:600px){.hero{padding:52px 20px 44px;}.page-body{padding:40px 20px 60px;}.cta-section{padding:36px 24px;}}
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo"><span>MVP</span> Kids Cards</a>
+  <div class="nav-links">
+    <a href="templates.html" class="hide-mobile">Templates</a>
+    <a href="fundraising.html" class="hide-mobile">Fundraising</a>
+    <a href="resources.html">Resources</a>
+    <a href="faq.html" class="hide-mobile">FAQ</a>
+    <a href="dashboard.html" class="nav-cta">Create Free</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="eyebrow">Collector Cards</div>
+  <h1><span>💎 1/1 Collector Cards</span></h1>
+  <p>MVP Kids Cards makes professional custom trading cards for 1/1 collector cards. Free to design — printed on real card stock — fundraise-ready.</p>
+  <div class="hero-ctas">
+    <a href="dashboard.html" class="btn-primary">Create Your Card Free</a>
+    <a href="resources.html" class="btn-secondary">Browse All Resources</a>
+  </div>
+</section>
+
+<div class="page-body">
+
+  <h2 class="section-title">About 1/1 Collector Cards</h2>
+  <p class="section-text">MVP Kids Cards supports every youth activity with professional trading card designs. 1/1 Collector Cards is one of our most popular categories. Browse templates, design your card free, and order when you're ready.</p>
+    <div class="feature-grid">
+  <div class="feature-card">
+    <div class="icon">💎</div>
+    <h3>Category Templates</h3>
+    <p>Templates designed specifically for 1/1 collector cards.</p>
+  </div>
+  <div class="feature-card">
+    <div class="icon">📸</div>
+    <h3>Great Photo Tools</h3>
+    <p>Upload and crop any photo. Our guide helps you choose the best shot.</p>
+  </div>
+  <div class="feature-card">
+    <div class="icon">✏️</div>
+    <h3>Custom Fields</h3>
+    <p>Stats, achievements, and info fields tailored to your activity.</p>
+  </div>
+  <div class="feature-card">
+    <div class="icon">🔢</div>
+    <h3>Limited Editions</h3>
+    <p>Numbered cards with optional blockchain verification for collectible authenticity.</p>
+  </div>
+  </div>
+
+
+
+  <div class="related-links">
+    <h3>Related Resources</h3>
+    <div class="related-links-grid">
+<a href="templates.html">Browse Templates</a><a href="custom-trading-cards.html">Custom Trading Cards</a><a href="resources.html">All Resources</a><a href="fundraising.html">Fundraising</a><a href="faq.html">FAQ</a>
+    </div>
+  </div>
+
+  <div class="cta-section">
+    <h2>Ready to Create Your Card?</h2>
+    <p>Create your first custom trading card free. No design skills needed — just upload a photo and pick a template.</p>
+    <a href="dashboard.html" class="btn-primary">Create Your Card Free</a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo"><span>MVP</span> Kids Cards</div>
+      <p>Premium trading cards for every kid's milestone — sports, academics, arts, dance, scouting, and more.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="about.html">About</a>
+      <a href="blog.html">Blog</a>
+      <a href="press.html">Press</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Product</h4>
+      <a href="templates.html">Templates</a>
+      <a href="fundraising.html">Fundraising</a>
+      <a href="organizations.html">Organizations</a>
+      <a href="resources.html">Resources</a>
+      <a href="faq.html">FAQ</a>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="coppa.html">COPPA Compliance</a>
+      <a href="refund.html">Refund Policy</a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 MVP Kids Cards. All rights reserved. Made with ❤️ for every kid's moment.</div>
+</footer>
+
+</body>
+</html>
